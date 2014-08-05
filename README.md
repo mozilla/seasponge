@@ -7,7 +7,7 @@ This web-based application is being developed with three characteristics in mind
 
 * **Accessibility**: We want everyone to be able to map out their infastructures and generate security reports on any operating-system and on any browser. 
 * **Aesthetics**: We're tired of clunky, boring interfaces - we want to bring the pizazz into threat-modeling.
-* **Intuitive User-Experience**: We want you to be able to use the software without a manual.
+* **Intuitive User-Experience**: We hate manuals, and we want you to be able to use this software without one.
 
 #### Links
 
