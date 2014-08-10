@@ -40,5 +40,23 @@
   },
   "scripts": {
     "test": "grunt test"
-  }
+  },
+  "description": "Accessible and client-side threat modeling tool.",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mozilla/seasponge.git"
+  },
+  "keywords": [
+    "threat",
+    "modelling",
+    "tool"
+  ],
+  "license": "Mozilla Public License, version 2.0",
+  "bugs": {
+    "url": "https://github.com/mozilla/seasponge/issues"
+  },
+  "homepage": "https://github.com/mozilla/seasponge"
 }
