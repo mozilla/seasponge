@@ -64,6 +64,11 @@ module.exports = (grunt) ->
           "<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}"
         ]
 
+    # Generate Changelog
+    changelog:
+      options:
+        dest: 'CHANGELOG.md'
+        versionFile: 'package.json'
 
     # The actual grunt server settings
     connect:
