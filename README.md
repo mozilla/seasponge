@@ -28,50 +28,45 @@ and Professor [Dr. Pawan Lingras](http://cs.stmarys.ca/~pawan/)
 
 ## Contributing
 
-Please use issue branches and submit [Pull Requests](https://help.github.com/articles/using-pull-requests) for review.  
-Your commit messages should [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
+#### Coding Conventions
 
-### Getting Started
+- Please use issue branches and submit [Pull Requests](https://help.github.com/articles/using-pull-requests) for review.  
+- Your commit messages should follow [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
 
+#### Dependencies
 
-#### Installing Dependencies
+You may need to prefix commands with `sudo`
 
-After cloning the repository in the location of your choice run the following commands in your Terminal:
+- [Node.js](http://nodejs.org/) 
+  - [Bower](http://bower.io/) `npm install -g bower`
+  - [Grunt](http://gruntjs.com/) `npm install -g grunt-cli`
+  - [Yeoman](http://yeoman.io/) `npm install -g yo`
+    - [AngularJS Generator](https://github.com/yeoman/generator-angular) `npm install -g generator-angular`
+- [Ruby](https://www.ruby-lang.org/en/installation/)
+  - Linux users may also need `ruby-dev` via `sudo apt-get install ruby-dev`
+  - [Sass](http://sass-lang.com/install) `gem install sass`
+  - [Compass](http://compass-style.org/install/) >=0.12.2 `gem install compass`
 
-```
+After forking and cloning the repository in the location of your choice run the following commands to install your [Node.js](http://nodejs.org/) and [Bower](http://bower.io/) dependencies.
+
+```bash
 npm install
 bower install
 ```
 
-This will install your [Node.js](http://nodejs.org/) and [Bower](http://bower.io/) dependencies.
-
-We use [grunt-contrib-compass](https://github.com/gruntjs/grunt-contrib-compass)
-which requires you to have
-[Ruby](https://www.ruby-lang.org/en/downloads/),
-[Sass](http://sass-lang.com/guide),
-and [Compass](http://compass-style.org/install/) >=0.12.2 installed.
-
-Please verify you have those installed (see https://github.com/gruntjs/grunt-contrib-compass#compass-task)
-or you may receive the following error message when building:
-
-```
-Warning: Running "compass:dist" (compass) task
-Warning: You need to have Ruby and Compass installed and in your system PATH for this task to > work. More info: https://github.com/gruntjs/grunt-contrib-compass Use --force to continue.
-```
-
 #### Building
 
-Once you have the app dependencies installed you can start building the app.
+Once you have the application and dependencies installed you can start building the app.
 
-We use [Grunt](http://gruntjs.com/). Please verify you have it installed.
-
-Run `grunt` for building and `grunt serve` for previewing your app locally.
+```bash
+grunt build # builds the application to /dist
+grunt serve # previews the app on a local server
+```
 
 #### Developing
 
 We recommend you use the [sub-generators provided](https://github.com/yeoman/generator-angular#generators)
-by [generator-angular](https://github.com/yeoman/generator-angular).  
-Remember to follow the proper commit messages conventions: [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
+by [generator-angular](https://github.com/yeoman/generator-angular).
 
 ## Links
 
