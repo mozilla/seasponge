@@ -1,0 +1,39 @@
+// Variables
+$sidebar-left-width: 350px;
+$nav-bar-top-height: 40px;
+
+//
+.content-left {
+  position: absolute;
+  top: $nav-bar-top-height;
+  bottom: 0px;
+  left: 0px;
+  width: $sidebar-left-width;
+}
+
+.content-right {
+  position: absolute;
+  top: $nav-bar-top-height;
+  bottom: 0px;
+  left: $sidebar-left-width;
+  right: 0px;
+
+  .drawing-panel {
+    position: absolute;
+    overflow: hidden;
+    overflow-y: auto;
+    left: 0px;
+    right: 0px;
+    top: $nav-bar-top-height + 1;
+    bottom: $nav-bar-top-height;
+    margin-bottom: 0px;
+  }
+
+  .drawing-info-panel {
+    position: absolute;
+    bottom: 0px;
+    height: 40px;
+    overflow: hidden;
+  }
+
+}
