@@ -29,6 +29,16 @@ $nav-bar-top-height: 40px;
     margin-bottom: 0px;
   }
 
+  .jsPlumb-area {
+    position: absolute;
+    overflow: hidden;
+    overflow-y: auto;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+  }
+
   .drawing-info-panel {
     position: absolute;
     bottom: 0px;
