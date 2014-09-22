@@ -12,13 +12,10 @@ angular.module('seaspongeApp')
 
     jsPlumb.ready ->
       instance = jsPlumb.getInstance(
-
         # default drag options
         DragOptions:
           cursor: "pointer"
           zIndex: 2000
-
-
         # the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in this
         # case it returns the 'labelText' member that we set on each connection in the 'init' method below.
         ConnectionOverlays: [
@@ -49,7 +46,6 @@ angular.module('seaspongeApp')
         outlineWidth: 2
 
       connectorHoverStyle =
-
         # .. and this is the hover style.
         lineWidth: 4
         strokeStyle: "#216477"
@@ -61,7 +57,6 @@ angular.module('seaspongeApp')
         strokeStyle: "#216477"
 
       sourceEndpoint =
-
         # the definition of source endpoints (the small blue ones)
         endpoint: "Dot"
         paintStyle:
@@ -69,7 +64,6 @@ angular.module('seaspongeApp')
           fillStyle: "transparent"
           radius: 7
           lineWidth: 3
-
         isSource: true
         connector: [
           "Flowchart"
@@ -100,19 +94,16 @@ angular.module('seaspongeApp')
         ]]
 
       targetEndpoint =
-
         # the definition of target endpoints (will appear when the user drags a connection)
         endpoint: "Dot"
         paintStyle:
           fillStyle: "#7AB02C"
           radius: 11
-
         hoverPaintStyle: endpointHoverStyle
         maxConnections: -1
         dropOptions:
           hoverClass: "hover"
           activeClass: "active"
-
         isTarget: true
         overlays: [[
           "Label"
@@ -140,7 +131,6 @@ angular.module('seaspongeApp')
           instance.addEndpoint "flowchart" + toId, sourceEndpoint,
             anchor: sourceAnchors[i]
             uuid: sourceUUID
-
           i++
         j = 0
         while j < targetAnchors.length
@@ -148,7 +138,6 @@ angular.module('seaspongeApp')
           instance.addEndpoint "flowchart" + toId, targetEndpoint,
             anchor: targetAnchors[j]
             uuid: targetUUID
-
           j++
         return
 
