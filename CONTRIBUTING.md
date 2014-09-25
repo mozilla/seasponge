@@ -1,4 +1,4 @@
-# Mozilla SeaSponge Contributing Guidelines
+# Contributing Guidelines
 
 ## Git Workflow
 For non core team members please use the following workflow
