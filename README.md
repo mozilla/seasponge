@@ -4,7 +4,7 @@
 [![Gitter chat](https://badges.gitter.im/mozilla/seasponge.png)](https://gitter.im/mozilla/seasponge)
 [![Build Status](https://travis-ci.org/mozilla/seasponge.svg)](https://travis-ci.org/mozilla/seasponge)
 
-> SeaSponge is an accessible web-based threat modelling tool developed for [Mozilla Winter of Security 2014](https://wiki.mozilla.org/Security/Automation/WinterOfSecurity2014).
+> SeaSponge is an accessible web-based threat modeling tool developed for [Mozilla Winter of Security 2014](https://wiki.mozilla.org/Security/Automation/WinterOfSecurity2014).
 
 -----
 
@@ -12,7 +12,7 @@
 
 This web-based application is being developed with three characteristics in mind:
 
-- **Accessibility**: We want everyone to be able to map out their infastructures and generate security reports on any operating-system and on any browser.
+- **Accessibility**: We want everyone to be able to map out their infrastructures and generate security reports on any operating-system and on any browser.
 - **Aesthetics**: We're tired of clunky, boring interfaces - we want to bring the pizazz into threat-modeling.
 - **Intuitive User-Experience**: We hate manuals, and we want you to be able to use this software without one.
 
@@ -28,10 +28,8 @@ and Professor [Dr. Pawan Lingras](http://cs.stmarys.ca/~pawan/)
 
 ## Contributing
 
-#### Coding Conventions
+Please see our [Contributing Guidelines](CONTRIBUTING.md)
 
-- Please use issue branches and submit [Pull Requests](https://help.github.com/articles/using-pull-requests) for review.  
-- Your commit messages should follow [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
 
 #### Dependencies
 

@@ -1,11 +1,16 @@
 # Contributing Guidelines
 
 ## Git Workflow
+
 For non core team members please use the following workflow
 
 ```
 Fork -> Feature/Issue Branch -> Pull Request -> Comment, Reiterate -> Merge 
 ```
+
+#### Commit Messages
+
+Please follow [AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit).
 
 
 ## Angular.js
