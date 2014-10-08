@@ -10,8 +10,106 @@
 angular.module('seaspongeApp')
   .controller 'DrawCtrl', ($scope) ->
 
+    # this is the paint style for the connecting lines..
+    connectorPaintStyle =
+      lineWidth: 4
+      strokeStyle: "#61B7CF"
+      joinstyle: "round"
+      outlineColor: "white"
+      outlineWidth: 2
+
+    connectorHoverStyle =
+      # .. and this is the hover style.
+      lineWidth: 4
+      strokeStyle: "#216477"
+      outlineWidth: 2
+      outlineColor: "white"
+
+    endpointHoverStyle =
+      fillStyle: "#216477"
+      strokeStyle: "#216477"
+
+    sourceEndpoint =
+      # the definition of source endpoints (the small blue ones)
+      endpoint: "Dot"
+      paintStyle:
+        strokeStyle: "#7AB02C"
+        fillStyle: "transparent"
+        radius: 7
+        lineWidth: 3
+      isSource: true
+      connector: [
+        "Flowchart"
+        {
+          stub: [
+            40
+            60
+          ]
+          gap: 10
+          cornerRadius: 5
+          alwaysRespectStubs: true
+        }
+      ]
+      connectorStyle: connectorPaintStyle
+      hoverPaintStyle: endpointHoverStyle
+      connectorHoverStyle: connectorHoverStyle
+      dragOptions: {}
+      overlays: [[
+        "Label"
+        {
+          location: [
+            0.5
+            1.5
+          ]
+          label: "Drag"
+          cssClass: "endpointSourceLabel"
+        }
+      ]]
+
+    targetEndpoint =
+      # the definition of target endpoints (will appear when the user drags a connection)
+      endpoint: "Dot"
+      paintStyle:
+        fillStyle: "#7AB02C"
+        radius: 11
+      hoverPaintStyle: endpointHoverStyle
+      maxConnections: -1
+      dropOptions:
+        hoverClass: "hover"
+        activeClass: "active"
+      isTarget: true
+      overlays: [[
+        "Label"
+        {
+          location: [
+            0.5
+            -0.5
+          ]
+          label: "Drop"
+          cssClass: "endpointTargetLabel"
+        }
+      ]]
+
+    
+    _addEndpoints = (instance, toId, sourceAnchors, targetAnchors) ->
+      i = 0
+      while i < sourceAnchors.length
+        sourceUUID = toId + sourceAnchors[i]
+        instance.addEndpoint "flowchart" + toId, sourceEndpoint,
+          anchor: sourceAnchors[i]
+          uuid: sourceUUID
+        i++
+      j = 0
+      while j < targetAnchors.length
+        targetUUID = toId + targetAnchors[j]
+        instance.addEndpoint "flowchart" + toId, targetEndpoint,
+          anchor: targetAnchors[j]
+          uuid: targetUUID
+        j++
+      return
+
     jsPlumb.ready ->
-      instance = jsPlumb.getInstance(
+      $scope.instance = instance = jsPlumb.getInstance(
         # default drag options
         DragOptions:
           cursor: "pointer"
@@ -37,86 +135,6 @@ angular.module('seaspongeApp')
         Container: "content-right"
       )
 
-      # this is the paint style for the connecting lines..
-      connectorPaintStyle =
-        lineWidth: 4
-        strokeStyle: "#61B7CF"
-        joinstyle: "round"
-        outlineColor: "white"
-        outlineWidth: 2
-
-      connectorHoverStyle =
-        # .. and this is the hover style.
-        lineWidth: 4
-        strokeStyle: "#216477"
-        outlineWidth: 2
-        outlineColor: "white"
-
-      endpointHoverStyle =
-        fillStyle: "#216477"
-        strokeStyle: "#216477"
-
-      sourceEndpoint =
-        # the definition of source endpoints (the small blue ones)
-        endpoint: "Dot"
-        paintStyle:
-          strokeStyle: "#7AB02C"
-          fillStyle: "transparent"
-          radius: 7
-          lineWidth: 3
-        isSource: true
-        connector: [
-          "Flowchart"
-          {
-            stub: [
-              40
-              60
-            ]
-            gap: 10
-            cornerRadius: 5
-            alwaysRespectStubs: true
-          }
-        ]
-        connectorStyle: connectorPaintStyle
-        hoverPaintStyle: endpointHoverStyle
-        connectorHoverStyle: connectorHoverStyle
-        dragOptions: {}
-        overlays: [[
-          "Label"
-          {
-            location: [
-              0.5
-              1.5
-            ]
-            label: "Drag"
-            cssClass: "endpointSourceLabel"
-          }
-        ]]
-
-      targetEndpoint =
-        # the definition of target endpoints (will appear when the user drags a connection)
-        endpoint: "Dot"
-        paintStyle:
-          fillStyle: "#7AB02C"
-          radius: 11
-        hoverPaintStyle: endpointHoverStyle
-        maxConnections: -1
-        dropOptions:
-          hoverClass: "hover"
-          activeClass: "active"
-        isTarget: true
-        overlays: [[
-          "Label"
-          {
-            location: [
-              0.5
-              -0.5
-            ]
-            label: "Drop"
-            cssClass: "endpointTargetLabel"
-          }
-        ]]
-
       init = (connection) ->
         connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
         connection.bind "editCompleted", (o) ->
@@ -124,47 +142,30 @@ angular.module('seaspongeApp')
           return
         return
 
-      _addEndpoints = (toId, sourceAnchors, targetAnchors) ->
-        i = 0
-        while i < sourceAnchors.length
-          sourceUUID = toId + sourceAnchors[i]
-          instance.addEndpoint "flowchart" + toId, sourceEndpoint,
-            anchor: sourceAnchors[i]
-            uuid: sourceUUID
-          i++
-        j = 0
-        while j < targetAnchors.length
-          targetUUID = toId + targetAnchors[j]
-          instance.addEndpoint "flowchart" + toId, targetEndpoint,
-            anchor: targetAnchors[j]
-            uuid: targetUUID
-          j++
-        return
-
       # suspend drawing and initialise.
       instance.doWhileSuspended ->
-        _addEndpoints "Window4", [
+        _addEndpoints instance, "Window4", [
           "TopCenter"
           "BottomCenter"
         ], [
           "LeftMiddle"
           "RightMiddle"
         ]
-        _addEndpoints "Window2", [
+        _addEndpoints instance, "Window2", [
           "LeftMiddle"
           "BottomCenter"
         ], [
           "TopCenter"
           "RightMiddle"
         ]
-        _addEndpoints "Window3", [
+        _addEndpoints instance, "Window3", [
           "RightMiddle"
           "BottomCenter"
         ], [
           "LeftMiddle"
           "TopCenter"
         ]
-        _addEndpoints "Window1", [
+        _addEndpoints instance, "Window1", [
           "LeftMiddle"
           "RightMiddle"
         ], [
@@ -253,3 +254,30 @@ angular.module('seaspongeApp')
         return
       jsPlumb.fire "jsPlumbDemoLoaded", instance
       return
+
+    $scope.addStencil = () ->
+      # Get container
+      $dp = $('#flowchart-demo')
+      # Create new element
+      $s = $('<div class="window" id="flowchartWindow5"><strong>5</strong><br/><br/></div>')
+      # Add to container
+      $dp.append($s);
+      # suspend drawing and initialise.
+      instance = $scope.instance
+      instance.doWhileSuspended ->
+        #
+        _addEndpoints instance, "Window5", [
+          "TopCenter"
+          "BottomCenter"
+        ], [
+          "LeftMiddle"
+          "RightMiddle"
+        ]
+        # make all the window divs draggable
+        instance.draggable jsPlumb.getSelector(".flowchart-demo .window"),
+          grid: [
+            20
+            20
+          ]
+        #
+        instance.repaint()
