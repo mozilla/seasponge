@@ -9,6 +9,7 @@ $nav-bar-top-height: 40px;
   bottom: 0px;
   left: 0px;
   width: $sidebar-left-width;
+  overflow-y: scroll;
 }
 
 .content-right {
