@@ -30,40 +30,13 @@
 
     <div class="content-left">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Properties <small>- OS Process</small></h3>
-        </div>
-        <div class="panel-body">
+      <accordion close-others="false">
 
-          <form class="form" role="form">
+        <accordion-group is-open="status.stencilsOpen">
 
-            <div class="form-group">
-              <label for="inputEmail3" class="">Attribute</label>
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Value">
-            </div>
-
-            <div class="form-group">
-              <label for="inputEmail3" class="">Attribute</label>
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Value">
-            </div>
-
-            <div class="form-group">
-              <label for="inputEmail3" class="">Attribute</label>
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Value">
-            </div>
-
-          </form>
-
-        </div>
-      </div>
-
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Stencils</h3>
-        </div>
-        <div class="panel-body">
+          <accordion-heading>
+            Stencils <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.stencilsOpen, 'glyphicon-chevron-right': !status.stencilsOpen}"></i>
+          </accordion-heading>
 
           <ul class="nav nav-tabs" role="tablist">
             <li class="active"><a href="#home" role="tab" data-toggle="tab">OS Process</a>
@@ -109,8 +82,36 @@
             <div class="tab-pane" id="settings">...</div>
           </div>
 
-        </div>
-      </div>
+        </accordion-group>
+
+
+        <accordion-group is-open="status.propertiesOpen">
+          <accordion-heading>
+            Properties <small>- OS Process</small>  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.propertiesOpen, 'glyphicon-chevron-right': !status.propertiesOpen}"></i>
+          </accordion-heading>
+
+          <form class="form" role="form">
+
+            <div class="form-group">
+              <label for="inputEmail3" class="">Attribute</label>
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Value">
+            </div>
+
+            <div class="form-group">
+              <label for="inputEmail3" class="">Attribute</label>
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Value">
+            </div>
+
+            <div class="form-group">
+              <label for="inputEmail3" class="">Attribute</label>
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Value">
+            </div>
+
+          </form>
+
+        </accordion-group>
+
+      </accordion>
 
     </div>
 
@@ -135,10 +136,22 @@
 
             <!-- demo -->
             <div class="flowchart-demo" id="flowchart-demo">
-                <div class="window" id="flowchartWindow1"><strong>1</strong><br/><br/></div>
-                <div class="window" id="flowchartWindow2"><strong>2</strong><br/><br/></div>
-                <div class="window" id="flowchartWindow3"><strong>3</strong><br/><br/></div>
-                <div class="window" id="flowchartWindow4"><strong>4</strong><br/><br/></div>
+              <div class="window" id="flowchartWindow1"><strong>1</strong>
+                <br/>
+                <br/>
+              </div>
+              <div class="window" id="flowchartWindow2"><strong>2</strong>
+                <br/>
+                <br/>
+              </div>
+              <div class="window" id="flowchartWindow3"><strong>3</strong>
+                <br/>
+                <br/>
+              </div>
+              <div class="window" id="flowchartWindow4"><strong>4</strong>
+                <br/>
+                <br/>
+              </div>
             </div>
             <!-- /demo -->
 

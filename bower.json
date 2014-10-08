@@ -14,7 +14,8 @@
     "angular-touch": "1.2.16",
     "angular-route": "1.2.16",
     "jsplumb": "~1.6.2",
-    "jquery-ui": "~1.11.1"
+    "jquery-ui": "~1.11.1",
+    "angular-bootstrap": "~0.11.2"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",
@@ -24,7 +25,7 @@
     "jsplumb": {
       "main": [
         "dist/css/jsplumb.css",
-        "css/demo-all.css",
+        "dist/css/demo-all.css",
         "dist/js/jquery.jsPlumb-1.6.4.js"
       ]
     }

@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.bootstrap'
   ])
   .config ($routeProvider) ->
     $routeProvider
@@ -30,4 +31,3 @@ angular
         controller: 'DrawCtrl'
       .otherwise
         redirectTo: '/'
-
