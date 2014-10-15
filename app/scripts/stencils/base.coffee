@@ -48,6 +48,7 @@ class @stencils.BaseStencil
 
   _addEndpoints: (instance, toId, sourceAnchors, targetAnchors) ->
     console.log('add endpoints', arguments)
+    console.log(@sourceEndpoint, @targetEndpoint)
     i = 0
     while i < sourceAnchors.length
       sourceUUID = toId + sourceAnchors[i]
@@ -64,7 +65,7 @@ class @stencils.BaseStencil
       j++
     return
 
-  @sourceEndpoint =
+  sourceEndpoint:
     # the definition of source endpoints (the small blue ones)
     endpoint: "Dot"
     paintStyle:
@@ -102,7 +103,7 @@ class @stencils.BaseStencil
     ]]
 
 
-  @targetEndpoint =
+  targetEndpoint:
     # the definition of target endpoints (will appear when the user drags a connection)
     endpoint: "Dot"
     paintStyle:
@@ -127,20 +128,20 @@ class @stencils.BaseStencil
     ]]
 
   # this is the paint style for the connecting lines..
-  @connectorPaintStyle =
+  connectorPaintStyle:
     lineWidth: 4
     strokeStyle: "#61B7CF"
     joinstyle: "round"
     outlineColor: "white"
     outlineWidth: 2
 
-  @connectorHoverStyle =
+  connectorHoverStyle:
     # .. and this is the hover style.
     lineWidth: 4
     strokeStyle: "#216477"
     outlineWidth: 2
     outlineColor: "white"
 
-  @endpointHoverStyle =
+  endpointHoverStyle:
     fillStyle: "#216477"
     strokeStyle: "#216477"
