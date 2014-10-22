@@ -10,6 +10,8 @@
 angular.module('seaspongeApp')
   .controller 'DrawCtrl', ($scope) ->
 
+    $scope.stencils = window.stencils
+
     jsPlumb.ready ->
       $scope.instance = instance = jsPlumb.getInstance(
         # default drag options
@@ -89,7 +91,7 @@ angular.module('seaspongeApp')
       jsPlumb.fire "jsPlumbDemoLoaded", instance
       return
 
-    $scope.addStencil = () ->
+    $scope.addStencil = (stencilClass) ->
       instance = $scope.instance
       # Get container
       $container = $('#flowchart-demo')
@@ -98,5 +100,6 @@ angular.module('seaspongeApp')
       uuid = jsPlumbUtil.uuid()
       console.log('uuid: ', uuid)
       #
-      stencil = new stencils.BaseStencil(uuid, $container, instance)
+      # stencil = new stencils.BaseStencil(uuid, $container, instance)
+      stencil = new stencilClass(uuid, $container, instance)
       console.log(stencil)

@@ -1,21 +1,21 @@
 @stencils = {}
 class @stencils.BaseStencil
 
-  title: "Base"
+  @title: "Base"
   @type: "Base"
   @anchors: []
-  @icon: null
-  classNames: ["stencil", "window"]
+  @icon: "http://upload.wikimedia.org/wikipedia/de/2/2e/Mozilla_Firefox_Logo.png"
+  @classNames: ["stencil", "window"]
   $element: null
 
   constructor: (@uuid, @$container, @plumbInstance) ->
     # Create new element
     @$element = $element = $('<div/>', {
       id: @uuid
-    }).append($('<p/>').text(@title))
+    }).append($('<p/>').text("#{@constructor.title} <#{@constructor.type}>"))
     # Add class names
-    console.log(@classNames)
-    cls = @classNames.join(" ")
+    console.log(@constructor.classNames)
+    cls = @constructor.classNames.join(" ")
     $element.addClass(cls)
     # Add to container
     @$container.append($element);
@@ -97,7 +97,7 @@ class @stencils.BaseStencil
           0.5
           1.5
         ]
-        label: "Drag"
+        # label: "Drag"
         cssClass: "endpointSourceLabel"
       }
     ]]
@@ -122,7 +122,7 @@ class @stencils.BaseStencil
           0.5
           -0.5
         ]
-        label: "Drop"
+        # label: "Drop"
         cssClass: "endpointTargetLabel"
       }
     ]]

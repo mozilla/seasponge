@@ -53,12 +53,16 @@
             <div class="tab-pane active" id="home">
 
               <div class="row">
-                <div class="col-xs-6 col-md-3">
-                  <a href="" class="thumbnail" ng-click="addStencil()">
-                    <img src="http://upload.wikimedia.org/wikipedia/de/2/2e/Mozilla_Firefox_Logo.png" alt="...">
-                    Stencil 1
+
+                <div class="col-xs-6 col-md-3" ng-repeat="stencil in stencils | filter:{ title:'!Base' }">
+                  <a href="" class="thumbnail" ng-click="addStencil(stencil)">
+                    <img ng-src="{{stencil.icon}}" ng-alt="{{stencil.title}}">
+                    <span class="stencil-title">{{stencil.title}}</span>
+                    <span class="stencil-type label label-info">{{stencil.type}}</span>
                   </a>
                 </div>
+
+
                 <div class="col-xs-6 col-md-3">
                   <a href="" class="thumbnail" ng-click="addStencil()">
                     <img src="http://upload.wikimedia.org/wikipedia/de/2/2e/Mozilla_Firefox_Logo.png" alt="...">
@@ -77,6 +81,7 @@
                     Stencil 4
                   </a>
                 </div>
+
               </div>
 
             </div>
