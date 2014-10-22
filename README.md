@@ -16,6 +16,8 @@ This web-based application is being developed with three characteristics in mind
 - **Aesthetics**: We're tired of clunky, boring interfaces - we want to bring the pizazz into threat-modeling.
 - **Intuitive User-Experience**: We hate manuals, and we want you to be able to use this software without one.
 
+Please see http://mozilla.github.io/seasponge/dist/ for a live demo of the application.
+
 ## Authors
 
 - [Mathew Kallada](https://github.com/kallada)
