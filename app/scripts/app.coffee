@@ -17,6 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.bootstrap'
+    'ui.select'
   ])
   .config ($routeProvider) ->
     $routeProvider

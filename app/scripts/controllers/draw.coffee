@@ -12,6 +12,24 @@ angular.module('seaspongeApp')
 
     $scope.stencils = window.stencils
 
+    $scope.menu = {
+      stencilsOpen: false
+      propertiesOpen: false
+    }
+
+    $scope.selectedStencil = false
+
+    # Get container
+    $scope.container = $('#flowchart-demo')
+
+    $scope.stencilTypes = (() ->
+      arr = []
+      arr.push(stencil.type) for name, stencil of $scope.stencils \
+      when arr.indexOf(stencil.type) is -1 and stencil.type isnt "Base"
+      console.log('types', arr, $scope.stencils)
+      return arr
+    )()
+
     jsPlumb.ready ->
       $scope.instance = instance = jsPlumb.getInstance(
         # default drag options
@@ -87,19 +105,37 @@ angular.module('seaspongeApp')
           console.log "contextmenu: ", component, originalEvent
           return
 
+        $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
+            console.log "stencil-instance-click", arguments
+            $scope.$apply ->
+                # Remove selected class from all selected
+                $('.selected-stencil').removeClass('selected-stencil')
+                # Check if same or different stencil instance
+                if $scope.selectedStencil is inst
+                    # Same instance
+                    # Change selected in $scope
+                    $scope.selectedStencil = null
+                    $scope.menu.propertiesOpen = false
+                else
+                    # Add selected class
+                    inst.$element.addClass('selected-stencil')
+                    # Change selected in $scope
+                    $scope.selectedStencil = inst
+                    $scope.menu.stencilsOpen = false
+                    $scope.menu.propertiesOpen = true
+
+
         return
       jsPlumb.fire "jsPlumbDemoLoaded", instance
       return
 
     $scope.addStencil = (stencilClass) ->
       instance = $scope.instance
-      # Get container
-      $container = $('#flowchart-demo')
-      console.log($container)
+      console.log('container', $scope.container)
       # Generate UUID
       uuid = jsPlumbUtil.uuid()
       console.log('uuid: ', uuid)
       #
       # stencil = new stencils.BaseStencil(uuid, $container, instance)
-      stencil = new stencilClass(uuid, $container, instance)
+      stencil = new stencilClass(uuid, $scope.container, instance)
       console.log(stencil)

@@ -19,6 +19,9 @@ class @stencils.BaseStencil
     $element.addClass(cls)
     # Add to container
     @$container.append($element);
+    # Add events
+    @$element.click (event) =>
+        @$container.trigger "stencil-instance-click", [@, event]
     # suspend drawing and initialise.
     @plumbInstance.doWhileSuspended =>
       console.log(@plumbInstance)

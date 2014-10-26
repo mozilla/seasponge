@@ -15,7 +15,8 @@
     "angular-route": "1.2.16",
     "jsplumb": "~1.6.2",
     "jquery-ui": "~1.11.1",
-    "angular-bootstrap": "~0.11.2"
+    "angular-bootstrap": "~0.11.2",
+    "angular-ui-select": "~0.8.3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",
@@ -29,5 +30,9 @@
         "dist/js/jquery.jsPlumb-1.6.4.js"
       ]
     }
+  },
+  "resolutions": {
+    "angular": ">=1.2.18",
+    "angular-ui-select": "~0.8.3"
   }
 }
