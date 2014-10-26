@@ -13,7 +13,7 @@ angular.module('seaspongeApp')
     $scope.stencils = window.stencils
 
     $scope.menu = {
-      stencilsOpen: false
+      stencilsOpen: true
       propertiesOpen: false
     }
 
@@ -29,6 +29,30 @@ angular.module('seaspongeApp')
       console.log('types', arr, $scope.stencils)
       return arr
     )()
+
+    $scope.dropStencil = @dropStencil = (event, ui) ->
+        console.log('dropStencil', arguments)
+        el = ui.draggable
+        $el = $(el)
+        #s = $el.data('$ngModelController')
+        ctrl = $el.controller('ngModel')
+        if ctrl
+            stencil = ctrl.$modelValue
+            # console.log(el, $el, stencil)
+            i = $scope.addStencil(stencil)
+            b = $scope.container.offset()
+            offset = {
+                'left': event.pageX - b.left
+                'top': event.pageY - b.top
+            }
+            console.log(offset)
+            # i.$element.offset(offset)
+            $se = i.$element
+            console.log($se, $se.offset(), $se.position())
+            $se.css(offset)
+            console.log($se, $se.offset(), $se.position())
+            $scope.instance.repaintEverything()
+            console.log($se, $se.offset(), $se.position())
 
     jsPlumb.ready ->
       $scope.instance = instance = jsPlumb.getInstance(
@@ -116,6 +140,7 @@ angular.module('seaspongeApp')
                     # Change selected in $scope
                     $scope.selectedStencil = null
                     $scope.menu.propertiesOpen = false
+                    $scope.menu.stencilsOpen = true
                 else
                     # Add selected class
                     inst.$element.addClass('selected-stencil')
@@ -139,3 +164,4 @@ angular.module('seaspongeApp')
       # stencil = new stencils.BaseStencil(uuid, $container, instance)
       stencil = new stencilClass(uuid, $scope.container, instance)
       console.log(stencil)
+      return stencil

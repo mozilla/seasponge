@@ -18,6 +18,7 @@ angular
     'ngTouch',
     'ui.bootstrap'
     'ui.select'
+    'ngDragDrop'
   ])
   .config ($routeProvider) ->
     $routeProvider

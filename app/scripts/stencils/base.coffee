@@ -10,9 +10,11 @@ class @stencils.BaseStencil
 
   constructor: (@uuid, @$container, @plumbInstance) ->
     # Create new element
-    @$element = $element = $('<div/>', {
+    @$element = $element = $('<div />', {
       id: @uuid
     }).append($('<p/>').text("#{@constructor.title} <#{@constructor.type}>"))
+    # Data
+    @$element.data('stencil', @)
     # Add class names
     console.log(@constructor.classNames)
     cls = @constructor.classNames.join(" ")
