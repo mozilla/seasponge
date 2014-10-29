@@ -1,6 +1,3 @@
-# Bower
-bower_components/
-
 # Temporary files used for building
 .tmp/
 .sass-cache/
