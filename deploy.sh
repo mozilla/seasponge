@@ -64,6 +64,7 @@ if [[ -z $(git status -s) ]]; then
     echo "Committing changes for build from commit ${currentCommit}"
     if [[ -z "$GH_TOKEN" ]]; then
         # GH_TOKEN is not set
+        echo "Assuming you already have Git user name and email set"
     else
         # GH_TOKEN is set
         # Must be in Travis CI
