@@ -43,12 +43,13 @@ if [[ -z $(git status -s) ]]; then
     mv bower_components/ .tmp/bower_components/ || true
     
     # Checkout Deploy branch
-    git fetch origin gh-pages:gh-pages
+    echo "Checkout branch ${deployBranch}"
+    git fetch origin "$deployBranch":"$deployBranch"
     git checkout "$deployBranch"
-
+    
     # Clean deploy directory
     echo "Cleaning up deploy branch by removing old build files"
-    find . -maxdepth 1 | grep -v "\./README\.md\|\./LICENSE\|\.git\|\./${destDir}\|\./node_modules\|\./bower_components\|\.tmp\|\.$" | xargs rm -r
+    find . -maxdepth 1 | grep -v "\./README\.md\|\./LICENSE\|\.git\|\./${destDir}\|\./node_modules\|\.tmp\|\.$" | xargs rm -r
     
     # Move up dist/ to current directory for deploying
     echo "Move the build files in ${destDir}/ up to the current directory for deploying"
@@ -61,6 +62,14 @@ if [[ -z $(git status -s) ]]; then
     git add --all
 
     echo "Committing changes for build from commit ${currentCommit}"
+    if [[ -z "$GH_TOKEN" ]]; then
+        # GH_TOKEN is not set
+    else
+        # GH_TOKEN is set
+        # Must be in Travis CI
+        git config user.name "Travis-CI"
+        git config user.email "travis-ci@mozilla.com"
+    fi
     git commit -m "Deploy build from branch ${currentBranch} for commit ${currentCommit}"
 
     echo "Pushing changes"
