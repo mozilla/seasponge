@@ -43,6 +43,7 @@ if [[ -z $(git status -s) ]]; then
     mv bower_components/ .tmp/bower_components/ || true
     
     # Checkout Deploy branch
+    git fetch
     git checkout "$deployBranch"
 
     # Clean deploy directory
