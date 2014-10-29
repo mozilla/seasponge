@@ -37,7 +37,7 @@ if [[ -z $(git status -s) ]]; then
 
     # Clean deploy directory
     echo "Cleaning up deploy branch by removing old build files"
-    find . -maxdepth 1 | grep -v "\./README\.md\|\./LICENSE\|\.git\|\./${destDir}" | xargs rm -r
+    find . -maxdepth 1 | grep -v "\./README\.md\|\./LICENSE\|\.git\|\./${destDir}\|\.$" | xargs rm -r
 
     # Move up dist/ to current directory for deploying
     echo "Move the build files in ${destDir}/ up to the current directory for deploying"
