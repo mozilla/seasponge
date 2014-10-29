@@ -43,7 +43,7 @@ if [[ -z $(git status -s) ]]; then
     mv bower_components/ .tmp/bower_components/ || true
     
     # Checkout Deploy branch
-    git fetch
+    git fetch origin gh-pages:gh-pages
     git checkout "$deployBranch"
 
     # Clean deploy directory
