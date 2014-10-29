@@ -41,8 +41,8 @@ if [[ -z $(git status -s) ]]; then
 
     # Move up dist/ to current directory for deploying
     echo "Move the build files in ${destDir}/ up to the current directory for deploying"
-    mv ${destDir}/* .[^.]* .
-    
+    mv ${destDir}/* .[^.]* . || true
+
     echo "Remove directory ${destDir}/"
     rm -r "${destDir}/"
 
