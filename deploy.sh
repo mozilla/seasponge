@@ -56,8 +56,15 @@ if [[ -z $(git status -s) ]]; then
     git commit -m "Deploy build from branch ${currentBranch} for commit ${currentCommit}"
 
     echo "Pushing changes"
-    git push origin "$deployBranch"
-    
+    if [[ -z "$GH_TOKEN" ]]; then
+        # GH_TOKEN is not set
+        git push origin "$deployBranch"
+    else
+        # GH_TOKEN is set
+        # Must be in Travis CI
+        git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" "${deployBranch}":"${deployBranch}"
+    fi
+
     echo "Checking out original branch, ${currentBranch}"
     git checkout "${currentBranch}"
     
