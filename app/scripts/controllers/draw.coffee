@@ -10,8 +10,52 @@
 angular.module('seaspongeApp')
   .controller 'DrawCtrl', ($scope) ->
 
+    $scope.stencils = window.stencils
+
+    $scope.menu = {
+      stencilsOpen: true
+      propertiesOpen: false
+    }
+
+    $scope.selectedStencil = false
+
+    # Get container
+    $scope.container = $('#flowchart-demo')
+
+    $scope.stencilTypes = (() ->
+      arr = []
+      arr.push(stencil.type) for name, stencil of $scope.stencils \
+      when arr.indexOf(stencil.type) is -1 and stencil.type isnt "Base"
+      console.log('types', arr, $scope.stencils)
+      return arr
+    )()
+
+    $scope.dropStencil = @dropStencil = (event, ui) ->
+        console.log('dropStencil', arguments)
+        el = ui.draggable
+        $el = $(el)
+        #s = $el.data('$ngModelController')
+        ctrl = $el.controller('ngModel')
+        if ctrl
+            stencil = ctrl.$modelValue
+            # console.log(el, $el, stencil)
+            i = $scope.addStencil(stencil)
+            b = $scope.container.offset()
+            offset = {
+                'left': event.pageX - b.left
+                'top': event.pageY - b.top
+            }
+            console.log(offset)
+            # i.$element.offset(offset)
+            $se = i.$element
+            console.log($se, $se.offset(), $se.position())
+            $se.css(offset)
+            console.log($se, $se.offset(), $se.position())
+            $scope.instance.repaintEverything()
+            console.log($se, $se.offset(), $se.position())
+
     jsPlumb.ready ->
-      instance = jsPlumb.getInstance(
+      $scope.instance = instance = jsPlumb.getInstance(
         # default drag options
         DragOptions:
           cursor: "pointer"
@@ -37,86 +81,6 @@ angular.module('seaspongeApp')
         Container: "content-right"
       )
 
-      # this is the paint style for the connecting lines..
-      connectorPaintStyle =
-        lineWidth: 4
-        strokeStyle: "#61B7CF"
-        joinstyle: "round"
-        outlineColor: "white"
-        outlineWidth: 2
-
-      connectorHoverStyle =
-        # .. and this is the hover style.
-        lineWidth: 4
-        strokeStyle: "#216477"
-        outlineWidth: 2
-        outlineColor: "white"
-
-      endpointHoverStyle =
-        fillStyle: "#216477"
-        strokeStyle: "#216477"
-
-      sourceEndpoint =
-        # the definition of source endpoints (the small blue ones)
-        endpoint: "Dot"
-        paintStyle:
-          strokeStyle: "#7AB02C"
-          fillStyle: "transparent"
-          radius: 7
-          lineWidth: 3
-        isSource: true
-        connector: [
-          "Flowchart"
-          {
-            stub: [
-              40
-              60
-            ]
-            gap: 10
-            cornerRadius: 5
-            alwaysRespectStubs: true
-          }
-        ]
-        connectorStyle: connectorPaintStyle
-        hoverPaintStyle: endpointHoverStyle
-        connectorHoverStyle: connectorHoverStyle
-        dragOptions: {}
-        overlays: [[
-          "Label"
-          {
-            location: [
-              0.5
-              1.5
-            ]
-            label: "Drag"
-            cssClass: "endpointSourceLabel"
-          }
-        ]]
-
-      targetEndpoint =
-        # the definition of target endpoints (will appear when the user drags a connection)
-        endpoint: "Dot"
-        paintStyle:
-          fillStyle: "#7AB02C"
-          radius: 11
-        hoverPaintStyle: endpointHoverStyle
-        maxConnections: -1
-        dropOptions:
-          hoverClass: "hover"
-          activeClass: "active"
-        isTarget: true
-        overlays: [[
-          "Label"
-          {
-            location: [
-              0.5
-              -0.5
-            ]
-            label: "Drop"
-            cssClass: "endpointTargetLabel"
-          }
-        ]]
-
       init = (connection) ->
         connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
         connection.bind "editCompleted", (o) ->
@@ -124,61 +88,14 @@ angular.module('seaspongeApp')
           return
         return
 
-      _addEndpoints = (toId, sourceAnchors, targetAnchors) ->
-        i = 0
-        while i < sourceAnchors.length
-          sourceUUID = toId + sourceAnchors[i]
-          instance.addEndpoint "flowchart" + toId, sourceEndpoint,
-            anchor: sourceAnchors[i]
-            uuid: sourceUUID
-          i++
-        j = 0
-        while j < targetAnchors.length
-          targetUUID = toId + targetAnchors[j]
-          instance.addEndpoint "flowchart" + toId, targetEndpoint,
-            anchor: targetAnchors[j]
-            uuid: targetUUID
-          j++
-        return
-
       # suspend drawing and initialise.
       instance.doWhileSuspended ->
-        _addEndpoints "Window4", [
-          "TopCenter"
-          "BottomCenter"
-        ], [
-          "LeftMiddle"
-          "RightMiddle"
-        ]
-        _addEndpoints "Window2", [
-          "LeftMiddle"
-          "BottomCenter"
-        ], [
-          "TopCenter"
-          "RightMiddle"
-        ]
-        _addEndpoints "Window3", [
-          "RightMiddle"
-          "BottomCenter"
-        ], [
-          "LeftMiddle"
-          "TopCenter"
-        ]
-        _addEndpoints "Window1", [
-          "LeftMiddle"
-          "RightMiddle"
-        ], [
-          "TopCenter"
-          "BottomCenter"
-        ]
-
         # listen for new connections; initialise them the same way we initialise the connections at startup.
         instance.bind "connection", (connInfo, originalEvent) ->
           init connInfo.connection
           return
-
         # make all the window divs draggable
-        instance.draggable jsPlumb.getSelector(".flowchart-demo .window"),
+        instance.draggable jsPlumb.getSelector(".flowchart-demo .stencil"),
           grid: [
             20
             20
@@ -187,49 +104,6 @@ angular.module('seaspongeApp')
         # THIS DEMO ONLY USES getSelector FOR CONVENIENCE. Use your library's appropriate selector
         # method, or document.querySelectorAll:
         #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
-
-        # connect a few up
-        instance.connect
-          uuids: [
-            "Window2BottomCenter"
-            "Window3TopCenter"
-          ]
-          editable: true
-
-        instance.connect
-          uuids: [
-            "Window2LeftMiddle"
-            "Window4LeftMiddle"
-          ]
-          editable: true
-
-        instance.connect
-          uuids: [
-            "Window4TopCenter"
-            "Window4RightMiddle"
-          ]
-          editable: true
-
-        instance.connect
-          uuids: [
-            "Window3RightMiddle"
-            "Window2RightMiddle"
-          ]
-          editable: true
-
-        instance.connect
-          uuids: [
-            "Window4BottomCenter"
-            "Window1TopCenter"
-          ]
-          editable: true
-
-        instance.connect
-          uuids: [
-            "Window3BottomCenter"
-            "Window1BottomCenter"
-          ]
-          editable: true
 
         #
         #
@@ -250,6 +124,44 @@ angular.module('seaspongeApp')
         instance.bind "connectionMoved", (params) ->
           console.log "connection " + params.connection.id + " was moved"
           return
+
+        instance.bind "contextmenu", (component, originalEvent) ->
+          console.log "contextmenu: ", component, originalEvent
+          return
+
+        $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
+            console.log "stencil-instance-click", arguments
+            $scope.$apply ->
+                # Remove selected class from all selected
+                $('.selected-stencil').removeClass('selected-stencil')
+                # Check if same or different stencil instance
+                if $scope.selectedStencil is inst
+                    # Same instance
+                    # Change selected in $scope
+                    $scope.selectedStencil = null
+                    $scope.menu.propertiesOpen = false
+                    $scope.menu.stencilsOpen = true
+                else
+                    # Add selected class
+                    inst.$element.addClass('selected-stencil')
+                    # Change selected in $scope
+                    $scope.selectedStencil = inst
+                    $scope.menu.stencilsOpen = false
+                    $scope.menu.propertiesOpen = true
+
+
         return
       jsPlumb.fire "jsPlumbDemoLoaded", instance
       return
+
+    $scope.addStencil = (stencilClass) ->
+      instance = $scope.instance
+      console.log('container', $scope.container)
+      # Generate UUID
+      uuid = jsPlumbUtil.uuid()
+      console.log('uuid: ', uuid)
+      #
+      # stencil = new stencils.BaseStencil(uuid, $container, instance)
+      stencil = new stencilClass(uuid, $scope.container, instance)
+      console.log(stencil)
+      return stencil

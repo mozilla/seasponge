@@ -1,14 +1,22 @@
 // Variables
 $sidebar-left-width: 350px;
 $nav-bar-top-height: 40px;
+$sidebar-left-height: 200px;
 
 //
 .content-left {
-  position: absolute;
+  //position: absolute;
   top: $nav-bar-top-height;
   bottom: 0px;
   left: 0px;
   width: $sidebar-left-width;
+  overflow-y: scroll;
+
+  .all-stencils {
+      max-height: $sidebar-left-height;
+      overflow-y: scroll;
+  }
+
 }
 
 .content-right {
