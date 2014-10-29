@@ -1,0 +1,52 @@
+#/bin/bash
+
+# Variables
+title="SeaSponge"
+currentCommit=$(git rev-parse --verify HEAD)
+currentBranch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+deployBranch="gh-pages"
+destDir="dist"
+
+echo "=========="
+echo "Preparing to Deploy $title!"
+echo ""
+
+# Check if working tree is clean
+echo "Checking if you have a clean working tree on this branch, ${currentBranch}"
+
+if [[ -z $(git status -s) ]]; then
+    echo "Clean, let's continue!";
+
+    # Build to dist/
+    echo "Going to building the app into directory ${destDir}/"
+    grunt build
+
+    # Checkout Deploy branch
+    echo "Checking out branch, ${deployBranch}"
+    git checkout "$deployBranch"
+
+    # Clean deploy directory
+    echo "Cleaning up deploy branch by removing old build files"
+    find . -maxdepth 1 | grep -v "\./README\.md\|\./LICENSE\|\.git\|\./${destDir}" | xargs rm -r
+
+    # Move up dist/ to current directory for deploying
+    echo "Move the build files in ${destDir}/ up to the current directory for deploying"
+    mv ${destDir}/* .[^.]* .
+    
+    echo "Adding changes to Git staging area"
+    git add --all
+
+    echo "Committing changes for build from commit ${currentCommit}"
+    git commit -m "Deploy build for commit ${currentCommit}"
+
+    echo "Pushing changes"
+    git push origin "$deployBranch"
+
+    echo "Done!"
+    echo "";
+    exit 0;
+else
+    echo "Not clean! Please commit all uncommitted changes. Thank you.";
+    echo "";
+    exit 1;
+fi
