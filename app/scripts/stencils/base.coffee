@@ -4,7 +4,7 @@ class @stencils.BaseStencil
   @title: "Base"
   @type: "Base"
   @anchors: []
-  @icon: "http://upload.wikimedia.org/wikipedia/de/2/2e/Mozilla_Firefox_Logo.png"
+  @icon: "http://png-5.findicons.com/files/icons/1070/software/128/mozilla_firefox.png"
   @classNames: ["stencil", "window"]
   $element: null
 
