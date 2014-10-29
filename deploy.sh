@@ -4,7 +4,14 @@ set -e
 # Variables
 title="SeaSponge"
 currentCommit=$(git rev-parse --verify HEAD)
-currentBranch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+if [[ -z "$TRAVIS_BRANCH" ]]; then
+    # TRAVIS_BRANCH is not set
+    currentBranch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)
+else
+    # TRAVIS_BRANCH is set
+    # Must be Travis CI
+    currentBranch="$TRAVIS_BRANCH"
+fi
 stableBranch="master"
 deployBranch="gh-pages"
 destDir="dist"
@@ -77,6 +84,7 @@ if [[ -z $(git status -s) ]]; then
     exit 0;
 else
     echo "Not clean! Please commit all uncommitted changes. Thank you.";
+    git status
     echo "";
     exit 1;
 fi
