@@ -11,7 +11,8 @@ $sidebar-left-height: 200px;
   left: 0px;
   width: $sidebar-left-width;
   overflow-y: scroll;
-
+  margin-left: 15px;
+  
   .all-stencils {
       max-height: $sidebar-left-height;
       overflow-y: scroll;
