@@ -43,7 +43,11 @@ if [[ -z $(git status -s) ]]; then
     mv bower_components/ .tmp/bower_components/ || true
     
     # Checkout Deploy branch
-    echo "Checkout branch ${deployBranch}"
+    echo "Preparing to checkout branch ${deployBranch}"
+    # Clear any uncommitted changes
+    git stash save --keep-index
+    git stash drop
+    # Fetch the deploy branch before checking out
     git fetch origin "$deployBranch":"$deployBranch"
     git checkout "$deployBranch"
     
@@ -95,6 +99,7 @@ if [[ -z $(git status -s) ]]; then
     exit 0;
 else
     echo "Not clean! Please commit all uncommitted changes. Thank you.";
+    echo ""
     git status
     echo "";
     exit 1;
