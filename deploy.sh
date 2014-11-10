@@ -44,6 +44,15 @@ if [[ -z $(git status -s) ]]; then
     
     # Checkout Deploy branch
     echo "Preparing to checkout branch ${deployBranch}"
+    if [[ -z "$GH_TOKEN" ]]; then
+        # GH_TOKEN is not set
+        echo "Assuming you already have Git user name and email set"
+    else
+        # GH_TOKEN is set
+        # Must be in Travis CI
+        git config user.name "Travis-CI"
+        git config user.email "travis-ci@mozilla.com"
+    fi
     # Clear any uncommitted changes
     git stash save --keep-index
     git stash drop
@@ -66,15 +75,6 @@ if [[ -z $(git status -s) ]]; then
     git add --all
 
     echo "Committing changes for build from commit ${currentCommit}"
-    if [[ -z "$GH_TOKEN" ]]; then
-        # GH_TOKEN is not set
-        echo "Assuming you already have Git user name and email set"
-    else
-        # GH_TOKEN is set
-        # Must be in Travis CI
-        git config user.name "Travis-CI"
-        git config user.email "travis-ci@mozilla.com"
-    fi
     git commit -m "Deploy build from branch ${currentBranch} for commit ${currentCommit}"
 
     echo "Pushing changes"
@@ -104,4 +104,3 @@ else
     echo "";
     exit 1;
 fi
-
