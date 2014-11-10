@@ -12,3 +12,7 @@ env:
   - secure: oKXze26rmtYixf27LtPZ9VartkpSf7IpYW9ciIVMTgAj/WZiwSxauMjj366GGovI9kWpPDKVymwSpkcyXQy+qzYYCp1TZuw5bVDy0SR0VSVUjDuQ40lXRuVpbmFNph8J/aBYsNm7/DLztdjIkPxNk5S8YBBE396h1RDLK9mLyRo=
 after_success:
   - './deploy.sh'
+cache:
+  directories:
+  - node_modules
+  - bower_components
