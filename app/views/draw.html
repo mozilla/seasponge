@@ -22,10 +22,9 @@
 
     <div class="content-left">
 
-
       <accordion close-others="false">
 
-        <accordion-group is-open="menu.stencilsOpen">
+        <accordion-group class="stencils-container" is-open="menu.stencilsOpen">
 
           <accordion-heading>
             Stencils <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.stencilsOpen, 'glyphicon-chevron-right': !status.stencilsOpen}"></i>
@@ -39,8 +38,8 @@
             data-jqyoui-options="{helper: 'clone', animate: true, placeholder: 'keep'}">
               <a href="" class="thumbnail" ng-click="addStencil(stencil)">
                 <img ng-src="{{stencil.icon}}" ng-alt="{{stencil.title}}">
-                <span class="stencil-title">{{stencil.title}}</span>
-                <span class="stencil-type label label-info">{{stencil.type}}</span>
+                <span class="stencil-name">{{stencil.title}}</span>
+                <span class="stencil-type label label-info">{{stencil.category}}</span>
               </a>
             </div>
 
@@ -53,7 +52,7 @@
           <accordion-heading>
             Properties
             <small>- {{selectedStencil.constructor.title}}
-            <span class="label label-info">{{selectedStencil.constructor.type}}</span>
+            <span class="label label-info">{{selectedStencil.constructor.category}}</span>
             </small>
             <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.propertiesOpen, 'glyphicon-chevron-right': !menu.propertiesOpen}"></i>
             <!-- Select an element to view its properties -->

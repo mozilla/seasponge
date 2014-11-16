@@ -1,18 +1,35 @@
 @stencils = {}
 class @stencils.BaseStencil
 
+  # Class variables
   @title: "Base"
-  @type: "Base"
+  @category: "Base"
   @anchors: []
   @icon: "http://png-5.findicons.com/files/icons/1070/software/128/mozilla_firefox.png"
   @classNames: ["stencil", "window"]
+  @shape: "rectange" # Default rectange
+
+  # Instance variables
   $element: null
+  tags: []
+  codeType: "managed"
+  runningAs: "Kernel"
+  acceptsInput: "Kernel, System, or Local Admin"
+  authenticationScheme: {
+    uses: false
+    description: null
+  }
+  authorizationScheme: {
+    uses: false
+    description: null
+  }
+  communicationProtocol: null
 
   constructor: (@uuid, @$container, @plumbInstance) ->
     # Create new element
     @$element = $element = $('<div />', {
       id: @uuid
-    }).append($('<p/>').text("#{@constructor.title} <#{@constructor.type}>"))
+    }).append($('<p/>').text("#{@constructor.title} <#{@constructor.category}>"))
     # Data
     @$element.data('stencil', @)
     # Add class names
@@ -23,6 +40,7 @@ class @stencils.BaseStencil
     @$container.append($element);
     # Add events
     @$element.click (event) =>
+        console.log(JSON.stringify(@serialize(), undefined, 4))
         @$container.trigger "stencil-instance-click", [@, event]
     # suspend drawing and initialise.
     @plumbInstance.doWhileSuspended =>
@@ -69,6 +87,29 @@ class @stencils.BaseStencil
         uuid: targetUUID
       j++
     return
+
+  getPosition: ->
+    return @$element.position()
+
+  serialize: ->
+    serialized = {
+      id: @uuid
+      name: @constructor.title
+      category: @constructor.category
+      class: @constructor.name
+      location: @getPosition()
+      scale: 1.0
+      attributes: {
+        shape: @constructor.shape
+        codeType: @codeType
+        runningAs: @runningAs
+        acceptsInput: @acceptsInput
+        authenticationScheme: @authenticationScheme
+        authorizationScheme: @authorizationScheme
+        communicationProtocol: @communicationProtocol
+      }
+    }
+    return serialized
 
   sourceEndpoint:
     # the definition of source endpoints (the small blue ones)
