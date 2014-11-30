@@ -54,8 +54,8 @@ if [[ -z $(git status -s) ]]; then
         git config user.email "travis-ci@mozilla.com"
     fi
     # Clear any uncommitted changes
-    git stash save --keep-index
-    git stash drop
+    git stash save --keep-index || true
+    git stash drop || true
     # Fetch the deploy branch before checking out
     git fetch origin "$deployBranch":"$deployBranch"
     git checkout "$deployBranch"
