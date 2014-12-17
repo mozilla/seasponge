@@ -65,118 +65,118 @@
         </accordion-group>
 
         <!-- Selected Element Properties -->
-        <div ng-if="selectedStencil">
+        <accordion-group is-open="menu.propertiesOpen">
 
-            <accordion-group is-open="menu.propertiesOpen" is-disabled="!selectedStencil">
+          <accordion-heading>
+            Properties
+            <small>- {{selectedStencil.constructor.title}}
+            <span class="label label-info">{{selectedStencil.constructor.category}}</span>
+            </small>
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.propertiesOpen, 'glyphicon-chevron-right': !menu.propertiesOpen}"></i>
+          </accordion-heading>
 
-              <accordion-heading>
-                Properties
-                <small>- {{selectedStencil.constructor.title}}
-                <span class="label label-info">{{selectedStencil.constructor.category}}</span>
-                </small>
-                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.propertiesOpen, 'glyphicon-chevron-right': !menu.propertiesOpen}"></i>
-                <!-- Select an element to view its properties -->
-              </accordion-heading>
+          <form class="form" role="form" ng-hide="!selectedStencil">
 
-              <form class="form" role="form">
+            <div class="form-group">
+              <label for="properties-name" class="">Name</label>
+              <br/>
+              {{selectedStencil.constructor.title}}
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-name" class="">Name</label>
-                  <br/>
-                  {{selectedStencil.constructor.title}}
-                </div>
+            <div class="form-group">
+              <label for="properties-category" class="">Category</label>
+              <br/>
+              {{selectedStencil.constructor.category}}
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-category" class="">Category</label>
-                  <br/>
-                  {{selectedStencil.constructor.category}}
-                </div>
+            <div class="form-group">
+              <label for="properties-tags" class="">Tags</label>
+              <input type="text"
+              class="form-control" id="properties-tags" placeholder="Comma separated tags" 
+              ng-model="selectedStencil.tags">
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-tags" class="">Tags</label>
-                  <input type="text"
-                  class="form-control" id="properties-tags" placeholder="Comma separated tags" 
-                  ng-model="selectedStencil.tags">
-                </div>
+            <div class="form-group">
+              <label for="properties-codeType" class="">Code Type</label>
+              <select class="form-control" id="properties-codeType" 
+              ng-options="codeType for codeType in codeTypeOptions"
+              ng-model="selectedStencil.codeType">
+              </select>
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-codeType" class="">Code Type</label>
-                  <select class="form-control" id="properties-codeType" 
-                  ng-options="codeType for codeType in codeTypeOptions"
-                  ng-model="selectedStencil.codeType">
-                  </select>
-                </div>
+            <div class="form-group">
+              <label for="properties-runningAs" class="">Running As</label>
+              <select class="form-control" id="properties-runningAs" 
+              ng-model="selectedStencil.runningAs"
+              ng-options="runningAs for runningAs in runningAsOptions">
+              </select>
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-runningAs" class="">Running As</label>
-                  <select class="form-control" id="properties-runningAs" 
-                  ng-model="selectedStencil.runningAs"
-                  ng-options="runningAs for runningAs in runningAsOptions">
-                  </select>
-                </div>
+            <div class="form-group">
+              <label for="properties-acceptsInput" class="">Accepts Input From</label>
+              <select class="form-control" id="properties-acceptsInput" 
+              ng-model="selectedStencil.acceptsInput"
+              ng-options="acceptsInput for acceptsInput in acceptsInputOptions">
+              </select>
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-acceptsInput" class="">Accepts Input From</label>
-                  <select class="form-control" id="properties-acceptsInput" 
-                  ng-model="selectedStencil.acceptsInput"
-                  ng-options="acceptsInput for acceptsInput in acceptsInputOptions">
-                  </select>
-                </div>
+            <div class="form-group">
+              <label for="properties-authenticationScheme-uses" class="">Has Authentication Scheme</label>
+              <input type="checkbox" 
+              class="form-control" id="properties-authenticationScheme-uses" 
+              ng-model="selectedStencil.authenticationScheme.uses">
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-authenticationScheme-uses" class="">Has Authentication Scheme</label>
-                  <input type="checkbox" 
-                  class="form-control" id="properties-authenticationScheme-uses" 
-                  ng-model="selectedStencil.authenticationScheme.uses">
-                </div>
+            <div class="form-group" ng-if="selectedStencil.authenticationScheme.uses">
+              <label for="properties-authenticationScheme-description" class="">Authentication Scheme Description</label>
+              <input type="text" 
+              class="form-control" id="properties-authenticationScheme-description" placeholder="Value" 
+              ng-model="selectedStencil.authenticationScheme.description">
+            </div>
 
-                <div class="form-group" ng-if="selectedStencil.authenticationScheme.uses">
-                  <label for="properties-authenticationScheme-description" class="">Authentication Scheme Description</label>
-                  <input type="text" 
-                  class="form-control" id="properties-authenticationScheme-description" placeholder="Value" 
-                  ng-model="selectedStencil.authenticationScheme.description">
-                </div>
+            <div class="form-group">
+              <label for="properties-communicationProtocol-uses" class="">Has Communication Protocol</label>
+              <input type="checkbox" 
+              class="form-control" id="properties-communicationProtocol-uses" 
+              ng-model="selectedStencil.communicationProtocol.uses">
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-communicationProtocol-uses" class="">Has Communication Protocol</label>
-                  <input type="checkbox" 
-                  class="form-control" id="properties-communicationProtocol-uses" 
-                  ng-model="selectedStencil.communicationProtocol.uses">
-                </div>
+            <div class="form-group" ng-if="selectedStencil.communicationProtocol.uses">
+              <label for="properties-communicationProtocol-description" class="">Communication Protocol Description</label>
+              <input type="text" 
+              class="form-control" id="properties-communicationProtocol-description" placeholder="Value" 
+              ng-model="selectedStencil.communicationProtocol.description">
+            </div>
 
-                <div class="form-group" ng-if="selectedStencil.communicationProtocol.uses">
-                  <label for="properties-communicationProtocol-description" class="">Communication Protocol Description</label>
-                  <input type="text" 
-                  class="form-control" id="properties-communicationProtocol-description" placeholder="Value" 
-                  ng-model="selectedStencil.communicationProtocol.description">
-                </div>
+            <div class="form-group">
+              <label for="properties-authorizationScheme-uses" class="">Has Authorization Scheme</label>
+              <input type="checkbox" 
+              class="form-control" id="properties-authorizationScheme-uses" 
+              ng-model="selectedStencil.authorizationScheme.uses">
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-authorizationScheme-uses" class="">Has Authorization Scheme</label>
-                  <input type="checkbox" 
-                  class="form-control" id="properties-authorizationScheme-uses" 
-                  ng-model="selectedStencil.authorizationScheme.uses">
-                </div>
+            <div class="form-group" ng-if="selectedStencil.authorizationScheme.uses">
+              <label for="properties-authorizationScheme-description" class="">Authorization Scheme Description</label>
+              <input type="text"
+              class="form-control" id="properties-authorizationScheme-description" placeholder="Value" 
+              ng-model="selectedStencil.authorizationScheme.description">
+            </div>
 
-                <div class="form-group" ng-if="selectedStencil.authorizationScheme.uses">
-                  <label for="properties-authorizationScheme-description" class="">Authorization Scheme Description</label>
-                  <input type="text"
-                  class="form-control" id="properties-authorizationScheme-description" placeholder="Value" 
-                  ng-model="selectedStencil.authorizationScheme.description">
-                </div>
+            <div class="form-group">
+              <label for="properties-notes" class="">Notes</label>
+              <textarea 
+              class="form-control" id="properties-notes" placeholder="Notes"></textarea 
+              ng-model="selectedStencil.notes">
+            </div>
 
-                <div class="form-group">
-                  <label for="properties-notes" class="">Notes</label>
-                  <textarea 
-                  class="form-control" id="properties-notes" placeholder="Notes"></textarea 
-                  ng-model="selectedStencil.notes">
-                </div>
+          </form>
 
-              </form>
+          <div class="lead" ng-hide="selectedStencil">
+            Select an element to view its properties
+          </div>
 
-            </accordion-group>
+        </accordion-group>
 
-        </div>
       </accordion>
 
     </div>
