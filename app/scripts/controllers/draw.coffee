@@ -135,11 +135,10 @@ angular.module('seaspongeApp')
 
     $scope.addStencil = (stencilClass) ->
         if $scope.selectedDiagram?
-            element = $scope.selectedDiagram.addElement(
-                $scope.instance, 
-                $scope.container, 
-                stencilClass
-                )
+            # Create element
+            element = $scope.selectedDiagram.addElement(stencilClass)
+            # Render element
+            element.render($scope.instance, $scope.container)
             return element
 
     $scope.instance = instance = jsPlumb.getInstance(
@@ -183,8 +182,10 @@ angular.module('seaspongeApp')
             # Select new diagram
             diagram.selected = true
             $scope.selectedDiagram = diagram
-            # console.log($scope.model.serialize())
-   
+            # console.log(diagram.serialize())
+            # De-select Stencil
+            $scope.selectedStencil = false
+
     $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
         # console.log "stencil-instance-click", arguments
         $scope.$apply ->
@@ -210,6 +211,9 @@ angular.module('seaspongeApp')
         diagram = model.addDiagram()
         console.log('Load new diagram', diagram)
         $scope.loadDiagram(diagram)
-
+    else
+        diagram = model.diagrams[0]
+        $scope.loadDiagram(diagram)
+            
     ]
 

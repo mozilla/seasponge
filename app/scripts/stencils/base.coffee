@@ -12,6 +12,7 @@ angular.module('seaspongeApp')
       @shape: "rectange" # Default rectange
 
       # Instance variables
+      uuid: null
       $element: null
       location: null
       tags: null
@@ -23,8 +24,9 @@ angular.module('seaspongeApp')
       communicationProtocol: null
       notes: "There is no available notes."
 
-      constructor: (@uuid, @$container, @plumbInstance) ->
+      constructor: () ->
         # Instance variables
+        @uuid = jsPlumbUtil.uuid()
         @tags = []
         @location = {
             left: 0
@@ -55,20 +57,27 @@ angular.module('seaspongeApp')
         shp = @constructor.shape
         $element.addClass(cls)
         $element.addClass(shp)
-        # Add to container
-        @$container.append($element);
+
+      render: (instance, $container) =>
+        # Data
+        @$element.data('stencil', @)
+        # Check if $element has parent
+        if @$element.parent().length is 0
+            # Add to container
+            $container.append(@$element);
+        # Clear previous events
+        @$element.unbind('click')
+        @$element.unbind('mouseup')
         # Add events
-        @$element.click (event) =>
-            # console.log(JSON.stringify(@serialize(), undefined, 4))
-            @$container.trigger "stencil-instance-click", [@, event]
-        # Add Drag event
         @$element.mouseup (event) =>
             @getPosition()
+        @$element.click (event) =>
+            # console.log(JSON.stringify(@serialize(), undefined, 4))
+            $container.trigger "stencil-instance-click", [@, event]
         # suspend drawing and initialise.
-        @plumbInstance.doWhileSuspended =>
+        instance.doWhileSuspended =>
           # console.log(@plumbInstance)
-
-          @_addEndpoints @plumbInstance, @uuid, [
+          @_addEndpoints instance, @uuid, [
             "TopCenter"
             "BottomCenter"
           ], [
@@ -78,18 +87,16 @@ angular.module('seaspongeApp')
           # # make all the window divs draggable
           $els = jsPlumb.getSelector(".diagram-contents .stencil")
           # console.log($els)
-          @plumbInstance.draggable $els,
+          instance.draggable $els,
             grid: [
               20
               20
             ]
-
           # THIS DEMO ONLY USES getSelector FOR CONVENIENCE. Use your library's appropriate selector
           # method, or document.querySelectorAll:
           #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
-
           #
-          @plumbInstance.repaint()
+          instance.repaint()
 
       _addEndpoints: (instance, toId, sourceAnchors, targetAnchors) ->
         # console.log('add endpoints', arguments)
@@ -133,6 +140,7 @@ angular.module('seaspongeApp')
           location: @getPosition()
           tags: @tags
           scale: 1.0
+          notes: @notes
           attributes: {
             shape: @constructor.shape
             codeType: @codeType
@@ -146,8 +154,22 @@ angular.module('seaspongeApp')
         return serialized
 
       deserialize: (serialized) =>
-        console.log('serialized element', serialized)
+        # console.log('serialized element', serialized)
+        attr = serialized.attributes
         
+        # Local
+        @uuid = serialized.id
+        @tags = serialized.tags
+        @codeType = attr.codeType
+        @runningAs = attr.runningAs
+        @acceptsInput = attr.acceptsInput
+        @authenticationScheme = attr.authenticationScheme
+        @authorizationScheme = attr.authorizationScheme
+        @communicationProtocol = attr.communicationProtocol
+        @notes =  serialized.notes
+
+        # Update
+        @$element.attr('id', @uuid)
         @setPosition(serialized.location)
 
         return @

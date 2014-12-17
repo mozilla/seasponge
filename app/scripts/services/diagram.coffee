@@ -8,12 +8,12 @@
  # Factory in the seaspongeApp.
 ###
 angular.module('seaspongeApp')
-  .factory 'Diagram', [ 'BaseStencil', (BaseStencil) ->
+  .factory 'Diagram', [ 'Stencils', (Stencils) ->
 
     return class Diagram
 
         # Instance Variables
-        id: jsPlumbUtil.uuid()
+        id: null
         title: "Untitled Diagram"
         elements: null
         flows: null
@@ -22,22 +22,22 @@ angular.module('seaspongeApp')
         # Class Methods
         @clear: (instance, container) ->
             # Connections
-            conns = instance.getConnections();
-            for con in conns
-               instance.detach(conn);
+            cons = instance.getConnections()
+            instance.detach(con) for con in cons
             # Endpoints
-            instance.removeAllEndpoints();
+            instance.removeAllEndpoints()
             # Everything
-            instance.reset();
+            instance.reset()
             # Elements
-            $(container).empty();
+            $(container).empty()
 
         # Instance Methods
         constructor: () ->
+            @id = jsPlumbUtil.uuid()
             @elements = []
             @flows = []
             @boundaries = []
-            
+
         serialize: =>
             serialized = {
                 id: @id
@@ -48,31 +48,42 @@ angular.module('seaspongeApp')
             }
             return serialized
 
+        @stencilClassForElement: (name) ->
+            stencilClass = (stencilClass for stencilClass in Stencils when stencilClass.name is name)
+            # console.log('stencilClass', stencilClass)
+            return stencilClass[0]
+
         deserialize: (serialized) =>
+            # Local
+            @id = serialized.id
+            @title = serialized.title
+            # Nested
+            @elements = (@addElement(
+                @constructor.stencilClassForElement(element.class))\
+                .deserialize(element) \
+                for element in serialized.elements)
             return @
 
-        addElement: (instance, container, stencilClass) ->
-            # console.log('addElement', arguments)
-            # console.log('container', $scope.container)
-            # Generate UUID
-            uuid = jsPlumbUtil.uuid()
-            # console.log('uuid: ', uuid)
+        addElement: (stencilClass) ->
             # stencil = new stencils.BaseStencil(uuid, $container, instance)
-            stencil = new stencilClass(uuid, container, instance)
+            stencil = new stencilClass()
             # console.log(stencil)
             @elements.push(stencil)
             return stencil
 
         save: (instance, container) ->
+            # console.log('save', instance, container)
+            # console.log('save before', @serialize())
             # Elements
             $elements = $('.stencil', container)
-            elements = $.map($elements, (el) ->
-                $element = $(el)
-                return $element.data('stencil')
-            )
+            # console.log('$elements', $elements)
+            elements = ($(element).data('stencil') for element in $elements)
+            # console.log(elements)
             @elements = elements
+            # console.log('save after', @serialize())
 
             # TODO: Flows
+            @flows = instance.getConnections()
 
             # TODO: Boundaries
 
@@ -97,16 +108,6 @@ angular.module('seaspongeApp')
                 instance.bind "connection", (connInfo, originalEvent) ->
                   init connInfo.connection
                   return
-                # make all the window divs draggable
-                instance.draggable jsPlumb.getSelector(".diagram-contents .stencil"),
-                  grid: [
-                    20
-                    20
-                  ]
-
-                # THIS DEMO ONLY USES getSelector FOR CONVENIENCE. Use your library's appropriate selector
-                # method, or document.querySelectorAll:
-                #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
 
                 #
                 #
@@ -133,15 +134,26 @@ angular.module('seaspongeApp')
                   return
 
                 # Render Elements
-                @addElement(instance, container, element.constructor)\
-                .deserialize(element.serialize()) \
-                for element in @elements
+                element.render(instance, container) for element in @elements
 
                 # TODO: Render Flows
 
                 # TODO: Render Boundaries
 
+                # make all the window divs draggable
+                instance.draggable jsPlumb.getSelector(".diagram-contents .stencil"),
+                  grid: [
+                    20
+                    20
+                  ]
+
+                # THIS DEMO ONLY USES getSelector FOR CONVENIENCE. Use your library's appropriate selector
+                # method, or document.querySelectorAll:
+                #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
+                #
+
                 # Repaint
+                instance.repaint()
                 instance.repaintEverything()
 
 

@@ -17,14 +17,17 @@ angular.module('seaspongeApp')
             # Instance Variables
             title: "Untitled Model"
             version: "0.0.0"
-            authors: []
-            threats: []
+            authors: ""
+            threats: ""
             notes: ""
-            diagrams: []
+            diagrams: null
 
             # Class Methods
 
             # Instance Methods
+            constructor: () ->
+                @diagrams = []
+
             addDiagram: ->
                 # Create new Diagram and push to array
                 diagram = new Diagram()
@@ -47,6 +50,16 @@ angular.module('seaspongeApp')
                 return serialized
 
             deserialize: (serialized) =>
+                # Local
+                @title = serialized.title
+                @version = serialized.version
+                @authors = serialized.authors
+                @threats = serialized.threats
+                @notes = serialized.notes
+
+                # Nested
+                @diagrams = (@addDiagram().deserialize(diagram) for diagram in serialized.diagrams)
+
                 return @
 
         return new Model() # Return Model instance

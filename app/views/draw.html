@@ -5,9 +5,15 @@
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
         <button type="button" class="btn btn-default">
-        <i class="glyphicon glyphicon-plus"></i> New</button>
+            <i class="glyphicon glyphicon-plus"></i> New
+        </button>
+        <a href="#/load" class="btn btn-default">
+            <i class="glyphicon glyphicon-floppy-open"></i>
+            Load
+        </a>
         <button type="button" class="btn btn-default" ng-click="saveModel()">
-        <i class="glyphicon glyphicon-floppy-save"></i> Save</button>
+            <i class="glyphicon glyphicon-floppy-save"></i> Save
+        </button>
       </div>
       <div class="btn-group">
         <button type="button" class="btn btn-default">
@@ -53,6 +59,7 @@
                   <a href="" class="thumbnail stencil-item" ng-click="addStencil(stencil)">
                     <!-- <img ng-src="{{stencil.icon}}" ng-alt="{{stencil.title}}"> -->
                     <span class="stencil-name">{{stencil.title}}</span>
+                    <br/>
                     <span class="stencil-type label label-info">{{stencil.category}}</span>
                   </a>
                 </div>

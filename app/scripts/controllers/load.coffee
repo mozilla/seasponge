@@ -8,8 +8,24 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'LoadController', ['$scope', 'model', ($scope, model) ->
+  .controller 'LoadController', [
+    '$scope', '$location', 'model', 
+    ($scope, $location, model) ->
 
-    console.log('model', model)
+        $scope.loadFile = (element) ->
+            # console.log('loadFile', arguments)
+            $scope.$apply (scope) ->
+                reader = new FileReader()
+                reader.onload = ->
+                    $scope.$apply (scope) ->
+                        data = reader.result
+                        # console.log(data)
+                        serialized = JSON.parse(data)
+                        # console.log(serialized)
+                        model.deserialize(serialized)
+                        # console.log(model)
+                        # Transition to Draw route
+                        $location.path('/draw')
+                reader.readAsText(element.files[0])
 
   ]
