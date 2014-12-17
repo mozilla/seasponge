@@ -17,6 +17,8 @@ angular.module('seaspongeApp')
       propertiesOpen: false
     }
 
+    $scope.fileName = "ExampleFileName"
+
     $scope.selectedStencil = false
 
     # UI
@@ -102,6 +104,13 @@ angular.module('seaspongeApp')
 
     # Save the Model
     $scope.saveModel = ->
+
+        fileName = prompt("Please enter file name", $scope.fileName)
+
+        if not fileName?
+            return
+        $scope.fileName = fileName
+
         $stencils = $('.stencil', $scope.container)
         stencils = $.map($stencils, (el) ->
                 $stencil = $(el)
@@ -125,8 +134,18 @@ angular.module('seaspongeApp')
         }
         diagrams.push(diagram)
         console.log('model', model)
+
         modelStr = JSON.stringify(model, undefined, 4)
-        downloadData("model.sponge", modelStr, "application/json")
+        if (typeof(Storage) isnt "undefined")
+            # Code for localStorage/sessionStorage.
+            localStorage[fileName] = modelStr
+        else
+            # Sorry! No Web Storage support..
+            alert("Sorry! No Web Storage support with this browser...")
+
+        if confirm("Would you also like to download the #{fileName}.sponge file?")
+            downloadData("#{fileName}.sponge", modelStr, "application/json")
+
 
     jsPlumb.ready ->
       $scope.instance = instance = jsPlumb.getInstance(
