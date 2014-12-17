@@ -4,9 +4,10 @@
   <div class="nav-top">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
-        <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-plus"></i> New
-        </button>
+        <a href="#/create" class="btn btn-default">
+            <i class="glyphicon glyphicon-plus"></i>
+            New
+        </a>
         <a href="#/load" class="btn btn-default">
             <i class="glyphicon glyphicon-floppy-open"></i>
             Load
@@ -22,9 +23,8 @@
         <i class="glyphicon glyphicon-zoom-out"></i> Zoom-Out</button>
       </div>
       <div class="btn-group">
-          <button type="button" class="btn btn-default">
-          <i class="glyphicon glyphicon-pencil"></i>
-          {{model.title}}
+          <button type="button" class="btn btn-link" ng-click="openModelInfo()">
+              {{model.title}}
           </button>
       </div>
       <div class="btn-group pull-right">
@@ -42,6 +42,41 @@
     <div class="content-left">
 
       <accordion close-others="false">
+
+        <!-- Model Info -->
+        <accordion-group is-open="menu.infoOpen">
+
+          <accordion-heading>
+            Model Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
+          </accordion-heading>
+
+          <form class="form" role="form">
+
+            <div class="form-group">
+              <label for="model-title" class="">Model Title</label>
+              <input type="text"
+              class="form-control" id="model-title" placeholder="Model Title" 
+              ng-model="model.title">
+            </div>
+
+            <div class="form-group">
+              <label for="model-version" class="">Version</label>
+              <input type="text"
+              class="form-control" id="model-version" placeholder="Model Version" 
+              ng-model="model.version">
+            </div>
+
+            <div class="form-group">
+              <label for="model-authors" class="">Authors</label>
+              <input type="text"
+              class="form-control" id="model-authors" placeholder="Model Authors" 
+              ng-model="model.authors">
+            </div>
+
+          </form>
+
+        </accordion-group>
+
 
         <!-- Stencils -->
         <accordion-group class="stencils-container" is-open="menu.stencilsOpen">
@@ -208,7 +243,10 @@
             <a href="" ng-click="loadDiagram(diagram)" role="tab" data-toggle="tab">{{diagram.title}}</a>
         </li>
         <li>
-            <a href="" ng-click="model.addDiagram()" class="">+ Diagram</a>
+            <a href="" ng-click="model.addDiagram()" class="">
+                <i class="glyphicon glyphicon-plus"></i>
+                Diagram
+            </a>
         </li>
         <li class="pull-right"><a href="#report" role="tab" data-toggle="tab">Reports</a></li>
       </ul>

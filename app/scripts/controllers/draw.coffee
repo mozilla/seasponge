@@ -17,8 +17,10 @@ angular.module('seaspongeApp')
     $scope.stencils = Stencils
 
     $scope.menu = {
-      stencilsOpen: true
-      propertiesOpen: false
+        infoOpen: false
+        stencilsOpen: true
+        threatsOpen: false
+        propertiesOpen: false
     }
 
     $scope.fileName = "ExampleFileName"
@@ -185,6 +187,9 @@ angular.module('seaspongeApp')
             # console.log(diagram.serialize())
             # De-select Stencil
             $scope.selectedStencil = false
+
+    $scope.openModelInfo = ->
+        $scope.menu.infoOpen = true
 
     $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
         # console.log "stencil-instance-click", arguments
