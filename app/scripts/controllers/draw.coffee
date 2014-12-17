@@ -8,9 +8,9 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'DrawCtrl', ($scope) ->
-
-    $scope.stencils = window.stencils
+  .controller 'DrawController', ['$scope', 'Stencils', ($scope, Stencils) ->
+    
+    $scope.stencils = Stencils
 
     $scope.menu = {
       stencilsOpen: true
@@ -165,3 +165,5 @@ angular.module('seaspongeApp')
       stencil = new stencilClass(uuid, $scope.container, instance)
       console.log(stencil)
       return stencil
+
+    ]

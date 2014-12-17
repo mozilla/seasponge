@@ -1,4 +1,6 @@
-class @stencils.BaseProcessStencil extends @stencils.BaseStencil
-
-  @title: "Base"
-  @category: "Process"
+angular.module('seaspongeApp')
+.factory('BaseProcessStencil', ['BaseStencil', (BaseStencil) ->
+    return class BaseProcessStencil extends BaseStencil
+      @title: "Base"
+      @category: "Process"
+])

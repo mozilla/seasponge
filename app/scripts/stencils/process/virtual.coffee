@@ -1,3 +1,5 @@
-class @stencils.VirtualStencil extends @stencils.BaseProcessStencil
-
-  @title: "Virtual"
+angular.module('seaspongeApp')
+.factory('VirtualStencil', ['BaseProcessStencil', (BaseProcessStencil) ->
+    return class VirtualStencil extends BaseProcessStencil
+        @title: "Virtual"
+])

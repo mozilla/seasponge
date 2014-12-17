@@ -1,3 +1,5 @@
-class @stencils.ThreadStencil extends @stencils.BaseProcessStencil
-
-  @title: "Thread"
+angular.module('seaspongeApp')
+.factory('ThreadStencil', ['BaseProcessStencil', (BaseProcessStencil) ->
+    return class ThreadStencil extends BaseProcessStencil
+        @title: "Thread"
+])

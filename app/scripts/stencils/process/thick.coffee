@@ -1,3 +1,5 @@
-class @stencils.ThickStencil extends @stencils.BaseProcessStencil
-
-  @title: "Thick"
+angular.module('seaspongeApp')
+.factory('ThickStencil', ['BaseProcessStencil', (BaseProcessStencil) ->
+    return class ThickStencil extends BaseProcessStencil
+        @title: "Thick"
+])

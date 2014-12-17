@@ -1,3 +1,6 @@
-class @stencils.NativeStencil extends @stencils.BaseProcessStencil
+angular.module('seaspongeApp')
+.factory('NativeStencil', ['BaseProcessStencil', (BaseProcessStencil) ->
+    return class NativeStencil extends BaseProcessStencil
+        @title: "Native"
+])
 
-  @title: "Native"

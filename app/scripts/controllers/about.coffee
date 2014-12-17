@@ -8,7 +8,7 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'AboutCtrl', ($scope) ->
+  .controller 'AboutController', ($scope) ->
     $scope.awesomeThings = [
       'HTML5 Boilerplate'
       'AngularJS'

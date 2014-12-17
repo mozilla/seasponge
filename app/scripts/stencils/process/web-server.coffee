@@ -1,3 +1,5 @@
-class @stencils.WebServerStencil extends @stencils.BaseProcessStencil
-
-  @title: "Web Server"
+angular.module('seaspongeApp')
+.factory('WebServerStencil', ['BaseProcessStencil', (BaseProcessStencil) ->
+    return class WebServerStencil extends BaseProcessStencil
+        @title: "Web Server"
+])

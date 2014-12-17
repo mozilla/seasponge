@@ -10,12 +10,12 @@
 ###
 angular
   .module('seaspongeApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
+    'ngAnimate'
+    'ngCookies'
+    'ngResource'
+    'ngRoute'
+    'ngSanitize'
+    'ngTouch'
     'ui.bootstrap'
     'ui.select'
     'ngDragDrop'
@@ -24,12 +24,12 @@ angular
     $routeProvider
       .when '/',
         templateUrl: 'views/main.html'
-        controller: 'MainCtrl'
+        controller: 'MainController'
       .when '/about',
         templateUrl: 'views/about.html'
-        controller: 'AboutCtrl'
+        controller: 'AboutController'
       .when '/draw',
         templateUrl: 'views/draw.html'
-        controller: 'DrawCtrl'
+        controller: 'DrawController'
       .otherwise
         redirectTo: '/'

@@ -1,3 +1,5 @@
-class @stencils.BrowserClientStencil extends @stencils.BaseProcessStencil
-
-  @title: "Browser Client"
+angular.module('seaspongeApp')
+.factory('BrowserClientStencil', ['BaseProcessStencil', (BaseProcessStencil) ->
+    return class BrowserClientStencil extends BaseProcessStencil
+        @title: "Browser Client"
+])
