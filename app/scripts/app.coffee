@@ -31,5 +31,11 @@ angular
       .when '/draw',
         templateUrl: 'views/draw.html'
         controller: 'DrawController'
+      .when '/create',
+        templateUrl: 'views/create.html'
+        controller: 'CreateController'
+      .when '/load',
+        templateUrl: 'views/load.html'
+        controller: 'LoadController'
       .otherwise
         redirectTo: '/'

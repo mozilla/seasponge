@@ -1,4 +1,5 @@
-angular.module('seaspongeApp').factory('BaseStencil', ->
+angular.module('seaspongeApp')
+.factory('BaseStencil', ->
 
     return class BaseStencil
 
@@ -12,7 +13,8 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
 
       # Instance variables
       $element: null
-      tags: []
+      location: null
+      tags: null
       codeType: "Managed"
       runningAs: "Kernel"
       acceptsInput: "Kernel, System, or Local Admin"
@@ -23,6 +25,11 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
 
       constructor: (@uuid, @$container, @plumbInstance) ->
         # Instance variables
+        @tags = []
+        @location = {
+            left: 0
+            top: 0
+        }
         @authenticationScheme = {
             uses: false
             description: null
@@ -52,6 +59,9 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
         @$element.click (event) =>
             # console.log(JSON.stringify(@serialize(), undefined, 4))
             @$container.trigger "stencil-instance-click", [@, event]
+        # Add Drag event
+        @$element.mouseup (event) =>
+            @getPosition()
         # suspend drawing and initialise.
         @plumbInstance.doWhileSuspended =>
           # console.log(@plumbInstance)
@@ -99,9 +109,20 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
         return
 
       getPosition: ->
-        return @$element.position()
+        # Check if $element is in DOM
+        if @$element.parent().length > 0
+            # Cache the location
+            @location = @$element.position()
+        # else
+            # Do not update cached location
+            # console.log('$element not in DOM')
+        return @location
 
-      serialize: ->
+      setPosition: (position) ->
+        @$element.css(position)
+        return @getPosition()
+
+      serialize: =>
         serialized = {
           id: @uuid
           name: @constructor.title
@@ -121,6 +142,13 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
           }
         }
         return serialized
+
+      deserialize: (serialized) =>
+        console.log('serialized element', serialized)
+        
+        @setPosition(serialized.location)
+
+        return @
 
       sourceEndpoint:
         # the definition of source endpoints (the small blue ones)

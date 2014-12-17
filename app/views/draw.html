@@ -4,12 +4,22 @@
   <div class="nav-top">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
-        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> New</button>
-        <button type="button" class="btn btn-default" ng-click="saveModel()"><i class="glyphicon glyphicon-floppy-save"></i> Save</button>
+        <button type="button" class="btn btn-default">
+        <i class="glyphicon glyphicon-plus"></i> New</button>
+        <button type="button" class="btn btn-default" ng-click="saveModel()">
+        <i class="glyphicon glyphicon-floppy-save"></i> Save</button>
       </div>
       <div class="btn-group">
-        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Zoom-In</button>
-        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-out"></i> Zoom-Out</button>
+        <button type="button" class="btn btn-default">
+        <i class="glyphicon glyphicon-zoom-in"></i> Zoom-In</button>
+        <button type="button" class="btn btn-default">
+        <i class="glyphicon glyphicon-zoom-out"></i> Zoom-Out</button>
+      </div>
+      <div class="btn-group">
+          <button type="button" class="btn btn-default">
+          <i class="glyphicon glyphicon-pencil"></i>
+          {{model.title}}
+          </button>
       </div>
       <div class="btn-group pull-right">
         <button type="button" class="btn btn-default">1</button>
@@ -186,13 +196,12 @@
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
-        <li class="active"><a href="#home" role="tab" data-toggle="tab">Diagram 1</a>
+        <li ng-repeat="diagram in model.diagrams" 
+        ng-class="{active: diagram.selected}">
+            <a href="" ng-click="loadDiagram(diagram)" role="tab" data-toggle="tab">{{diagram.title}}</a>
         </li>
-        <li><a href="#profile" role="tab" data-toggle="tab">Diagram 2</a>
-        </li>
-        <li><a href="#messages" role="tab" data-toggle="tab">Diagram 3</a>
-        </li>
-        <li><a href="#settings" role="tab" data-toggle="tab">Diagram 4</a>
+        <li>
+            <a href="" ng-click="model.addDiagram()" class="">+ Diagram</a>
         </li>
         <li class="pull-right"><a href="#report" role="tab" data-toggle="tab">Reports</a></li>
       </ul>
@@ -201,16 +210,11 @@
       <div class="drawing-panel" data-drop="true"
       jqyoui-droppable="{onDrop:'dropStencil'}">
         <div class="tab-content">
-          <div class="tab-pane active" id="home">
-
+          <div class="tab-pane active">
             <div class="diagram-contents">
                 <!-- KEEP THIS EMPTY -->
             </div>
-
           </div>
-          <div class="tab-pane" id="profile">...</div>
-          <div class="tab-pane" id="messages">...</div>
-          <div class="tab-pane" id="settings">...</div>
         </div>
       </div>
     </div>

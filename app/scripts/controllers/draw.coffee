@@ -8,8 +8,12 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'DrawController', ['$scope', 'Stencils', ($scope, Stencils) ->
+  .controller 'DrawController', ['$scope', 'Stencils', 'model', ($scope, Stencils, model) ->
     
+    console.log('model', model)
+
+    $scope.model = model
+
     $scope.stencils = Stencils
 
     $scope.menu = {
@@ -20,6 +24,7 @@ angular.module('seaspongeApp')
     $scope.fileName = "ExampleFileName"
 
     $scope.selectedStencil = false
+    $scope.selectedDiagram = null
 
     # UI
     $scope.codeTypeOptions = [
@@ -111,31 +116,13 @@ angular.module('seaspongeApp')
             return
         $scope.fileName = fileName
 
-        $stencils = $('.stencil', $scope.container)
-        stencils = $.map($stencils, (el) ->
-                $stencil = $(el)
-                return $stencil.data('stencil')
-            )
-        serializedElements = (stencil.serialize() for stencil in stencils)
-        # console.log('serializedElements', serializedElements)
-        model = {
-            "version": "0.0.0"
-            "date": new Date(),
-            "authors": [ "Glavin Wiechert" ]
-            "diagrams": []
-        }
-        diagrams = model.diagrams
-        diagram = {
-            "id": jsPlumbUtil.uuid()
-            "name": "Diagram 1"
-            "elements": serializedElements
-            "flows": []
-            "boundaries": []
-        }
-        diagrams.push(diagram)
-        console.log('model', model)
+        # Save current Diagram
+        $scope.selectedDiagram.save($scope.instance, $scope.container)
 
-        modelStr = JSON.stringify(model, undefined, 4)
+        # Serialize current Model
+        serialized = model.serialize()
+        console.log('model serialized', model, serialized)
+        modelStr = JSON.stringify(serialized, undefined, 4)
         if (typeof(Storage) isnt "undefined")
             # Code for localStorage/sessionStorage.
             localStorage[fileName] = modelStr
@@ -146,116 +133,83 @@ angular.module('seaspongeApp')
         if confirm("Would you also like to download the #{fileName}.sponge file?")
             downloadData("#{fileName}.sponge", modelStr, "application/json")
 
-
-    jsPlumb.ready ->
-      $scope.instance = instance = jsPlumb.getInstance(
-        # default drag options
-        DragOptions:
-          cursor: "pointer"
-          zIndex: 2000
-        # the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in this
-        # case it returns the 'labelText' member that we set on each connection in the 'init' method below.
-        ConnectionOverlays: [
-          [
-            "Arrow"
-            {
-              location: 1
-            }
-          ]
-          [
-            "Label"
-            {
-              location: 0.1
-              id: "label"
-              cssClass: "aLabel"
-            }
-          ]
-        ]
-        Container: "content-right"
-      )
-
-      init = (connection) ->
-        connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
-        connection.bind "editCompleted", (o) ->
-          console.log "connection edited. path is now ", o.path  unless typeof console is "undefined"
-          return
-        return
-
-      # suspend drawing and initialise.
-      instance.doWhileSuspended ->
-        # listen for new connections; initialise them the same way we initialise the connections at startup.
-        instance.bind "connection", (connInfo, originalEvent) ->
-          init connInfo.connection
-          return
-        # make all the window divs draggable
-        instance.draggable jsPlumb.getSelector(".diagram-contents .stencil"),
-          grid: [
-            20
-            20
-          ]
-
-        # THIS DEMO ONLY USES getSelector FOR CONVENIENCE. Use your library's appropriate selector
-        # method, or document.querySelectorAll:
-        #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
-
-        #
-        #
-        # listen for clicks on connections, and offer to delete connections on click.
-        #
-        instance.bind "click", (conn, originalEvent) ->
-          jsPlumb.detach conn  if confirm("Delete connection from " + conn.sourceId + " to " + conn.targetId + "?")
-          return
-
-        instance.bind "connectionDrag", (connection) ->
-          console.log "connection " + connection.id + " is being dragged. suspendedElement is ", connection.suspendedElement, " of type ", connection.suspendedElementType
-          return
-
-        instance.bind "connectionDragStop", (connection) ->
-          console.log "connection " + connection.id + " was dragged"
-          return
-
-        instance.bind "connectionMoved", (params) ->
-          console.log "connection " + params.connection.id + " was moved"
-          return
-
-        instance.bind "contextmenu", (component, originalEvent) ->
-          console.log "contextmenu: ", component, originalEvent
-          return
-
-        $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
-            # console.log "stencil-instance-click", arguments
-            $scope.$apply ->
-                # Remove selected class from all selected
-                $('.selected-stencil').removeClass('selected-stencil')
-                # Check if same or different stencil instance
-                if $scope.selectedStencil is inst
-                    # Same instance
-                    # Change selected in $scope
-                    $scope.selectedStencil = false
-                    $scope.menu.propertiesOpen = false
-                    $scope.menu.stencilsOpen = true
-                else
-                    # Add selected class
-                    inst.$element.addClass('selected-stencil')
-                    # Change selected in $scope
-                    $scope.selectedStencil = inst
-                    $scope.menu.stencilsOpen = false
-                    $scope.menu.propertiesOpen = true
-
-
-        return
-      #jsPlumb.fire "jsPlumbDemoLoaded", instance
-      return
-
     $scope.addStencil = (stencilClass) ->
-      instance = $scope.instance
-      # console.log('container', $scope.container)
-      # Generate UUID
-      uuid = jsPlumbUtil.uuid()
-      # console.log('uuid: ', uuid)
-      # stencil = new stencils.BaseStencil(uuid, $container, instance)
-      stencil = new stencilClass(uuid, $scope.container, instance)
-      # console.log(stencil)
-      return stencil
+        if $scope.selectedDiagram?
+            element = $scope.selectedDiagram.addElement(
+                $scope.instance, 
+                $scope.container, 
+                stencilClass
+                )
+            return element
+
+    $scope.instance = instance = jsPlumb.getInstance(
+                # default drag options
+                DragOptions:
+                  cursor: "pointer"
+                  zIndex: 2000
+                # the overlays to decorate each connection with.  note that the label overlay uses a function to generate the label text; in this
+                # case it returns the 'labelText' member that we set on each connection in the 'init' method below.
+                ConnectionOverlays: [
+                  [
+                    "Arrow"
+                    {
+                      location: 1
+                    }
+                  ]
+                  [
+                    "Label"
+                    {
+                      location: 0.1
+                      id: "label"
+                      cssClass: "aLabel"
+                    }
+                  ]
+                ]
+                Container: "content-right"
+              )
+
+    $scope.loadDiagram = (diagram) ->
+        if diagram?
+            if $scope.selectedDiagram?
+                selected = $scope.selectedDiagram
+                # Save current Diagram
+                selected.save($scope.instance, $scope.container)
+                # Clear old diagram
+                selected.constructor.clear($scope.instance, $scope.container)
+                # Close diagram
+                selected.selected = false
+            # Render new diagram
+            diagram.render($scope.instance, $scope.container)
+            # Select new diagram
+            diagram.selected = true
+            $scope.selectedDiagram = diagram
+            # console.log($scope.model.serialize())
+   
+    $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
+        # console.log "stencil-instance-click", arguments
+        $scope.$apply ->
+            # Remove selected class from all selected
+            $('.selected-stencil').removeClass('selected-stencil')
+            # Check if same or different stencil instance
+            if $scope.selectedStencil is inst
+                # Same instance
+                # Change selected in $scope
+                $scope.selectedStencil = false
+                $scope.menu.propertiesOpen = false
+                $scope.menu.stencilsOpen = true
+            else
+                # Add selected class
+                inst.$element.addClass('selected-stencil')
+                # Change selected in $scope
+                $scope.selectedStencil = inst
+                $scope.menu.stencilsOpen = false
+                $scope.menu.propertiesOpen = true
+
+    # Create Diagram in Model if non exists already
+    if model.diagrams.length is 0
+        diagram = model.addDiagram()
+        console.log('Load new diagram', diagram)
+        $scope.loadDiagram(diagram)
 
     ]
+
