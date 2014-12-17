@@ -1,5 +1,6 @@
 <div class="">
-
+  
+  <!-- Top Nav Bar -->
   <div class="nav-top">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
@@ -17,13 +18,16 @@
     </div>
     <br/>
   </div>
-
+  
+  <!-- Main Content -->
   <div class="row">
 
+    <!-- Left sidebar controls -->
     <div class="content-left">
 
       <accordion close-others="false">
 
+        <!-- Stencils -->
         <accordion-group class="stencils-container" is-open="menu.stencilsOpen">
 
           <accordion-heading>
@@ -45,13 +49,13 @@
             </div>
           
           </div>
-
         </accordion-group>
 
+        <!-- Threats -->
         <accordion-group is-open="menu.threatsOpen">
 
           <accordion-heading>
-            Thread Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
+            Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
           </accordion-heading>
 
           <div class="lead">
@@ -60,6 +64,7 @@
 
         </accordion-group>
 
+        <!-- Selected Element Properties -->
         <div ng-if="selectedStencil">
 
             <accordion-group is-open="menu.propertiesOpen" is-disabled="!selectedStencil">
@@ -172,11 +177,11 @@
             </accordion-group>
 
         </div>
-
       </accordion>
 
     </div>
 
+    <!-- Right content -->
     <div class="content-right">
 
       <!-- Nav tabs -->
@@ -207,7 +212,6 @@
           <div class="tab-pane" id="settings">...</div>
         </div>
       </div>
-
     </div>
 
   </div>
