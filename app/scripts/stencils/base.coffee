@@ -6,7 +6,7 @@ class @stencils.BaseStencil
   @category: "Base"
   @anchors: []
   @icon: "http://png-5.findicons.com/files/icons/1070/software/128/mozilla_firefox.png"
-  @classNames: ["stencil", "window"]
+  @classNames: ["stencil"]
   @shape: "rectange" # Default rectange
 
   # Instance variables
@@ -24,6 +24,7 @@ class @stencils.BaseStencil
     description: null
   }
   communicationProtocol: null
+  notes: "There is no available notes."
 
   constructor: (@uuid, @$container, @plumbInstance) ->
     # Create new element
@@ -54,7 +55,7 @@ class @stencils.BaseStencil
         "RightMiddle"
       ]
       # # make all the window divs draggable
-      $els = jsPlumb.getSelector(".flowchart-demo .stencil")
+      $els = jsPlumb.getSelector(".diagram-contents .stencil")
       console.log($els)
       @plumbInstance.draggable $els,
         grid: [

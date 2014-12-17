@@ -20,7 +20,7 @@ angular.module('seaspongeApp')
     $scope.selectedStencil = false
 
     # Get container
-    $scope.container = $('#flowchart-demo')
+    $scope.container = $('.diagram-contents')
 
     $scope.stencilTypes = (() ->
       arr = []
@@ -95,7 +95,7 @@ angular.module('seaspongeApp')
           init connInfo.connection
           return
         # make all the window divs draggable
-        instance.draggable jsPlumb.getSelector(".flowchart-demo .stencil"),
+        instance.draggable jsPlumb.getSelector(".diagram-contents .stencil"),
           grid: [
             20
             20
@@ -151,7 +151,7 @@ angular.module('seaspongeApp')
 
 
         return
-      jsPlumb.fire "jsPlumbDemoLoaded", instance
+      #jsPlumb.fire "jsPlumbDemoLoaded", instance
       return
 
     $scope.addStencil = (stencilClass) ->

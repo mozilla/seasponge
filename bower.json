@@ -27,7 +27,6 @@
     "jsplumb": {
       "main": [
         "dist/css/jsplumb.css",
-        "dist/css/demo-all.css",
         "dist/js/jquery.jsPlumb-1.6.4.js"
       ]
     }
