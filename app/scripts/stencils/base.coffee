@@ -45,7 +45,9 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
         # Add class names
         # console.log(@constructor.classNames)
         cls = @constructor.classNames.join(" ")
+        shp = @constructor.shape
         $element.addClass(cls)
+        $element.addClass(shp)
         # Add to container
         @$container.append($element);
         # Add events
@@ -55,7 +57,7 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
         # suspend drawing and initialise.
         @plumbInstance.doWhileSuspended =>
           # console.log(@plumbInstance)
-          # #
+
           @_addEndpoints @plumbInstance, @uuid, [
             "TopCenter"
             "BottomCenter"

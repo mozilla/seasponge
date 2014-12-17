@@ -74,3 +74,28 @@
   margin-top: 10px;
   text-align: center;
 }
+
+// Shapes
+.circle {
+  width: 100px !important;
+  height: 100px !important;
+  -moz-border-radius: 50px !important;
+  -webkit-border-radius: 50px !important;
+  border-radius: 50px !important;
+  
+  p {
+    margin-top: 25px;
+  }
+}
+
+.ellipse {
+  width: 200px !important;
+  height: 100px !important;
+  -moz-border-radius: 100px / 50px !important;
+  -webkit-border-radius: 100px / 50px !important;
+  border-radius: 100px / 50px !important;
+
+  p {
+    margin-top: 30px;
+  }
+}
