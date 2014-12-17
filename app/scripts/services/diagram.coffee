@@ -43,7 +43,7 @@ angular.module('seaspongeApp')
                 id: @id
                 title: @title
                 elements: (element.serialize() for element in @elements)
-                flows: (flow.serialize() for flow in @flows)
+                flows: @flows
                 boundaries: (boundary.serialize() for boundary in @boundaries)
             }
             return serialized
@@ -62,6 +62,7 @@ angular.module('seaspongeApp')
                 @constructor.stencilClassForElement(element.class))\
                 .deserialize(element) \
                 for element in serialized.elements)
+            @flows = serialized.flows
             return @
 
         addElement: (stencilClass) ->
@@ -82,8 +83,10 @@ angular.module('seaspongeApp')
             @elements = elements
             # console.log('save after', @serialize())
 
-            # TODO: Flows
-            @flows = instance.getConnections()
+            # Flows (Connections)
+            cons = instance.getConnections()
+            @flows = ({sourceId: flow.sourceId, targetId: flow.targetId} \
+                    for flow in cons)
 
             # TODO: Boundaries
 
@@ -136,7 +139,11 @@ angular.module('seaspongeApp')
                 # Render Elements
                 element.render(instance, container) for element in @elements
 
-                # TODO: Render Flows
+                # Render Flows
+                instance.connect({
+                    source: flow.sourceId
+                    target: flow.targetId
+                    }) for flow in @flows
 
                 # TODO: Render Boundaries
 
