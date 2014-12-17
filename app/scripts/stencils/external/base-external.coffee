@@ -3,4 +3,5 @@ angular.module('seaspongeApp')
     return class BaseExternalStencil extends BaseStencil
       @title: "Base"
       @category: "External"
+      @shape: "circle"
 ])
