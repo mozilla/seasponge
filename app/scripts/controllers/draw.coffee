@@ -11,6 +11,8 @@ angular.module('seaspongeApp')
   .controller 'DrawController', ['$scope', 'Stencils', ($scope, Stencils) ->
     
     $scope.stencils = Stencils
+    console.log('stencils', Stencils)
+    console.log('scope stencils', $scope.stencils)
 
     $scope.menu = {
       stencilsOpen: true
