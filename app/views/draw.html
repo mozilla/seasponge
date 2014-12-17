@@ -4,7 +4,7 @@
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> New</button>
-        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-floppy-save"></i> Save</button>
+        <button type="button" class="btn btn-default" ng-click="saveModel()"><i class="glyphicon glyphicon-floppy-save"></i> Save</button>
       </div>
       <div class="btn-group">
         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Zoom-In</button>
@@ -76,91 +76,95 @@
               <form class="form" role="form">
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Tags</label>
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="Comma separated tags">
+                  <label for="properties-name" class="">Name</label>
+                  <br/>
+                  {{selectedStencil.constructor.title}}
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Name</label>
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="Value">
+                  <label for="properties-category" class="">Category</label>
+                  <br/>
+                  {{selectedStencil.constructor.category}}
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Category</label>
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="Value">
+                  <label for="properties-tags" class="">Tags</label>
+                  <input type="text"
+                  class="form-control" id="properties-tags" placeholder="Comma separated tags" 
+                  ng-model="selectedStencil.tags">
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Code Type</label>
-                  <select class="form-control">
-                    <option>Not selected</option>
-                    <option>Managed</option>
-                    <option>Unmanaged</option>
+                  <label for="properties-codeType" class="">Code Type</label>
+                  <select class="form-control" id="properties-codeType" 
+                  ng-options="codeType for codeType in codeTypeOptions"
+                  ng-model="selectedStencil.codeType">
                   </select>
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Running As</label>
-                  <select class="form-control">
-                    <option>Kernel</option>
-                    <option>System</option>
-                    <option>Network Service</option>
-                    <option>Local Service</option>
-                    <option>Administrator</option>
-                    <option>Standard User with Elevation</option>
-                    <option>Standard User without Elevation</option>
-                    <option>Windows Store App</option>
+                  <label for="properties-runningAs" class="">Running As</label>
+                  <select class="form-control" id="properties-runningAs" 
+                  ng-model="selectedStencil.runningAs"
+                  ng-options="runningAs for runningAs in runningAsOptions">
                   </select>
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Accepts Input From</label>
-                  <select class="form-control">
-                    <option>Not Selected</option>
-                    <option>Any Remote User or Entity</option>
-                    <option>Kernel, System, or Local Admin</option>
-                    <option>Local or Network Service</option>
-                    <option>Local Standard User With Elevation</option>
-                    <option>Local Standard User Without Elevation</option>
-                    <option>Windows Store Apps or App Container Processes</option>
-                    <option>Nothing</option>
-                    <option>Other</option>
+                  <label for="properties-acceptsInput" class="">Accepts Input From</label>
+                  <select class="form-control" id="properties-acceptsInput" 
+                  ng-model="selectedStencil.acceptsInput"
+                  ng-options="acceptsInput for acceptsInput in acceptsInputOptions">
                   </select>
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Has Authentication Scheme</label>
-                  <input type="checkbox" class="form-control" id="inputEmail3" ng-model="hasAuthenticationScheme">
+                  <label for="properties-authenticationScheme-uses" class="">Has Authentication Scheme</label>
+                  <input type="checkbox" 
+                  class="form-control" id="properties-authenticationScheme-uses" 
+                  ng-model="selectedStencil.authenticationScheme.uses">
                 </div>
 
-                <div class="form-group" ng-if="hasAuthenticationScheme">
-                  <label for="inputEmail3" class="">Authentication Scheme Description</label>
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="Value">
-                </div>
-
-                <div class="form-group">
-                  <label for="inputEmail3" class="">Has Communication Protocol</label>
-                  <input type="checkbox" class="form-control" id="inputEmail3" ng-model="hasCommunicationProtol">
-                </div>
-
-                <div class="form-group" ng-if="hasCommunicationProtol">
-                  <label for="inputEmail3" class="">Communication Protocol Description</label>
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="Value">
+                <div class="form-group" ng-if="selectedStencil.authenticationScheme.uses">
+                  <label for="properties-authenticationScheme-description" class="">Authentication Scheme Description</label>
+                  <input type="text" 
+                  class="form-control" id="properties-authenticationScheme-description" placeholder="Value" 
+                  ng-model="selectedStencil.authenticationScheme.description">
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Has Authorization Scheme</label>
-                  <input type="checkbox" class="form-control" id="inputEmail3" ng-model="hasAuthorizationScheme">
+                  <label for="properties-communicationProtocol-uses" class="">Has Communication Protocol</label>
+                  <input type="checkbox" 
+                  class="form-control" id="properties-communicationProtocol-uses" 
+                  ng-model="selectedStencil.communicationProtocol.uses">
                 </div>
 
-                <div class="form-group" ng-if="hasAuthorizationScheme">
-                  <label for="inputEmail3" class="">Authorization Scheme Description</label>
-                  <input type="text" class="form-control" id="inputEmail3" placeholder="Value">
+                <div class="form-group" ng-if="selectedStencil.communicationProtocol.uses">
+                  <label for="properties-communicationProtocol-description" class="">Communication Protocol Description</label>
+                  <input type="text" 
+                  class="form-control" id="properties-communicationProtocol-description" placeholder="Value" 
+                  ng-model="selectedStencil.communicationProtocol.description">
                 </div>
 
                 <div class="form-group">
-                  <label for="inputEmail3" class="">Notes</label>
-                  <textarea class="form-control" id="inputEmail3" placeholder="Notes"></textarea>
+                  <label for="properties-authorizationScheme-uses" class="">Has Authorization Scheme</label>
+                  <input type="checkbox" 
+                  class="form-control" id="properties-authorizationScheme-uses" 
+                  ng-model="selectedStencil.authorizationScheme.uses">
+                </div>
+
+                <div class="form-group" ng-if="selectedStencil.authorizationScheme.uses">
+                  <label for="properties-authorizationScheme-description" class="">Authorization Scheme Description</label>
+                  <input type="text"
+                  class="form-control" id="properties-authorizationScheme-description" placeholder="Value" 
+                  ng-model="selectedStencil.authorizationScheme.description">
+                </div>
+
+                <div class="form-group">
+                  <label for="properties-notes" class="">Notes</label>
+                  <textarea 
+                  class="form-control" id="properties-notes" placeholder="Notes"></textarea 
+                  ng-model="selectedStencil.notes">
                 </div>
 
               </form>

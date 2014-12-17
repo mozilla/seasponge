@@ -45,7 +45,7 @@ $sidebar-left-height: 300px;
     left: 0px;
     right: 0px;
     top: $nav-bar-top-height + 1;
-    bottom: $nav-bar-top-height;
+    bottom: 0px;
     margin-bottom: 0px;
   }
 
@@ -57,13 +57,6 @@ $sidebar-left-height: 300px;
     right: 0px;
     top: 0px;
     bottom: 0px;
-  }
-
-  .drawing-info-panel {
-    position: absolute;
-    bottom: 0px;
-    height: 40px;
-    overflow: hidden;
   }
 
 }

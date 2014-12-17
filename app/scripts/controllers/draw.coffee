@@ -19,19 +19,48 @@ angular.module('seaspongeApp')
 
     $scope.selectedStencil = false
 
+    # UI
+    $scope.codeTypeOptions = [
+        "Not selected"
+        "Managed"
+        "Unmanaged"
+    ]
+    $scope.runningAsOptions = [
+        "Kernel"
+        "System"
+        "Network Service"
+        "Local Service"
+        "Administrator"
+        "Standard User with Elevation"
+        "Standard User without Elevation"
+        "Windows Store App"
+    ]
+    $scope.acceptsInputOptions = [
+        "Not Selected"
+        "Any Remote User or Entity"
+        "Kernel, System, or Local Admin"
+        "Local or Network Service"
+        "Local Standard User With Elevation"
+        "Local Standard User Without Elevation"
+        "Windows Store Apps or App Container Processes"
+        "Nothing"
+        "Other"
+    ]
+
     # Get container
     $scope.container = $('.diagram-contents')
 
-    $scope.stencilTypes = (() ->
-      arr = []
-      arr.push(stencil.type) for name, stencil of $scope.stencils \
-      when arr.indexOf(stencil.type) is -1 and stencil.type isnt "Base"
-      console.log('types', arr, $scope.stencils)
-      return arr
-    )()
+    # $scope.stencilTypes = (() ->
+    #   arr = []
+    #   arr.push(stencil.type) for name, stencil of $scope.stencils \
+    #   when arr.indexOf(stencil.type) is -1 and stencil.type isnt "Base"
+    #   console.log('types', arr, $scope.stencils)
+    #   return arr
+    # )()
 
+    # Drag'n'Drop Stencil support
     $scope.dropStencil = @dropStencil = (event, ui) ->
-        console.log('dropStencil', arguments)
+        # console.log('dropStencil', arguments)
         el = ui.draggable
         $el = $(el)
         #s = $el.data('$ngModelController')
@@ -45,14 +74,59 @@ angular.module('seaspongeApp')
                 'left': event.pageX - b.left
                 'top': event.pageY - b.top
             }
-            console.log(offset)
+            # console.log(offset)
             # i.$element.offset(offset)
             $se = i.$element
-            console.log($se, $se.offset(), $se.position())
+            # console.log($se, $se.offset(), $se.position())
             $se.css(offset)
-            console.log($se, $se.offset(), $se.position())
+            # console.log($se, $se.offset(), $se.position())
             $scope.instance.repaintEverything()
-            console.log($se, $se.offset(), $se.position())
+            # console.log($se, $se.offset(), $se.position())
+
+    downloadData = (name, data, type) ->
+        # Browser support
+        window.URL = window.URL || window.webkitURL;
+        # Arg defaults 
+        type = type || "text/plain";
+        name = name || "download"
+        data = data || ""
+        # Create Blob
+        blob = new Blob([data], {type: type})
+        url = window.URL.createObjectURL(blob)
+        # Create link
+        link = document.createElement("a")
+        link.download = name
+        link.href = url
+        # Download!
+        link.click()
+
+    # Save the Model
+    $scope.saveModel = ->
+        $stencils = $('.stencil', $scope.container)
+        stencils = $.map($stencils, (el) ->
+                $stencil = $(el)
+                return $stencil.data('stencil')
+            )
+        serializedElements = (stencil.serialize() for stencil in stencils)
+        # console.log('serializedElements', serializedElements)
+        model = {
+            "version": "0.0.0"
+            "date": new Date(),
+            "authors": [ "Glavin Wiechert" ]
+            "diagrams": []
+        }
+        diagrams = model.diagrams
+        diagram = {
+            "id": jsPlumbUtil.uuid()
+            "name": "Diagram 1"
+            "elements": serializedElements
+            "flows": []
+            "boundaries": []
+        }
+        diagrams.push(diagram)
+        console.log('model', model)
+        modelStr = JSON.stringify(model, undefined, 4)
+        downloadData("model.sponge", modelStr, "application/json")
 
     jsPlumb.ready ->
       $scope.instance = instance = jsPlumb.getInstance(
@@ -130,7 +204,7 @@ angular.module('seaspongeApp')
           return
 
         $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
-            console.log "stencil-instance-click", arguments
+            # console.log "stencil-instance-click", arguments
             $scope.$apply ->
                 # Remove selected class from all selected
                 $('.selected-stencil').removeClass('selected-stencil')
@@ -138,7 +212,7 @@ angular.module('seaspongeApp')
                 if $scope.selectedStencil is inst
                     # Same instance
                     # Change selected in $scope
-                    $scope.selectedStencil = null
+                    $scope.selectedStencil = false
                     $scope.menu.propertiesOpen = false
                     $scope.menu.stencilsOpen = true
                 else
@@ -156,14 +230,13 @@ angular.module('seaspongeApp')
 
     $scope.addStencil = (stencilClass) ->
       instance = $scope.instance
-      console.log('container', $scope.container)
+      # console.log('container', $scope.container)
       # Generate UUID
       uuid = jsPlumbUtil.uuid()
-      console.log('uuid: ', uuid)
-      #
+      # console.log('uuid: ', uuid)
       # stencil = new stencils.BaseStencil(uuid, $container, instance)
       stencil = new stencilClass(uuid, $scope.container, instance)
-      console.log(stencil)
+      # console.log(stencil)
       return stencil
 
     ]

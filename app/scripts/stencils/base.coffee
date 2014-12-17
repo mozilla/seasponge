@@ -13,21 +13,29 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
       # Instance variables
       $element: null
       tags: []
-      codeType: "managed"
+      codeType: "Managed"
       runningAs: "Kernel"
       acceptsInput: "Kernel, System, or Local Admin"
-      authenticationScheme: {
-        uses: false
-        description: null
-      }
-      authorizationScheme: {
-        uses: false
-        description: null
-      }
+      authenticationScheme: null
+      authorizationScheme: null
       communicationProtocol: null
       notes: "There is no available notes."
 
       constructor: (@uuid, @$container, @plumbInstance) ->
+        # Instance variables
+        @authenticationScheme = {
+            uses: false
+            description: null
+        }
+        @authorizationScheme = {
+            uses: false
+            description: null
+        }
+        @communicationProtocol = {
+            uses: false
+            description: null
+        }
+
         # Create new element
         @$element = $element = $('<div />', {
           id: @uuid
@@ -35,18 +43,18 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
         # Data
         @$element.data('stencil', @)
         # Add class names
-        console.log(@constructor.classNames)
+        # console.log(@constructor.classNames)
         cls = @constructor.classNames.join(" ")
         $element.addClass(cls)
         # Add to container
         @$container.append($element);
         # Add events
         @$element.click (event) =>
-            console.log(JSON.stringify(@serialize(), undefined, 4))
+            # console.log(JSON.stringify(@serialize(), undefined, 4))
             @$container.trigger "stencil-instance-click", [@, event]
         # suspend drawing and initialise.
         @plumbInstance.doWhileSuspended =>
-          console.log(@plumbInstance)
+          # console.log(@plumbInstance)
           # #
           @_addEndpoints @plumbInstance, @uuid, [
             "TopCenter"
@@ -57,7 +65,7 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
           ]
           # # make all the window divs draggable
           $els = jsPlumb.getSelector(".diagram-contents .stencil")
-          console.log($els)
+          # console.log($els)
           @plumbInstance.draggable $els,
             grid: [
               20
@@ -72,8 +80,8 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
           @plumbInstance.repaint()
 
       _addEndpoints: (instance, toId, sourceAnchors, targetAnchors) ->
-        console.log('add endpoints', arguments)
-        console.log(@sourceEndpoint, @targetEndpoint)
+        # console.log('add endpoints', arguments)
+        # console.log(@sourceEndpoint, @targetEndpoint)
         i = 0
         while i < sourceAnchors.length
           sourceUUID = toId + sourceAnchors[i]
@@ -100,6 +108,7 @@ angular.module('seaspongeApp').factory('BaseStencil', ->
           category: @constructor.category
           class: @constructor.name
           location: @getPosition()
+          tags: @tags
           scale: 1.0
           attributes: {
             shape: @constructor.shape
