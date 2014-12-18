@@ -86,7 +86,7 @@
           </accordion-heading>
 
           <div class="all-stencils row">
-            <input type="text" class="form-control" ng-model="stencilQuery" placeholder="Search Stencils">
+            <input type="text" class="form-control stencil-search" ng-model="stencilQuery" placeholder="Search Stencils">
             <div data-ng-repeat="stencil in filterFn(stencilQuery, stencils)">
                 <div class="stencil col-xs-6 col-md-4 col-lg-4"
                 draggable="true" data-drag="true" jqyoui-draggable ng-model="stencil"
