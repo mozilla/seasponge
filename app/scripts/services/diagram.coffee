@@ -140,9 +140,11 @@ angular.module('seaspongeApp')
                 element.render(instance, container) for element in @elements
 
                 # Render Flows
+                console.log 'about to connect'
                 instance.connect({
                     source: flow.sourceId
                     target: flow.targetId
+                    connector: ["Flowchart"]
                     }) for flow in @flows
 
                 # TODO: Render Boundaries
