@@ -100,7 +100,10 @@ angular.module('seaspongeApp')
         name = name || "download"
         data = data || ""
         # Create Blob
-        blob = new Blob([data], {type: type})
+        if data instanceof Blob
+            blob = data
+        else
+            blob = new Blob([data], {type: type})
         url = window.URL.createObjectURL(blob)
         # Create link
         link = document.createElement("a")
@@ -190,6 +193,19 @@ angular.module('seaspongeApp')
 
     $scope.openModelInfo = ->
         $scope.menu.infoOpen = true
+
+    $scope.exportDiagram = ->
+        # el = $scope.container.get(0)
+        # el = document.body
+        el = $('.drawing-panel').get(0)
+        html2canvas(el, {
+            onrendered: (canvas) ->
+                # console.log(canvas)
+                # document.body.appendChild(canvas)
+                canvas.toBlob((blob) ->
+                    downloadData("#{$scope.selectedDiagram.title}.jpg", blob, 'image/jpeg')
+                )
+        })
 
     $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
         # console.log "stencil-instance-click", arguments

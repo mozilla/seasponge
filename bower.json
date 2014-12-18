@@ -17,7 +17,9 @@
     "jquery-ui": "~1.11.1",
     "angular-bootstrap": "~0.11.2",
     "angular-ui-select": "~0.8.3",
-    "angular-dragdrop": "~1.0.8"
+    "angular-dragdrop": "~1.0.8",
+    "html2canvas": "0.4.1",
+    "blueimp-canvas-to-blob": "~2.1.1"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",
