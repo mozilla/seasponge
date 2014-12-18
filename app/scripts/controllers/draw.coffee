@@ -10,7 +10,6 @@
 angular.module('seaspongeApp')
   .controller 'DrawController', ['$scope', 'Stencils', 'model', ($scope, Stencils, model) ->
     
-    console.log('model', model)
     $scope.model = model
     $scope.stencils = Stencils
     $scope.stencilQuery = ''
@@ -25,6 +24,8 @@ angular.module('seaspongeApp')
       else
         values
 
+    $scope.semverRegex = new RegExp("\\bv?(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?\\b")
+    
     $scope.menu = {
         infoOpen: false
         stencilsOpen: true
