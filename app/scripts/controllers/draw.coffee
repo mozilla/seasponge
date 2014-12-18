@@ -195,14 +195,30 @@ angular.module('seaspongeApp')
         $scope.menu.infoOpen = true
 
     $scope.exportDiagram = ->
-        # el = $scope.container.get(0)
-        # el = document.body
         el = $('.drawing-panel').get(0)
+        # Render Elements
         html2canvas(el, {
             onrendered: (canvas) ->
-                # console.log(canvas)
-                # document.body.appendChild(canvas)
+                ctx = canvas.getContext('2d')
+                # Render Flows/connections on top of same canvas
+                $flows = $('> svg', el)
+                $flows.each(() ->
+                    $svg = $(@)
+                    offset = $svg.position()
+                    svgStr = $svg.prop('outerHTML')
+                    ctx.drawSvg(svgStr, offset.left, offset.top)
+                )
+                # Render Endpoints
+                $endpoints = $('._jsPlumb_endpoint > svg', el)
+                $endpoints.each(() ->
+                    $svg = $(@)
+                    offset = $svg.parent().position()
+                    svgStr = $svg.prop('outerHTML')
+                    ctx.drawSvg(svgStr, offset.left, offset.top)
+                )
+                # Convert canvas to Blob
                 canvas.toBlob((blob) ->
+                    # Download Blob canvas
                     downloadData("#{$scope.selectedDiagram.title}.jpg", blob, 'image/jpeg')
                 )
         })
