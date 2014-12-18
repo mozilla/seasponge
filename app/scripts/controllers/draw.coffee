@@ -10,9 +10,19 @@
 angular.module('seaspongeApp')
   .controller 'DrawController', ['$scope', 'Stencils', ($scope, Stencils) ->
     
+    
     $scope.stencils = Stencils
-    console.log('stencils', Stencils)
-    console.log('scope stencils', $scope.stencils)
+    $scope.stencilQuery = ''
+    $scope.filterFn = (query, values) ->
+      results = []
+      angular.forEach values, ((value, key) ->
+        @push value  if value.title.toLowerCase().indexOf(query.toLowerCase()) isnt -1 or value.category.toLowerCase().indexOf(query.toLowerCase()) isnt -1
+        return
+      ), results
+      if results.length > 0
+        results
+      else
+        values
 
     $scope.menu = {
       stencilsOpen: true
