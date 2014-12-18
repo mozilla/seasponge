@@ -52,10 +52,10 @@
       <accordion close-others="false">
 
         <!-- Model Info -->
-        <accordion-group is-open="menu.infoOpen">
+        <accordion-group is-open="menu.modelOpen">
 
           <accordion-heading>
-            Model Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
+            Model Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.modelOpen, 'glyphicon-chevron-right': !menu.modelOpen}"></i>
           </accordion-heading>
 
           <form class="form" role="form" name="modelForm">
@@ -122,6 +122,69 @@
 
         </accordion-group>
 
+        <!-- Diagram Information -->
+        <accordion-group is-open="menu.diagramOpen">
+
+          <accordion-heading>
+            Diagram Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.diagramOpen, 'glyphicon-chevron-right': !menu.diagramOpen}"></i>
+          </accordion-heading>
+
+          <div class="lead" ng-show="!selectedDiagram">
+            Select a Diagram to view its information
+          </div>
+
+          <form class="form" role="form" 
+          name="diagramForm" ng-show="selectedDiagram">
+
+            <div class="form-group">
+              <label for="diagram-title" class="">Diagram Title</label>
+              <input type="text"
+              class="form-control" placeholder="Diagram Title" 
+              id="diagram-title" name="diagramTitle"
+              ng-model="selectedDiagram.title" required ng-required=true
+              ng-minlength=2>
+
+              <span class="text-danger"
+              ng-show="diagramForm.diagramTitle.$error.required">
+                  Diagram Title is required!
+              </span>
+              <span class="text-danger"
+              ng-show="diagramForm.diagramTitle.$error.minlength">
+                  Too short!
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label class=""># of Elements</label>
+              <span>{{selectedDiagram.elements.length}}</span>
+            </div>
+
+            <div class="form-group">
+              <label class=""># of Flows</label>
+              <span>{{selectedDiagram.flows.length}}</span>
+            </div>
+
+            <div class="form-group">
+              <label class=""># of Boundaries</label>
+              <span>{{selectedDiagram.boundaries.length}}</span>
+            </div>
+
+          </form>
+
+        </accordion-group>
+
+        <!-- Threats -->
+        <accordion-group is-open="menu.threatsOpen">
+
+          <accordion-heading>
+            Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
+          </accordion-heading>
+
+          <div class="lead">
+              Threat Information coming soon!
+          </div>
+
+        </accordion-group>
 
         <!-- Stencils -->
         <accordion-group class="stencils-container" is-open="menu.stencilsOpen">
@@ -146,19 +209,6 @@
             </div>
           
           </div>
-        </accordion-group>
-
-        <!-- Threats -->
-        <accordion-group is-open="menu.threatsOpen">
-
-          <accordion-heading>
-            Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
-          </accordion-heading>
-
-          <div class="lead">
-              Threat Information coming soon!
-          </div>
-
         </accordion-group>
 
         <!-- Selected Element Properties -->
