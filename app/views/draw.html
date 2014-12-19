@@ -4,18 +4,29 @@
   <div class="nav-top">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group">
-        <a href="#/create" class="btn btn-default">
-            <i class="glyphicon glyphicon-plus"></i>
-            New
-        </a>
-        <a href="#/load" class="btn btn-default">
-            <i class="glyphicon glyphicon-floppy-open"></i>
-            Load
-        </a>
-        <button type="button" class="btn btn-default" ng-click="saveModel()">
-            <i class="glyphicon glyphicon-floppy-save"></i> 
-            Save
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          File <span class="caret"></span>
         </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#/create">
+            <i class="glyphicon glyphicon-plus"></i>
+            New Model
+          </a></li>
+          <li class="divider"></li>
+          <li><a ng-click="saveModel()">
+            <i class="glyphicon glyphicon-floppy-save"></i>
+            Save Model
+          </a></li>
+          <li><a href="#/load">
+            <i class="glyphicon glyphicon-floppy-open"></i>
+            Load Model
+          </a></li>
+          <li class="divider"></li>
+          <li><a ng-click="exportDiagram()">
+            <i class="glyphicon glyphicon-export"></i>
+            Export Diagram as Image
+          </a></li>
+        </ul>
       </div>
       <div class="btn-group">
         <button type="button" class="btn btn-default">
@@ -32,12 +43,21 @@
               {{model.title}}
           </button>
       </div>
+
       <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default" 
-        ng-click="exportDiagram()">
-            <i class="glyphicon glyphicon-export"></i>
-            Export Diagram as Image
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <i class="glyphicon glyphicon-question-sign"></i> Help <span class="caret"></span>
         </button>
+        <ul class="dropdown-menu" role="menu">
+          <li>
+            <a href="#/about">
+              About SeaSponge
+            </a>
+          </li>
+          <li><a href="https://github.com/mozilla/seasponge/wiki">
+            Documentation
+          </a></li>
+        </ul>
       </div>
     </div>
     <br/>
