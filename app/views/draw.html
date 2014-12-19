@@ -13,14 +13,19 @@
             Load
         </a>
         <button type="button" class="btn btn-default" ng-click="saveModel()">
-            <i class="glyphicon glyphicon-floppy-save"></i> Save
+            <i class="glyphicon glyphicon-floppy-save"></i> 
+            Save
         </button>
       </div>
       <div class="btn-group">
         <button type="button" class="btn btn-default">
-        <i class="glyphicon glyphicon-zoom-in"></i> Zoom-In</button>
+            <i class="glyphicon glyphicon-zoom-in"></i> 
+            Zoom-In
+        </button>
         <button type="button" class="btn btn-default">
-        <i class="glyphicon glyphicon-zoom-out"></i> Zoom-Out</button>
+            <i class="glyphicon glyphicon-zoom-out"></i> 
+            Zoom-Out
+        </button>
       </div>
       <div class="btn-group">
           <button type="button" class="btn btn-link" ng-click="openModelInfo()">
@@ -47,39 +52,139 @@
       <accordion close-others="false">
 
         <!-- Model Info -->
-        <accordion-group is-open="menu.infoOpen">
+        <accordion-group is-open="menu.modelOpen">
 
           <accordion-heading>
-            Model Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
+            Model Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.modelOpen, 'glyphicon-chevron-right': !menu.modelOpen}"></i>
           </accordion-heading>
 
-          <form class="form" role="form">
+          <form class="form" role="form" name="modelForm">
 
             <div class="form-group">
               <label for="model-title" class="">Model Title</label>
               <input type="text"
-              class="form-control" id="model-title" placeholder="Model Title" 
-              ng-model="model.title">
+              class="form-control" placeholder="Model Title" 
+              id="model-title" name="modelTitle"
+              ng-model="model.title" required ng-required=true
+              ng-minlength=2>
+
+              <span class="text-danger"
+              ng-show="modelForm.modelTitle.$error.required">
+                  Model Title is required!
+              </span>
+              <span class="text-danger"
+              ng-show="modelForm.modelTitle.$error.minlength">
+                  Too short!
+              </span>
             </div>
 
             <div class="form-group">
               <label for="model-version" class="">Version</label>
-              <input type="text"
-              class="form-control" id="model-version" placeholder="Model Version" 
-              ng-model="model.version">
+              <input type="text" class="form-control" 
+              placeholder="Model Version" 
+              id="model-version" name="modelVersion" 
+              ng-model="model.version"
+              ng-required=true
+              ng-pattern=semverRegex>
+
+              <span class="text-danger"
+              ng-show="modelForm.modelVersion.$error.required">
+                  Model Version is required!
+              </span>
+              <span class="text-danger"
+              ng-show="modelForm.modelVersion.$error.pattern">
+                  Please follow <a href="http://semver.org/" target="_blank" 
+                  class=" btn-link">semver</a>.
+              </span>
             </div>
 
             <div class="form-group">
               <label for="model-authors" class="">Authors</label>
               <input type="text"
-              class="form-control" id="model-authors" placeholder="Model Authors" 
+              class="form-control" placeholder="Model Authors" 
+              id="model-authors" name="modelAuthors"
+              ng-required=true
+              ng-minlength=2
               ng-model="model.authors">
+
+              <span class="text-danger"
+              ng-show="modelForm.modelAuthors.$error.required">
+                  Model Authors is required!
+              </span>
+              <span class="text-danger"
+              ng-show="modelForm.modelAuthors.$error.minlength">
+                  Too short!
+              </span>
+            
             </div>
 
           </form>
 
         </accordion-group>
 
+        <!-- Diagram Information -->
+        <accordion-group is-open="menu.diagramOpen">
+
+          <accordion-heading>
+            Diagram Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.diagramOpen, 'glyphicon-chevron-right': !menu.diagramOpen}"></i>
+          </accordion-heading>
+
+          <div class="lead" ng-show="!selectedDiagram">
+            Select a Diagram to view its information
+          </div>
+
+          <form class="form" role="form" 
+          name="diagramForm" ng-show="selectedDiagram">
+
+            <div class="form-group">
+              <label for="diagram-title" class="">Diagram Title</label>
+              <input type="text"
+              class="form-control" placeholder="Diagram Title" 
+              id="diagram-title" name="diagramTitle"
+              ng-model="selectedDiagram.title" required ng-required=true
+              ng-minlength=2>
+
+              <span class="text-danger"
+              ng-show="diagramForm.diagramTitle.$error.required">
+                  Diagram Title is required!
+              </span>
+              <span class="text-danger"
+              ng-show="diagramForm.diagramTitle.$error.minlength">
+                  Too short!
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label class=""># of Elements</label>
+              <span>{{selectedDiagram.elements.length}}</span>
+            </div>
+
+            <div class="form-group">
+              <label class=""># of Flows</label>
+              <span>{{selectedDiagram.flows.length}}</span>
+            </div>
+
+            <div class="form-group">
+              <label class=""># of Boundaries</label>
+              <span>{{selectedDiagram.boundaries.length}}</span>
+            </div>
+
+          </form>
+
+        </accordion-group>
+
+        <!-- Threats -->
+        <accordion-group is-open="menu.threatsOpen">
+
+          <accordion-heading>
+            Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
+          </accordion-heading>
+
+          <div class="lead">
+              Threat Information coming soon!
+          </div>
+
+        </accordion-group>
 
         <!-- Stencils -->
         <accordion-group class="stencils-container" is-open="menu.stencilsOpen">
@@ -104,19 +209,6 @@
             </div>
           
           </div>
-        </accordion-group>
-
-        <!-- Threats -->
-        <accordion-group is-open="menu.threatsOpen">
-
-          <accordion-heading>
-            Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
-          </accordion-heading>
-
-          <div class="lead">
-              Threat Information coming soon!
-          </div>
-
         </accordion-group>
 
         <!-- Selected Element Properties -->

@@ -10,7 +10,6 @@
 angular.module('seaspongeApp')
   .controller 'DrawController', ['$scope', 'Stencils', 'model', ($scope, Stencils, model) ->
     
-    console.log('model', model)
     $scope.model = model
     $scope.stencils = Stencils
     $scope.stencilQuery = ''
@@ -25,8 +24,11 @@ angular.module('seaspongeApp')
       else
         values
 
+    $scope.semverRegex = new RegExp("\\bv?(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?\\b")
+    
     $scope.menu = {
-        infoOpen: false
+        modelOpen: false
+        diagramOpen: false
         stencilsOpen: true
         threatsOpen: false
         propertiesOpen: false
@@ -196,12 +198,18 @@ angular.module('seaspongeApp')
             # Select new diagram
             diagram.selected = true
             $scope.selectedDiagram = diagram
-            # console.log(diagram.serialize())
             # De-select Stencil
             $scope.selectedStencil = false
+            # Open Diagram information menu
+            $scope.menu.diagramOpen = true
+            # Close Model information menu
+            $scope.menu.modelOpen = false
 
     $scope.openModelInfo = ->
-        $scope.menu.infoOpen = true
+        # Open Model information menu
+        $scope.menu.modelOpen = true
+        # Close Diagram information menu
+        $scope.menu.diagramOpen = false
 
     $scope.exportDiagram = ->
         el = $('.drawing-panel').get(0)
@@ -232,6 +240,7 @@ angular.module('seaspongeApp')
                 )
         })
 
+    # Listen for Stencil/Element click events
     $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
         # console.log "stencil-instance-click", arguments
         $scope.$apply ->
@@ -239,7 +248,7 @@ angular.module('seaspongeApp')
             $('.selected-stencil').removeClass('selected-stencil')
             # Check if same or different stencil instance
             if $scope.selectedStencil is inst
-                # Same instance
+                # Same instance therefore De-select
                 # Change selected in $scope
                 $scope.selectedStencil = false
                 $scope.menu.propertiesOpen = false
@@ -250,6 +259,8 @@ angular.module('seaspongeApp')
                 # Change selected in $scope
                 $scope.selectedStencil = inst
                 $scope.menu.stencilsOpen = false
+                $scope.menu.modelOpen = false
+                $scope.menu.diagramOpen = false
                 $scope.menu.propertiesOpen = true
 
     # Create Diagram in Model if non exists already
