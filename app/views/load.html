@@ -1,16 +1,31 @@
-<div class="container">
-
-    <div class="jumbotron">
-        <h1>Load SeaSponge Model</h1>
-        <p class="lead">
-        Please select a file to load.
-        </p>
-
-        <div class="form-group">
-            <label for="input-file">File input</label>
-            <input type="file" id="input-file" onchange="angular.element(this).scope().loadFile(this)">
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    
+    <div class="cover-container">
+      
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand">SeaSponge</h3>
+          <nav>
+            <ul class="nav masthead-nav">
+              <li><a href="#/about">About</a></li>
+              <li><a href="https://github.com/mozilla/seasponge/wiki">Documentation</a></li>
+              <li><a href="https://www.github.com/mozilla/seasponge">Github</a></li>
+            </ul>
+          </nav>
         </div>
+      </div>
+        
+      <div class="inner cover">
+        <p class="lead">Load a Model</p>
+        
+        <div class="form-group create-form">
+            <!-- <label for="input-file">File input</label> -->
+            <input type="file" class="load-form" id="input-file" onchange="angular.element(this).scope().loadFile(this)">
+        </div>
+      </div>
 
     </div>
 
+  </div>
 </div>
