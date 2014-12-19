@@ -12,13 +12,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
-/* Space out content a bit */
-body {
-/*   padding-top: 20px;
-padding-bottom: 20px;
- */
- }
-
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -134,7 +127,7 @@ a:hover {
   border: 1px solid #fff;
 }
 
-
+// BOOTSTRAP COVERPAGE TEMPLATE
 /*
  * Base structure
  */
@@ -142,13 +135,9 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #D0E2F2; /*#A7BCD9;*/
+  background-color: #fff; /*#A7BCD9;*/
 }
-body {
-  color: #000;
-  text-align: center;
-  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
-}
+
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
@@ -158,6 +147,9 @@ body {
   min-height: 100%;
   -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
           box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+  background-color: #D0E2F2; /*#A7BCD9;*/
+  text-align: center;
+
 }
 .site-wrapper-inner {
   display: table-cell;
