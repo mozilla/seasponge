@@ -203,14 +203,86 @@
         </accordion-group>
 
         <!-- Threats -->
+            <!-- New -->
+        <accordion-group is-open="menu.newThreatOpen">
+          
+          <accordion-heading>
+            New Threat <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.newThreatOpen, 'glyphicon-chevron-right': !menu.newThreatOpen}"></i>
+          </accordion-heading>
+
+          <form class="form" role="form" name="newThreatForm">
+
+            <div class="form-group">
+              <label for="threat-name" class="">Threat Name</label>
+              <input type="text"
+              class="form-control" placeholder="Threat Name" 
+              id="threat-name" name="threatName"
+              ng-model="newThreat.name" required ng-required=true
+              ng-minlength=2>
+
+              <span class="text-danger"
+              ng-show="newThreatForm.threatName.$error.required">
+                  Threat Name is required!
+              </span>
+              <span class="text-danger"
+              ng-show="newThreatForm.threatName.$error.minlength">
+                  Too short!
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="newThreat-severity" class="">Severity</label>
+              <select class="form-control" id="newThreat-severity" 
+              ng-options="severity for severity in severityOptions"
+              ng-model="newThreat.severity">
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="newThreat-description" class="">Description</label>
+              <textarea 
+              class="form-control" id="newThreat-description" placeholder="Describe the threat" ng-model="newThreat.description"></textarea>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-sm btn-primary">Add Threat</button>
+            </div>
+
+          </form>
+
+        </accordion-group>
+            <!-- Existing -->
         <accordion-group is-open="menu.threatsOpen">
 
           <accordion-heading>
             Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
           </accordion-heading>
 
-          <div class="lead">
-              Threat Information coming soon!
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Sample High <span class="label label-danger pull-right">High</span>
+            </div>
+            <div class="panel-body">
+              Top Priority
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Sample Medium <span class="label label-warning pull-right">Medium</span>
+            </div>
+            <div class="panel-body">
+              You should address this
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Sample Low <span class="label label-info pull-right">Low</span>
+            </div>
+            <div class="panel-body">
+              This could wait
+            </div>
           </div>
 
         </accordion-group>
