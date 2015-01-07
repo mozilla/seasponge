@@ -72,6 +72,12 @@ angular.module('seaspongeApp')
             @elements.push(stencil)
             return stencil
 
+        deleteElement: (element) ->
+            index = @elements.indexOf(element)
+            console.log(index, @elements)
+            if index > -1
+                @elements.splice(index, 1)
+
         save: (instance, container) ->
             # console.log('save', instance, container)
             # console.log('save before', @serialize())
@@ -97,7 +103,7 @@ angular.module('seaspongeApp')
             # console.log('Render diagram!', @, instance)
 
             jsPlumb.ready =>
-              
+
               init = (connection) ->
                 connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
                 connection.bind "editCompleted", (o) ->

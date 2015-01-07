@@ -9,7 +9,7 @@
 ###
 angular.module('seaspongeApp')
   .controller 'DrawController', ['$scope', 'Stencils', 'model', ($scope, Stencils, model) ->
-    
+
     $scope.model = model
     $scope.stencils = Stencils
     $scope.stencilQuery = ''
@@ -25,7 +25,7 @@ angular.module('seaspongeApp')
         values
 
     $scope.semverRegex = new RegExp("\\bv?(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?\\b")
-    
+
     $scope.menu = {
         modelOpen: false
         diagramOpen: false
@@ -106,7 +106,7 @@ angular.module('seaspongeApp')
     downloadData = (name, data, type) ->
         # Browser support
         window.URL = window.URL || window.webkitURL;
-        # Arg defaults 
+        # Arg defaults
         type = type || "text/plain";
         name = name || "download"
         data = data || ""
@@ -156,6 +156,18 @@ angular.module('seaspongeApp')
             # Render element
             element.render($scope.instance, $scope.container)
             return element
+
+    $scope.deleteElement = (element) ->
+        diagram = $scope.selectedDiagram
+        if element? and diagram
+            console.log('deleteElement', element, diagram)
+            diagram.deleteElement(element)
+            # Unselect Element
+            $scope.selectedStencil = false
+            # Clear old diagram
+            diagram.constructor.clear($scope.instance, $scope.container)
+            # Render new diagram
+            diagram.render($scope.instance, $scope.container)
 
     $scope.instance = instance = jsPlumb.getInstance(
                 # default drag options
@@ -271,6 +283,5 @@ angular.module('seaspongeApp')
     else
         diagram = model.diagrams[0]
         $scope.loadDiagram(diagram)
-            
-    ]
 
+    ]

@@ -1,5 +1,5 @@
 <div>
-  
+
   <!-- Top Nav Bar -->
   <div class="nav-top">
     <div class="btn-toolbar" role="toolbar">
@@ -39,11 +39,11 @@
       </div>
       <div class="btn-group">
         <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-zoom-in"></i> 
+            <i class="glyphicon glyphicon-zoom-in"></i>
             Zoom-In
         </button>
         <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-zoom-out"></i> 
+            <i class="glyphicon glyphicon-zoom-out"></i>
             Zoom-Out
         </button>
       </div>
@@ -71,7 +71,7 @@
     </div>
     <br/>
   </div>
-  
+
   <!-- Main Content -->
   <div class="row">
 
@@ -92,7 +92,7 @@
             <div class="form-group">
               <label for="model-title" class="">Model Title</label>
               <input type="text"
-              class="form-control" placeholder="Model Title" 
+              class="form-control" placeholder="Model Title"
               id="model-title" name="modelTitle"
               ng-model="model.title" required ng-required=true
               ng-minlength=2>
@@ -109,9 +109,9 @@
 
             <div class="form-group">
               <label for="model-version" class="">Version</label>
-              <input type="text" class="form-control" 
-              placeholder="Model Version" 
-              id="model-version" name="modelVersion" 
+              <input type="text" class="form-control"
+              placeholder="Model Version"
+              id="model-version" name="modelVersion"
               ng-model="model.version"
               ng-required=true
               ng-pattern=semverRegex>
@@ -122,7 +122,7 @@
               </span>
               <span class="text-danger"
               ng-show="modelForm.modelVersion.$error.pattern">
-                  Please follow <a href="http://semver.org/" target="_blank" 
+                  Please follow <a href="http://semver.org/" target="_blank"
                   class=" btn-link">semver</a>.
               </span>
             </div>
@@ -130,7 +130,7 @@
             <div class="form-group">
               <label for="model-authors" class="">Authors</label>
               <input type="text"
-              class="form-control" placeholder="Model Authors" 
+              class="form-control" placeholder="Model Authors"
               id="model-authors" name="modelAuthors"
               ng-required=true
               ng-minlength=2
@@ -144,7 +144,7 @@
               ng-show="modelForm.modelAuthors.$error.minlength">
                   Too short!
               </span>
-            
+
             </div>
 
           </form>
@@ -162,13 +162,13 @@
             Select a Diagram to view its information
           </div>
 
-          <form class="form" role="form" 
+          <form class="form" role="form"
           name="diagramForm" ng-show="selectedDiagram">
 
             <div class="form-group">
               <label for="diagram-title" class="">Diagram Title</label>
               <input type="text"
-              class="form-control" placeholder="Diagram Title" 
+              class="form-control" placeholder="Diagram Title"
               id="diagram-title" name="diagramTitle"
               ng-model="selectedDiagram.title" required ng-required=true
               ng-minlength=2>
@@ -236,7 +236,7 @@
                   </a>
                 </div>
             </div>
-          
+
           </div>
         </accordion-group>
 
@@ -254,6 +254,13 @@
           <form class="form" role="form" ng-hide="!selectedStencil">
 
             <div class="form-group">
+                <button class="btn btn-danger form-control" ng-click="deleteElement(selectedStencil)">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    Delete Element
+                </button>
+            </div>
+
+            <div class="form-group">
               <label for="properties-name" class="">Name</label>
               <br/>
               {{selectedStencil.constructor.title}}
@@ -268,13 +275,13 @@
             <div class="form-group">
               <label for="properties-tags" class="">Tags</label>
               <input type="text"
-              class="form-control" id="properties-tags" placeholder="Comma separated tags" 
+              class="form-control" id="properties-tags" placeholder="Comma separated tags"
               ng-model="selectedStencil.tags">
             </div>
 
             <div class="form-group">
               <label for="properties-codeType" class="">Code Type</label>
-              <select class="form-control" id="properties-codeType" 
+              <select class="form-control" id="properties-codeType"
               ng-options="codeType for codeType in codeTypeOptions"
               ng-model="selectedStencil.codeType">
               </select>
@@ -282,7 +289,7 @@
 
             <div class="form-group">
               <label for="properties-runningAs" class="">Running As</label>
-              <select class="form-control" id="properties-runningAs" 
+              <select class="form-control" id="properties-runningAs"
               ng-model="selectedStencil.runningAs"
               ng-options="runningAs for runningAs in runningAsOptions">
               </select>
@@ -290,7 +297,7 @@
 
             <div class="form-group">
               <label for="properties-acceptsInput" class="">Accepts Input From</label>
-              <select class="form-control" id="properties-acceptsInput" 
+              <select class="form-control" id="properties-acceptsInput"
               ng-model="selectedStencil.acceptsInput"
               ng-options="acceptsInput for acceptsInput in acceptsInputOptions">
               </select>
@@ -298,50 +305,50 @@
 
             <div class="form-group">
               <label for="properties-authenticationScheme-uses" class="">Has Authentication Scheme</label>
-              <input type="checkbox" 
-              class="form-control" id="properties-authenticationScheme-uses" 
+              <input type="checkbox"
+              class="form-control" id="properties-authenticationScheme-uses"
               ng-model="selectedStencil.authenticationScheme.uses">
             </div>
 
             <div class="form-group" ng-if="selectedStencil.authenticationScheme.uses">
               <label for="properties-authenticationScheme-description" class="">Authentication Scheme Description</label>
-              <input type="text" 
-              class="form-control" id="properties-authenticationScheme-description" placeholder="Value" 
+              <input type="text"
+              class="form-control" id="properties-authenticationScheme-description" placeholder="Value"
               ng-model="selectedStencil.authenticationScheme.description">
             </div>
 
             <div class="form-group">
               <label for="properties-communicationProtocol-uses" class="">Has Communication Protocol</label>
-              <input type="checkbox" 
-              class="form-control" id="properties-communicationProtocol-uses" 
+              <input type="checkbox"
+              class="form-control" id="properties-communicationProtocol-uses"
               ng-model="selectedStencil.communicationProtocol.uses">
             </div>
 
             <div class="form-group" ng-if="selectedStencil.communicationProtocol.uses">
               <label for="properties-communicationProtocol-description" class="">Communication Protocol Description</label>
-              <input type="text" 
-              class="form-control" id="properties-communicationProtocol-description" placeholder="Value" 
+              <input type="text"
+              class="form-control" id="properties-communicationProtocol-description" placeholder="Value"
               ng-model="selectedStencil.communicationProtocol.description">
             </div>
 
             <div class="form-group">
               <label for="properties-authorizationScheme-uses" class="">Has Authorization Scheme</label>
-              <input type="checkbox" 
-              class="form-control" id="properties-authorizationScheme-uses" 
+              <input type="checkbox"
+              class="form-control" id="properties-authorizationScheme-uses"
               ng-model="selectedStencil.authorizationScheme.uses">
             </div>
 
             <div class="form-group" ng-if="selectedStencil.authorizationScheme.uses">
               <label for="properties-authorizationScheme-description" class="">Authorization Scheme Description</label>
               <input type="text"
-              class="form-control" id="properties-authorizationScheme-description" placeholder="Value" 
+              class="form-control" id="properties-authorizationScheme-description" placeholder="Value"
               ng-model="selectedStencil.authorizationScheme.description">
             </div>
 
             <div class="form-group">
               <label for="properties-notes" class="">Notes</label>
-              <textarea 
-              class="form-control" id="properties-notes" placeholder="Notes"></textarea 
+              <textarea
+              class="form-control" id="properties-notes" placeholder="Notes"></textarea
               ng-model="selectedStencil.notes">
             </div>
 
@@ -362,7 +369,7 @@
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
-        <li ng-repeat="diagram in model.diagrams" 
+        <li ng-repeat="diagram in model.diagrams"
         ng-class="{active: diagram.selected}">
             <a href="" ng-click="loadDiagram(diagram)" role="tab" data-toggle="tab">{{diagram.title}}</a>
         </li>
