@@ -188,7 +188,6 @@ angular.module('seaspongeApp')
       deserialize: (serialized) =>
         # console.log('serialized element', serialized)
         attr = serialized.attributes
-
         # Local
         @uuid = serialized.id
         @tags = serialized.tags
@@ -201,11 +200,9 @@ angular.module('seaspongeApp')
         @dataClassifications = attr.dataClassifications
         @securityControls = attr.securityControls
         @notes = serialized.notes
-
         # Update
         @$element.attr('id', @uuid)
         @setPosition(serialized.location)
-
         return @
 
       sourceEndpoint:

@@ -56,10 +56,8 @@ angular.module('seaspongeApp')
                 @authors = serialized.authors
                 @threats = serialized.threats
                 @notes = serialized.notes
-
                 # Nested
                 @diagrams = (@addDiagram().deserialize(diagram) for diagram in serialized.diagrams)
-
                 return @
 
         return new Model() # Return Model instance

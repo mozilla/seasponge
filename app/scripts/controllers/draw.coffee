@@ -8,11 +8,12 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'DrawController', ['$scope', 'Stencils', 'model', ($scope, Stencils, model) ->
+  .controller 'DrawController', ['$scope', '$location', 'Stencils', 'model', ($scope, $location, Stencils, model) ->
 
     $scope.model = model
     $scope.stencils = Stencils
     $scope.stencilQuery = ''
+    $scope.shareLink = null
     $scope.filterFn = (query, values) ->
       results = []
       angular.forEach values, ((value, key) ->
@@ -90,6 +91,15 @@ angular.module('seaspongeApp')
     #   console.log('types', arr, $scope.stencils)
     #   return arr
     # )()
+
+    $scope.shareModel = ->
+        model = $scope.model
+        serialized = model.serialize()
+        str = JSON.stringify(serialized)
+        data = encodeURIComponent(str)
+        # console.log(serialized, data)
+        link = "#{location.origin}/#/load?model=#{data}"
+        $scope.shareLink = link
 
     # Drag'n'Drop Stencil support
     $scope.dropStencil = @dropStencil = (event, ui) ->

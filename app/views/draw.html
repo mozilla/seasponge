@@ -1,76 +1,114 @@
 <div>
 
-  <!-- Top Nav Bar -->
-  <div class="nav-top">
-    <div class="btn-toolbar" role="toolbar">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <span class="glyphicon glyphicon-floppy-disk"></span> File <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#/create">
-            <i class="glyphicon glyphicon-plus"></i>
-            New Model
-          </a></li>
-          <li class="divider"></li>
-          <li><a ng-click="saveModel()">
-            <i class="glyphicon glyphicon-floppy-save"></i>
-            Save Model
-          </a></li>
-          <li><a href="#/load">
-            <i class="glyphicon glyphicon-floppy-open"></i>
-            Load Model
-          </a></li>
-          <li class="divider"></li>
-          <li><a ng-click="exportDiagram()">
-            <i class="glyphicon glyphicon-export"></i>
-            Export Diagram as Image
-          </a></li>
-          <li class="divider"></li>
-          <li><a ng-click="">
-            <i class="glyphicon glyphicon-export"></i>
-            Export Report as PDF
-          </a></li>
-          <li><a ng-click="">
-            <i class="glyphicon glyphicon-export"></i>
-            Export Diagram as HTML
-          </a></li>
-        </ul>
-      </div>
-      <div class="btn-group">
-        <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-zoom-in"></i>
-            Zoom-In
-        </button>
-        <button type="button" class="btn btn-default">
-            <i class="glyphicon glyphicon-zoom-out"></i>
-            Zoom-Out
-        </button>
-      </div>
-      <div class="btn-group">
-          <button type="button" class="btn btn-link" ng-click="openModelInfo()">
-              {{model.title}}
-          </button>
-      </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://github.com/mozilla/seasponge" target="_blank">SeaSponge</a>
+            </div>
 
-      <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <i class="glyphicon glyphicon-question-sign"></i> Help <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li>
-            <a href="#/about">
-              About SeaSponge
-            </a>
-          </li>
-          <li><a href="https://github.com/mozilla/seasponge/wiki">
-            Documentation
-          </a></li>
-        </ul>
-      </div>
-    </div>
-    <br/>
-  </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"
+                        data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-floppy-disk"></span> File <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#/create">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                New Model
+                            </a></li>
+                            <li class="divider"></li>
+                            <li><a ng-click="saveModel()">
+                                <i class="glyphicon glyphicon-floppy-save"></i>
+                                Save Model
+                            </a></li>
+                            <li><a href="#/load">
+                                <i class="glyphicon glyphicon-floppy-open"></i>
+                                Load Model
+                            </a></li>
+                            <li class="divider"></li>
+                            <li><a ng-click="exportDiagram()">
+                                <i class="glyphicon glyphicon-export"></i>
+                                Export Diagram as Image
+                            </a></li>
+                            <li class="divider"></li>
+                            <li><a ng-click="">
+                                <i class="glyphicon glyphicon-export"></i>
+                                Export Report as PDF
+                            </a></li>
+                            <li><a ng-click="">
+                                <i class="glyphicon glyphicon-export"></i>
+                                Export Diagram as HTML
+                            </a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li><a class="">
+                        <i class="glyphicon glyphicon-zoom-in"></i>
+                        Zoom-In
+                    </a></li>
+                    <li><a class="">
+                        <i class="glyphicon glyphicon-zoom-in"></i>
+                        Zoom-Out
+                    </a></li>
+                </ul>
+
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a type="button" class="" ng-click="openModelInfo()">
+                            {{model.title}}
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <form class="navbar-form" role="search">
+                                <button type="button" class="btn btn-default"
+                                ng-click="shareModel()">
+                                    <span class="glyphicon glyphicon-share"></span>
+                                    Refresh Sharable Link
+                                </button>
+                                <div class="form-group">
+                                    <input type="text"
+                                    class="form-control" placeholder="Share link"
+                                    id="share-link" name="modelLink"
+                                    ng-model="shareLink">
+                                </div>
+                            </form>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="glyphicon glyphicon-question-sign"></i> Help <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#/about">
+                                        About SeaSponge
+                                    </a>
+                                </li>
+                                <li><a target="_blank" href="https://github.com/mozilla/seasponge/wiki">
+                                    Documentation
+                                </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 
   <!-- Main Content -->
   <div class="row">
