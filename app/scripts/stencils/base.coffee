@@ -22,12 +22,16 @@ angular.module('seaspongeApp')
       authenticationScheme: null
       authorizationScheme: null
       communicationProtocol: null
+      dataClassifications: null
+      securityControls: null
       notes: "There is no available notes."
 
       constructor: () ->
         # Instance variables
         @uuid = jsPlumbUtil.uuid()
         @tags = []
+        @dataClassifications = []
+        @securityControls = []
         @location = {
             left: 0
             top: 0
@@ -48,7 +52,7 @@ angular.module('seaspongeApp')
         # Create new element
         @$element = $element = $('<div />', {
           id: @uuid
-        }).append($('<p/>').text("#{@constructor.title} <#{@constructor.category}>"))
+        } ).append($('<p/>').text("#{@constructor.title} <#{@constructor.category}>"))
         # Data
         @$element.data('stencil', @)
         # Add class names
@@ -64,7 +68,7 @@ angular.module('seaspongeApp')
         # Check if $element has parent
         if @$element.parent().length is 0
             # Add to container
-            $container.append(@$element);
+            $container.append(@$element) ;
         # Clear previous events
         @$element.unbind('click')
         @$element.unbind('mouseup')
@@ -131,6 +135,32 @@ angular.module('seaspongeApp')
         @$element.css(position)
         return @getPosition()
 
+      addDataClassification: ->
+          @dataClassifications.push({
+            "title": "Untitled Data Classification"
+            "type": "public" # Default
+          } )
+          return @
+
+      removeDataClassification: (dataClassification) ->
+          index = @dataClassifications.indexOf(dataClassification)
+          if index > - 1
+              @dataClassifications.splice(index, 1)
+          return @dataClassifications
+
+      addSecurityControl: ->
+          @securityControls.push({
+            "title": "Untitled Security Control"
+            "type": "confidentiality" # Default
+          } )
+          return @
+
+      removeSecurityControl: (securityControl) ->
+          index = @securityControls.indexOf(securityControl)
+          if index > - 1
+              @securityControls.splice(index, 1)
+          return @securityControls
+
       serialize: =>
         serialized = {
           id: @uuid
@@ -149,6 +179,8 @@ angular.module('seaspongeApp')
             authenticationScheme: @authenticationScheme
             authorizationScheme: @authorizationScheme
             communicationProtocol: @communicationProtocol
+            dataClassifications: @dataClassifications
+            securityControls: @securityControls
           }
         }
         return serialized
@@ -156,7 +188,7 @@ angular.module('seaspongeApp')
       deserialize: (serialized) =>
         # console.log('serialized element', serialized)
         attr = serialized.attributes
-        
+
         # Local
         @uuid = serialized.id
         @tags = serialized.tags
@@ -166,7 +198,9 @@ angular.module('seaspongeApp')
         @authenticationScheme = attr.authenticationScheme
         @authorizationScheme = attr.authorizationScheme
         @communicationProtocol = attr.communicationProtocol
-        @notes =  serialized.notes
+        @dataClassifications = attr.dataClassifications
+        @securityControls = attr.securityControls
+        @notes = serialized.notes
 
         # Update
         @$element.attr('id', @uuid)
@@ -219,7 +253,7 @@ angular.module('seaspongeApp')
           fillStyle: "#7AB02C"
           radius: 11
         hoverPaintStyle: @endpointHoverStyle
-        maxConnections: -1
+        maxConnections: - 1
         dropOptions:
           hoverClass: "hover"
           activeClass: "active"
@@ -229,7 +263,7 @@ angular.module('seaspongeApp')
           {
             location: [
               0.5
-              -0.5
+               - 0.5
             ]
             # label: "Drop"
             cssClass: "endpointTargetLabel"

@@ -352,6 +352,78 @@
               ng-model="selectedStencil.notes">
             </div>
 
+            <div class="form-group">
+                <label for="properties-dataClassifications" class="">Data Classifications</label>
+            </div>
+            <div class="well">
+                <div class="form-group"
+                ng-repeat="dataClassification in selectedStencil.dataClassifications"
+                >
+                    <div class="form-group">
+                        <label for="properties-dataClassification-title" class="">Title</label>
+                        <input type="text"
+                        class="form-control" id="properties-dataClassification-title" placeholder="Value"
+                        ng-model="dataClassification.title">
+                    </div>
+                    <div class="form-group">
+                        <label for="properties-dataClassification-type" class="">Type</label>
+                        <select class="form-control" id="properties-dataClassification-type"
+                        ng-model="dataClassification.type"
+                        ng-options="dataClassificationOption for dataClassificationOption in dataClassificationOptions">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn btn-danger"
+                        ng-click="selectedStencil.removeDataClassification(dataClassification)"
+                        >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                    <hr/>
+                </div>
+                <button class="btn btn-primary form-control"
+                ng-click="selectedStencil.addDataClassification()">
+                    Add Data Classification
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label for="properties-securityControlOptions" class="">Security Controls</label>
+            </div>
+            <div class="well">
+                <div
+                class="form-group"
+                ng-repeat="securityControl in selectedStencil.securityControls"
+                >
+                    <div class="form-group">
+                        <label for="properties-securityControl-title" class="">Title</label>
+                        <input type="text"
+                        class="form-control" id="properties-securityControl-title" placeholder="Value"
+                        ng-model="securityControl.title">
+                    </div>
+                    <div class="form-group">
+                        <label for="properties-securityControl-type" class="">Type</label>
+                        <select class="form-control" id="properties-securityControl-type"
+                        ng-model="securityControl.type"
+                        ng-options="securityControlOption for securityControlOption in securityControlOptions">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control btn btn-danger"
+                        ng-click="selectedStencil.removeSecurityControl(securityControl)"
+                        >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                    <hr/>
+                </div>
+                <button class="btn btn-primary form-control"
+                ng-click="selectedStencil.addSecurityControl()">
+                    Add Security Control
+                </button>
+            </div>
+
+
           </form>
 
           <div class="lead" ng-hide="selectedStencil">
