@@ -98,7 +98,7 @@ angular.module('seaspongeApp')
         str = JSON.stringify(serialized)
         data = encodeURIComponent(str)
         # console.log(serialized, data)
-        link = "#{location.origin}/#/load?model=#{data}"
+        link = "#{location.origin}#{location.pathname}#/load?model=#{data}"
         $scope.shareLink = link
 
     # Drag'n'Drop Stencil support
