@@ -104,6 +104,16 @@ angular.module('seaspongeApp')
     #   return arr
     # )()
 
+    $scope.generateThreat = ->
+        model.addThreat($scope.newThreat)
+        $scope.menu.newThreatOpen = false
+        $scope.menu.threatsOpen = true
+        $scope.newThreat = {
+            name: ''
+            severity: null
+            description: ''
+        }
+
     $scope.shareModel = ->
         model = $scope.model
         serialized = model.serialize()

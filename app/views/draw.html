@@ -283,7 +283,7 @@
             </div>
 
             <div class="form-group">
-              <button class="btn btn-sm btn-primary">Add Threat</button>
+              <button class="btn btn-sm btn-primary" ng-click="generateThreat()">Add Threat</button>
             </div>
 
           </form>
@@ -296,32 +296,20 @@
             Threat Information <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.threatsOpen, 'glyphicon-chevron-right': !menu.threatsOpen}"></i>
           </accordion-heading>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              Sample High <span class="label label-danger pull-right">High</span>
-            </div>
-            <div class="panel-body">
-              Top Priority
-            </div>
-          </div>
+          <p class="lead" ng-hide="model.threatLength()">
+            Add threats first
+          </p>
 
-          <div class="panel panel-default">
+          <div class="panel panel-default" ng-repeat-start="item in model.threats">
             <div class="panel-heading">
-              Sample Medium <span class="label label-warning pull-right">Medium</span>
+              <span class="label label-danger">{{item.severity}}</span> {{item.name}} 
+              <button class="btn btn-danger btn-xs pull-right" ng-click="model.removeThreat(item)"><span class="glyphicon glyphicon-trash"></span></button>
             </div>
             <div class="panel-body">
-              You should address this
+              {{item.description}}
             </div>
           </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              Sample Low <span class="label label-info pull-right">Low</span>
-            </div>
-            <div class="panel-body">
-              This could wait
-            </div>
-          </div>
+          <br ng-repeat-end>
 
         </accordion-group>
 
