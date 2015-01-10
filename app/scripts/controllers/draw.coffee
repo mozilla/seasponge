@@ -26,11 +26,18 @@ angular.module('seaspongeApp')
         values
 
     $scope.semverRegex = new RegExp("\\bv?(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?\\b")
+    
+    $scope.newThreat = {
+        name: ''
+        severity: null
+        description: ''
+    }
 
     $scope.menu = {
         modelOpen: false
         diagramOpen: false
         stencilsOpen: true
+        newThreatOpen: false
         threatsOpen: false
         propertiesOpen: false
     }
@@ -41,6 +48,11 @@ angular.module('seaspongeApp')
     $scope.selectedDiagram = null
 
     # UI
+    $scope.severityOptions = [
+        "Low"
+        "Medium"
+        "High"
+    ]
     $scope.codeTypeOptions = [
         "Not selected"
         "Managed"
