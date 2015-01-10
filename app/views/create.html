@@ -38,6 +38,11 @@
             placeholder="Version" ng-model="version">
           </div>
 
+          <div class="form-group">
+            <label for="config">Configuration File</label>
+            <input type="file" class="load-form" id="config-file" onchange="angular.element(this).scope().loadFile(this)">
+          </div>
+
           <button type="submit" class="btn btn-default" ng-click="createModel()">Start Modeling!</button>
 
         </form>

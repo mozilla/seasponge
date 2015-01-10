@@ -16,6 +16,28 @@ angular.module('seaspongeApp')
         $scope.authors = "Glavin Wiechert"
         $scope.version = "0.0.0"
 
+        # Load Configuration from JSON string
+        loadJSON = (data) ->
+            # Data = JSON string
+            # console.log('data', data)
+            try
+                serialized = JSON.parse(data)
+                # console.log(serialized)
+                model.setConfiguration(serialized)
+                # console.log(model)
+            catch e
+                console.warn(e)
+
+        $scope.loadFile = (element) ->
+            # console.log('loadFile', arguments)
+            $scope.$apply (scope) ->
+                reader = new FileReader()
+                reader.onload = ->
+                    $scope.$apply (scope) ->
+                        data = reader.result
+                        loadJSON(data)
+                reader.readAsText(element.files[0])
+
         $scope.createModel = ->
             # Validate input
             # TODO
@@ -27,5 +49,4 @@ angular.module('seaspongeApp')
 
             # Transition to Draw route
             $location.path('/draw')
-
     ]

@@ -68,18 +68,9 @@ angular.module('seaspongeApp')
         "Other"
     ]
 
-    $scope.dataClassificationOptions = [
-        "public"
-        "internal"
-        "restricted"
-        "secret"
-        ]
+    $scope.dataClassificationOptions = model.dataClassificationOptions
 
-    $scope.securityControlOptions = [
-        "confidentiality"
-        "integrity"
-        "availability"
-    ]
+    $scope.securityControlOptions = model.securityControlOptions
 
     # Get container
     $scope.container = $('.diagram-contents')
