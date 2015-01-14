@@ -18,7 +18,7 @@ angular.module('seaspongeApp')
             title: "Untitled Model"
             version: "0.0.0"
             authors: ""
-            threats: ""
+            threats: []
             notes: ""
             diagrams: null
 
@@ -33,6 +33,21 @@ angular.module('seaspongeApp')
                 diagram = new Diagram()
                 @diagrams.push(diagram)
                 return diagram
+
+            addThreat: (threat) ->
+                @threats.push(threat)
+
+            removeThreat: (threat) ->
+                index = @threats.indexOf(threat)
+                if index > - 1
+                    @threats.splice(index, 1)
+                return
+
+            threatLength: ->
+                if @threats.length > 0
+                    return true
+                else
+                    return false
 
             removeDiagram: (diagram) ->
                 @diagrams.remove(diagram)

@@ -28,10 +28,17 @@ angular.module('seaspongeApp')
 
     $scope.semverRegex = new RegExp("\\bv?(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?\\b")
 
+    $scope.newThreat = {
+        name: 'Untitled Threat'
+        severity: 'Medium'
+        description: ''
+    }
+
     $scope.menu = {
         modelOpen: false
         diagramOpen: false
         stencilsOpen: true
+        newThreatOpen: false
         threatsOpen: false
         propertiesOpen: false
     }
@@ -40,8 +47,6 @@ angular.module('seaspongeApp')
 
     $scope.selectedStencil = false
     $scope.selectedDiagram = null
-
-    # UI
 
     $scope.dataClassificationOptions = model.dataClassificationOptions
 
@@ -57,6 +62,12 @@ angular.module('seaspongeApp')
     #   console.log('types', arr, $scope.stencils)
     #   return arr
     # )()
+
+    $scope.generateThreat = ->
+        newThreat = $.extend(true, {}, $scope.newThreat);
+        model.addThreat(newThreat)
+        $scope.menu.newThreatOpen = false
+        $scope.menu.threatsOpen = true
 
     $scope.shareModel = ->
         model = $scope.model
