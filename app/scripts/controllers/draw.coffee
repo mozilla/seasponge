@@ -26,10 +26,10 @@ angular.module('seaspongeApp')
         values
 
     $scope.semverRegex = new RegExp("\\bv?(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:\\.[\\da-z\\-]+)*)?\\b")
-    
+
     $scope.newThreat = {
-        name: ''
-        severity: null
+        name: 'Untitled Threat'
+        severity: 'Medium'
         description: ''
     }
 
@@ -105,14 +105,10 @@ angular.module('seaspongeApp')
     # )()
 
     $scope.generateThreat = ->
-        model.addThreat($scope.newThreat)
+        newThreat = $.extend(true, {}, $scope.newThreat);
+        model.addThreat(newThreat)
         $scope.menu.newThreatOpen = false
         $scope.menu.threatsOpen = true
-        $scope.newThreat = {
-            name: ''
-            severity: null
-            description: ''
-        }
 
     $scope.shareModel = ->
         model = $scope.model
