@@ -8,7 +8,7 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'CreateController', ['$scope', '$location', 'model', ($scope, $location, model) ->
+  .controller 'CreateController', ['$scope', '$location', 'model', 'config', ($scope, $location, model, config) ->
     
         console.log('model', model);
 
@@ -23,7 +23,7 @@ angular.module('seaspongeApp')
             try
                 serialized = JSON.parse(data)
                 # console.log(serialized)
-                model.setConfiguration(serialized)
+                config.setConfiguration(serialized)
                 # console.log(model)
             catch e
                 console.warn(e)

@@ -8,7 +8,7 @@
  # Factory in the seaspongeApp.
 ###
 angular.module('seaspongeApp')
-    .factory('model', ['Diagram', (Diagram) ->
+    .factory('model', ['Diagram', 'config', (Diagram, config) ->
 
         class Model
 
@@ -21,17 +21,6 @@ angular.module('seaspongeApp')
             threats: ""
             notes: ""
             diagrams: null
-            dataClassificationOptions: [
-                "public"
-                "internal"
-                "restricted"
-                "secret"
-            ]
-            securityControlOptions: [
-                "confidentiality"
-                "integrity"
-                "availability"
-            ]
 
             # Class Methods
 
@@ -48,11 +37,6 @@ angular.module('seaspongeApp')
             removeDiagram: (diagram) ->
                 @diagrams.remove(diagram)
 
-            setConfiguration: (serialized) =>
-                @dataClassificationOptions = serialized.dataClassificationOptions
-                @securityControlOptions = serialized.securityControlOptions
-                return
-
             serialize: =>
                 serialized = {
                     title: @title
@@ -60,8 +44,8 @@ angular.module('seaspongeApp')
                     date: new Date()
                     authors: @authors
                     configuration: {
-                        dataClassificationOptions: @dataClassificationOptions
-                        securityControlOptions: @securityControlOptions
+                        dataClassificationOptions: config.dataClassificationOptions
+                        securityControlOptions: config.securityControlOptions
                     }
                     threats: @threats
                     notes: @notes
@@ -75,8 +59,8 @@ angular.module('seaspongeApp')
                 @version = serialized.version
                 @authors = serialized.authors
                 @threats = serialized.threats
-                @dataClassificationOptions = serialized.configuration.dataClassificationOptions
-                @securityControlOptions = serialized.configuration.securityControlOptions
+                config.dataClassificationOptions = serialized.configuration.dataClassificationOptions
+                config.securityControlOptions = serialized.configuration.securityControlOptions
                 @notes = serialized.notes
                 # Nested
                 @diagrams = (@addDiagram().deserialize(diagram) for diagram in serialized.diagrams)
