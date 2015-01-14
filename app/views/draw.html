@@ -380,7 +380,7 @@
             <div class="form-group">
               <label for="properties-codeType" class="">Code Type</label>
               <select class="form-control" id="properties-codeType"
-              ng-options="codeType for codeType in codeTypeOptions"
+              ng-options="codeType for codeType in config.codeTypeOptions"
               ng-model="selectedStencil.codeType">
               </select>
             </div>
@@ -389,7 +389,7 @@
               <label for="properties-runningAs" class="">Running As</label>
               <select class="form-control" id="properties-runningAs"
               ng-model="selectedStencil.runningAs"
-              ng-options="runningAs for runningAs in runningAsOptions">
+              ng-options="runningAs for runningAs in config.runningAsOptions">
               </select>
             </div>
 
@@ -397,7 +397,7 @@
               <label for="properties-acceptsInput" class="">Accepts Input From</label>
               <select class="form-control" id="properties-acceptsInput"
               ng-model="selectedStencil.acceptsInput"
-              ng-options="acceptsInput for acceptsInput in acceptsInputOptions">
+              ng-options="acceptsInput for acceptsInput in config.acceptsInputOptions">
               </select>
             </div>
 
@@ -467,7 +467,7 @@
                         <label for="properties-dataClassification-type" class="">Type</label>
                         <select class="form-control" id="properties-dataClassification-type"
                         ng-model="dataClassification.type"
-                        ng-options="dataClassificationOption for dataClassificationOption in dataClassificationOptions">
+                        ng-options="dataClassificationOption for dataClassificationOption in config.dataClassificationOptions">
                         </select>
                     </div>
                     <div class="form-group">
@@ -503,7 +503,7 @@
                         <label for="properties-securityControl-type" class="">Type</label>
                         <select class="form-control" id="properties-securityControl-type"
                         ng-model="securityControl.type"
-                        ng-options="securityControlOption for securityControlOption in securityControlOptions">
+                        ng-options="securityControlOption for securityControlOption in config.securityControlOptions">
                         </select>
                     </div>
                     <div class="form-group">

@@ -8,7 +8,7 @@
  # Factory in the seaspongeApp.
 ###
 angular.module('seaspongeApp')
-    .factory('model', ['Diagram', (Diagram) ->
+    .factory('model', ['Diagram', 'config', (Diagram, config) ->
 
         class Model
 
@@ -58,6 +58,10 @@ angular.module('seaspongeApp')
                     version: @version
                     date: new Date()
                     authors: @authors
+                    configuration: {
+                        dataClassificationOptions: config.dataClassificationOptions
+                        securityControlOptions: config.securityControlOptions
+                    }
                     threats: @threats
                     notes: @notes
                     diagrams: (diagram.serialize() for diagram in @diagrams)
@@ -70,6 +74,8 @@ angular.module('seaspongeApp')
                 @version = serialized.version
                 @authors = serialized.authors
                 @threats = serialized.threats
+                config.dataClassificationOptions = serialized.configuration.dataClassificationOptions
+                config.securityControlOptions = serialized.configuration.securityControlOptions
                 @notes = serialized.notes
                 # Nested
                 @diagrams = (@addDiagram().deserialize(diagram) for diagram in serialized.diagrams)

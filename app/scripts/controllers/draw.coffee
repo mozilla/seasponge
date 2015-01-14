@@ -8,9 +8,10 @@
  # Controller of the seaspongeApp
 ###
 angular.module('seaspongeApp')
-  .controller 'DrawController', ['$scope', '$location', 'Stencils', 'model', ($scope, $location, Stencils, model) ->
+  .controller 'DrawController', ['$scope', '$location', 'Stencils', 'model', 'config', ($scope, $location, Stencils, model, config) ->
 
     $scope.model = model
+    $scope.config = config
     $scope.stencils = Stencils
     $scope.stencilQuery = ''
     $scope.shareLink = null
@@ -47,51 +48,9 @@ angular.module('seaspongeApp')
     $scope.selectedStencil = false
     $scope.selectedDiagram = null
 
-    # UI
-    $scope.severityOptions = [
-        "Low"
-        "Medium"
-        "High"
-    ]
-    $scope.codeTypeOptions = [
-        "Not selected"
-        "Managed"
-        "Unmanaged"
-    ]
-    $scope.runningAsOptions = [
-        "Kernel"
-        "System"
-        "Network Service"
-        "Local Service"
-        "Administrator"
-        "Standard User with Elevation"
-        "Standard User without Elevation"
-        "Windows Store App"
-    ]
-    $scope.acceptsInputOptions = [
-        "Not Selected"
-        "Any Remote User or Entity"
-        "Kernel, System, or Local Admin"
-        "Local or Network Service"
-        "Local Standard User With Elevation"
-        "Local Standard User Without Elevation"
-        "Windows Store Apps or App Container Processes"
-        "Nothing"
-        "Other"
-    ]
+    $scope.dataClassificationOptions = model.dataClassificationOptions
 
-    $scope.dataClassificationOptions = [
-        "public"
-        "internal"
-        "restricted"
-        "secret"
-        ]
-
-    $scope.securityControlOptions = [
-        "confidentiality"
-        "integrity"
-        "availability"
-    ]
+    $scope.securityControlOptions = model.securityControlOptions
 
     # Get container
     $scope.container = $('.diagram-contents')
