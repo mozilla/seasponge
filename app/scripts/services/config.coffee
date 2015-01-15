@@ -16,6 +16,7 @@ angular.module('seaspongeApp')
             setConfiguration: (serialized) ->
                 @dataClassificationOptions = serialized.dataClassificationOptions
                 @securityControlOptions = serialized.securityControlOptions
+                @severityOptions = serialized.severityOptions
                 return @
             
             codeTypeOptions: [
@@ -54,6 +55,11 @@ angular.module('seaspongeApp')
                 "confidentiality"
                 "integrity"
                 "availability"
+            ]
+            severityOptions: [
+                "Low"
+                "Medium"
+                "High"
             ]
         }
 

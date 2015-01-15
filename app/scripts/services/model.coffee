@@ -61,6 +61,7 @@ angular.module('seaspongeApp')
                     configuration: {
                         dataClassificationOptions: config.dataClassificationOptions
                         securityControlOptions: config.securityControlOptions
+                        severityOptions: config.severityOptions
                     }
                     threats: @threats
                     notes: @notes
@@ -76,6 +77,7 @@ angular.module('seaspongeApp')
                 @threats = serialized.threats
                 config.dataClassificationOptions = serialized.configuration.dataClassificationOptions
                 config.securityControlOptions = serialized.configuration.securityControlOptions
+                config.severityOptions = serialized.configuration.severityOptions
                 @notes = serialized.notes
                 # Nested
                 @diagrams = (@addDiagram().deserialize(diagram) for diagram in serialized.diagrams)
