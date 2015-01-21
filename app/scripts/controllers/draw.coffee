@@ -121,7 +121,13 @@ angular.module('seaspongeApp')
         link.download = name
         link.href = url
         # Download!
-        link.click()
+        # See http://stackoverflow.com/a/25047811/2578205 for more details
+        event = document.createEvent("MouseEvents")
+        event.initMouseEvent(
+                "click", true, false, window, 0, 0, 0, 0, 0
+                , false, false, false, false, 0, null
+        )
+        link.dispatchEvent(event)
 
     # Save the Model
     $scope.saveModel = ->
