@@ -14,6 +14,7 @@ angular.module('seaspongeApp')
       # Instance variables
       uuid: null
       title: null
+      icon: null
       $element: null
       location: null
       tags: null
@@ -31,6 +32,7 @@ angular.module('seaspongeApp')
         # Instance variables
         @uuid = jsPlumbUtil.uuid()
         @title = @constructor.title
+        @icon = @constructor.icon
         @tags = []
         @dataClassifications = []
         @securityControls = []
@@ -75,6 +77,7 @@ angular.module('seaspongeApp')
         shp = @constructor.shape
         $element.addClass(cls)
         $element.addClass(shp)
+        @refreshIcon()
 
       render: (instance, $container) =>
         # Data
@@ -153,6 +156,10 @@ angular.module('seaspongeApp')
         @$elementTitle.text(@title)
         return @
 
+      refreshIcon: ->
+        @$element.css("background-image", "url(#{@icon})")
+        return @
+
       addDataClassification: ->
           @dataClassifications.push({
             "title": "Untitled Data Classification"
@@ -183,6 +190,7 @@ angular.module('seaspongeApp')
         serialized = {
           id: @uuid
           title: @title
+          icon: @icon
           category: @constructor.category
           class: @constructor.name
           location: @getPosition()
@@ -209,6 +217,7 @@ angular.module('seaspongeApp')
         # Local
         @uuid = serialized.id
         @title = serialized.title
+        @icon = serialized.icon
         @tags = serialized.tags
         @codeType = attr.codeType
         @runningAs = attr.runningAs
@@ -223,6 +232,7 @@ angular.module('seaspongeApp')
         @$element.attr('id', @uuid)
         @setPosition(serialized.location)
         @refreshTitle()
+        @refreshIcon()
         return @
 
       sourceEndpoint:

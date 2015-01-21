@@ -380,6 +380,13 @@
             </div>
 
             <div class="form-group">
+                <label for="properties-icon" class="">Icon</label>
+                <input type="text"
+                class="form-control" id="properties-icon" placeholder="URL to Icon Image"
+                ng-model="selectedStencil.icon" ng-change="selectedStencil.refreshIcon()">
+            </div>
+
+            <div class="form-group">
               <label for="properties-codeType" class="">Code Type</label>
               <select class="form-control" id="properties-codeType"
               ng-options="codeType for codeType in config.codeTypeOptions"

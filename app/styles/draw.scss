@@ -22,6 +22,9 @@
   width: 80px;
   height: 80px;
 
+  background-repeat: no-repeat;
+  background-size: contain;
+
 }
 .diagram-contents .stencil:hover {
   box-shadow: 2px 2px 19px #444;
@@ -87,7 +90,7 @@
   -moz-border-radius: 50px !important;
   -webkit-border-radius: 50px !important;
   border-radius: 50px !important;
-  
+
   p {
     margin-top: 25px;
   }
