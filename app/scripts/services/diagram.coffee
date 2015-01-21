@@ -79,7 +79,7 @@ angular.module('seaspongeApp')
                 @elements.splice(index, 1)
 
         save: (instance, container) ->
-            # console.log('save', instance, container)
+            console.log('save', instance, container)
             # console.log('save before', @serialize())
             # Elements
             $elements = $('.stencil', container)
@@ -91,8 +91,9 @@ angular.module('seaspongeApp')
 
             # Flows (Connections)
             cons = instance.getConnections()
-            @flows = ({sourceId: flow.sourceId, targetId: flow.targetId} \
+            @flows = ({sourceUuid: flow.endpoints[0]?.getUuid(), targetUuid: flow.endpoints[1]?.getUuid()} \
                     for flow in cons)
+            console.log('flows', @flows)
 
             # TODO: Boundaries
 
@@ -104,11 +105,19 @@ angular.module('seaspongeApp')
 
             jsPlumb.ready =>
 
-              init = (connection) ->
+              # Get $scope
+              $scope = angular.element(container).scope()
+
+              init = (connection) =>
+                console.log(connection)
                 connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
-                connection.bind "editCompleted", (o) ->
+                connection.bind "editCompleted", (o) =>
                   console.log "connection edited. path is now ", o.path  unless typeof console is "undefined"
+                  $scope.$apply =>
+                      @save(instance, container)
                   return
+                $scope.$apply =>
+                    @save(instance, container)
                 return
 
               # suspend drawing and initialise.
@@ -122,8 +131,10 @@ angular.module('seaspongeApp')
                 #
                 # listen for clicks on connections, and offer to delete connections on click.
                 #
-                instance.bind "click", (conn, originalEvent) ->
+                instance.bind "click", (conn, originalEvent) =>
                   jsPlumb.detach conn  if confirm("Delete connection from " + conn.sourceId + " to " + conn.targetId + "?")
+                  $scope.$apply =>
+                      @save(instance, container)
                   return
 
                 instance.bind "connectionDrag", (connection) ->
@@ -147,8 +158,7 @@ angular.module('seaspongeApp')
 
                 # Render Flows
                 instance.connect({
-                    source: flow.sourceId
-                    target: flow.targetId
+                    uuids: [flow.sourceUuid, flow.targetUuid]
                     }) for flow in @flows
 
                 # TODO: Render Boundaries

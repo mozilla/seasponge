@@ -124,14 +124,14 @@ angular.module('seaspongeApp')
         # console.log(@sourceEndpoint, @targetEndpoint)
         i = 0
         while i < sourceAnchors.length
-          sourceUUID = toId + sourceAnchors[i]
+          sourceUUID = "#{toId}-#{sourceAnchors[i]}"
           instance.addEndpoint "#{toId}", @sourceEndpoint,
             anchor: sourceAnchors[i]
             uuid: sourceUUID
           i++
         j = 0
         while j < targetAnchors.length
-          targetUUID = toId + targetAnchors[j]
+          targetUUID = "#{toId}-#{targetAnchors[j]}"
           instance.addEndpoint "#{toId}", @targetEndpoint,
             anchor: targetAnchors[j]
             uuid: targetUUID
