@@ -1,5 +1,5 @@
 angular.module('seaspongeApp')
-.factory('BaseStencil', ->
+.factory('BaseStencil', [ ->
 
     return class BaseStencil
 
@@ -13,6 +13,7 @@ angular.module('seaspongeApp')
 
       # Instance variables
       uuid: null
+      title: null
       $element: null
       location: null
       tags: null
@@ -29,6 +30,7 @@ angular.module('seaspongeApp')
       constructor: () ->
         # Instance variables
         @uuid = jsPlumbUtil.uuid()
+        @title = @constructor.title
         @tags = []
         @dataClassifications = []
         @securityControls = []
@@ -52,7 +54,19 @@ angular.module('seaspongeApp')
         # Create new element
         @$element = $element = $('<div />', {
           id: @uuid
-        } ).append($('<p/>').text("#{@constructor.title} <#{@constructor.category}>"))
+        })
+        @$elementTitle = $('<span/>', {
+            class: "element-title"
+        }).text("#{@title}")
+        $category = $('<span/>', {
+            class: "element-category"
+        }).text("<#{@constructor.category}>")
+        $p = $('<p/>')
+            .append(@$elementTitle)
+            .append("<br/>")
+            .append($category)
+        $element.append($p)
+
         # Data
         @$element.data('stencil', @)
         # Add class names
@@ -135,6 +149,10 @@ angular.module('seaspongeApp')
         @$element.css(position)
         return @getPosition()
 
+      refreshTitle: ->
+        @$elementTitle.text(@title)
+        return @
+
       addDataClassification: ->
           @dataClassifications.push({
             "title": "Untitled Data Classification"
@@ -164,7 +182,7 @@ angular.module('seaspongeApp')
       serialize: =>
         serialized = {
           id: @uuid
-          name: @constructor.title
+          title: @title
           category: @constructor.category
           class: @constructor.name
           location: @getPosition()
@@ -190,6 +208,7 @@ angular.module('seaspongeApp')
         attr = serialized.attributes
         # Local
         @uuid = serialized.id
+        @title = serialized.title
         @tags = serialized.tags
         @codeType = attr.codeType
         @runningAs = attr.runningAs
@@ -203,6 +222,7 @@ angular.module('seaspongeApp')
         # Update
         @$element.attr('id', @uuid)
         @setPosition(serialized.location)
+        @refreshTitle()
         return @
 
       sourceEndpoint:
@@ -285,4 +305,5 @@ angular.module('seaspongeApp')
       endpointHoverStyle:
         fillStyle: "#216477"
         strokeStyle: "#216477"
+    ]
 )
