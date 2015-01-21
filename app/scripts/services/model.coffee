@@ -18,15 +18,18 @@ angular.module('seaspongeApp')
             title: "Untitled Model"
             version: "0.0.0"
             authors: ""
-            threats: []
+            threats: null
             notes: ""
             diagrams: null
+            assumptions: null
 
             # Class Methods
 
             # Instance Methods
             constructor: () ->
+                @threats = []
                 @diagrams = []
+                @assumptions = []
 
             addDiagram: ->
                 # Create new Diagram and push to array
@@ -50,7 +53,24 @@ angular.module('seaspongeApp')
                     return false
 
             removeDiagram: (diagram) ->
-                @diagrams.remove(diagram)
+                index = @diagrams.indexOf(diagram)
+                if index > - 1
+                    @diagrams.splice(index, 1)
+                return
+
+            addAssumption: ->
+                assumption = {
+                    "title": "",
+                    "details": ""
+                }
+                @assumptions.push(assumption)
+                return assumption
+
+            removeAssumption: (assumption) ->
+                index = @assumptions.indexOf(assumption)
+                if index > - 1
+                    @assumptions.splice(index, 1)
+                return
 
             serialize: =>
                 serialized = {
@@ -65,6 +85,7 @@ angular.module('seaspongeApp')
                     }
                     threats: @threats
                     notes: @notes
+                    assumptions: @assumptions
                     diagrams: (diagram.serialize() for diagram in @diagrams)
                 }
                 return serialized
@@ -74,11 +95,12 @@ angular.module('seaspongeApp')
                 @title = serialized.title
                 @version = serialized.version
                 @authors = serialized.authors
-                @threats = serialized.threats
+                @threats = serialized.threats || []
                 config.dataClassificationOptions = serialized.configuration.dataClassificationOptions
                 config.securityControlOptions = serialized.configuration.securityControlOptions
                 config.severityOptions = serialized.configuration.severityOptions
-                @notes = serialized.notes
+                @notes = serialized.notes || []
+                @assumptions = serialized.assumptions || []
                 # Nested
                 @diagrams = (@addDiagram().deserialize(diagram) for diagram in serialized.diagrams)
                 return @

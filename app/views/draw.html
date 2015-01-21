@@ -185,6 +185,68 @@
 
             </div>
 
+            <div class="form-group">
+                <label for="model-assumptions" class="">Assumptions</label>
+            </div>
+            <div class="well">
+                <div class="form-group"
+                ng-repeat="assumption in model.assumptions"
+                >
+                    <ng-form class="form" role="form" name="assumptionForm">
+                        <div class="form-group">
+                            <label for="model-assumptions-title" class="">Title</label>
+                            <input type="text"
+                            class="form-control" id="model-assumptions-title"
+                            placeholder="Enter assumption title"
+                            name="assumptionTitle"
+                            ng-required=true
+                            ng-minlength=2
+                            ng-model="assumption.title">
+                            <span class="text-danger"
+                            ng-show="assumptionForm.assumptionTitle.$error.required">
+                                Assumption Title is required!
+                            </span>
+                            <span class="text-danger"
+                            ng-show="assumptionForm.assumptionTitle.$error.minlength">
+                                Too short!
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="model-assumptions-details" class="">Details</label>
+                            <input type="text"
+                            class="form-control" id="model-assumptions-details"
+                            placeholder="Enter assumption details"
+                            name="assumptionDetails"
+                            ng-required=true
+                            ng-minlength=2
+                            ng-model="assumption.details">
+                            <span class="text-danger"
+                            ng-show="assumptionForm.assumptionDetails.$error.required">
+                                Assumption Details are required!
+                            </span>
+                            <span class="text-danger"
+                            ng-show="assumptionForm.assumptionDetails.$error.minlength">
+                                Too short!
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <button class="form-control btn btn-danger"
+                            ng-click="model.removeAssumption(assumption)"
+                            >
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </div>
+                        <hr/>
+                    </ng-form>
+                </div>
+                <button class="btn btn-primary form-control"
+                ng-click="model.addAssumption()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add Asssumption
+                </button>
+            </div>
+
+
           </form>
 
         </accordion-group>
@@ -283,7 +345,10 @@
             </div>
 
             <div class="form-group">
-              <button class="btn btn-sm btn-primary" ng-click="generateThreat()">Add Threat</button>
+              <button class="btn btn-sm btn-primary" ng-click="generateThreat()">
+                  <span class="glyphicon glyphicon-plus"></span>
+                  Add Threat
+              </button>
             </div>
 
           </form>
@@ -490,6 +555,7 @@
                 </div>
                 <button class="btn btn-primary form-control"
                 ng-click="selectedStencil.addDataClassification()">
+                    <span class="glyphicon glyphicon-plus"></span>
                     Add Data Classification
                 </button>
             </div>
@@ -526,6 +592,7 @@
                 </div>
                 <button class="btn btn-primary form-control"
                 ng-click="selectedStencil.addSecurityControl()">
+                    <span class="glyphicon glyphicon-plus"></span>
                     Add Security Control
                 </button>
             </div>
