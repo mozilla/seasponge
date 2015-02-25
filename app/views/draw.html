@@ -407,14 +407,28 @@
         <accordion-group is-open="menu.propertiesOpen">
 
           <accordion-heading>
-            Properties
-            <small>- {{selectedStencil.constructor.title}}
-            <span class="label label-info">{{selectedStencil.constructor.category}}</span>
-            </small>
+
+            <div ng-hide="selectedStencil || selectedFlow">
+                Properties
+            </div>
+
+            <div ng-show="selectedStencil">
+                Stencil Properties
+                <small>- {{selectedStencil.constructor.title}}
+                <span class="label label-info">{{selectedStencil.constructor.category}}</span>
+                </small>
+            </div>
+
+            <div ng-show="selectedFlow">
+              Flow Properties
+              <small>- {{selectedFlow.properties.label}}
+              </small>
+            </div>
+
             <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.propertiesOpen, 'glyphicon-chevron-right': !menu.propertiesOpen}"></i>
           </accordion-heading>
 
-          <form class="form" role="form" ng-hide="!selectedStencil">
+          <form class="form" role="form" ng-show="selectedStencil">
 
             <div class="form-group">
                 <button class="btn btn-danger form-control" ng-click="deleteElement(selectedStencil)">
@@ -597,10 +611,33 @@
                 </button>
             </div>
 
-
           </form>
 
-          <div class="lead" ng-hide="selectedStencil">
+          <form class="form" role="form" ng-show="selectedFlow">
+
+            <div class="form-group">
+                <button class="btn btn-danger form-control" ng-click="deleteFlow(selectedFlow)">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    Delete Flow
+                </button>
+            </div>
+
+            <div class="form-group">
+              <label for="properties-title" class="">Label</label>
+              <br/>
+              <input type="text"
+              class="form-control" id="properties-title" placeholder="Flow label"
+              ng-model="selectedFlow.properties.label" ng-change="selectedFlow.refreshLabel()">
+            </div>
+
+            <div class="form-group">
+              <label for="properties-tags" class="">Tags</label>
+              <input type="text"
+              class="form-control" id="properties-tags" placeholder="Comma separated tags"
+              ng-model="selectedFlow.tags">
+            </div>
+
+          <div class="lead" ng-hide="selectedStencil || selectedFlow">
             Select an element to view its properties
           </div>
 

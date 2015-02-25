@@ -78,6 +78,9 @@ angular.module('seaspongeApp')
             if index > -1
                 @elements.splice(index, 1)
 
+        deleteFlow: (flow) ->
+            jsPlumb.detach(flow)
+
         save: (instance, container) ->
             console.log('save', instance, container)
             # console.log('save before', @serialize())
@@ -91,8 +94,11 @@ angular.module('seaspongeApp')
 
             # Flows (Connections)
             cons = instance.getConnections()
-            @flows = ({sourceUuid: flow.endpoints[0]?.getUuid(), targetUuid: flow.endpoints[1]?.getUuid()} \
-                    for flow in cons)
+            @flows = ({
+                sourceUuid: flow.endpoints[0]?.getUuid(),
+                targetUuid: flow.endpoints[1]?.getUuid(),
+                properties: flow.properties
+                } for flow in cons)
             console.log('flows', @flows)
 
             # TODO: Boundaries
@@ -109,15 +115,23 @@ angular.module('seaspongeApp')
               $scope = angular.element(container).scope()
 
               init = (connection) =>
-                console.log(connection)
-                connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
+                console.log('init connection', connection)
+                connection.properties = connection.properties || {
+                    label: connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
+                    tags: []
+                }
+                # connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
+                connection.refreshLabel = ->
+                    connection.getOverlay("label").setLabel(connection.properties.label)
+                connection.refreshLabel()
+
                 connection.bind "editCompleted", (o) =>
                   console.log "connection edited. path is now ", o.path  unless typeof console is "undefined"
                   $scope.$apply =>
                       @save(instance, container)
                   return
-                $scope.$apply =>
-                    @save(instance, container)
+                # $scope.$apply =>
+                @save(instance, container)
                 return
 
               # suspend drawing and initialise.
@@ -132,9 +146,10 @@ angular.module('seaspongeApp')
                 # listen for clicks on connections, and offer to delete connections on click.
                 #
                 instance.bind "click", (conn, originalEvent) =>
-                  jsPlumb.detach conn  if confirm("Delete connection from " + conn.sourceId + " to " + conn.targetId + "?")
-                  $scope.$apply =>
-                      @save(instance, container)
+                  container.trigger "flow-instance-click", [conn, originalEvent]
+                #   jsPlumb.detach conn  if confirm("Delete connection from " + conn.sourceId + " to " + conn.targetId + "?")
+                #   $scope.$apply =>
+                #       @save(instance, container)
                   return
 
                 instance.bind "connectionDrag", (connection) ->
@@ -157,9 +172,13 @@ angular.module('seaspongeApp')
                 element.render(instance, container) for element in @elements
 
                 # Render Flows
-                instance.connect({
-                    uuids: [flow.sourceUuid, flow.targetUuid]
-                    }) for flow in @flows
+                for flow in @flows
+                  conn = instance.connect({
+                                    uuids: [flow.sourceUuid, flow.targetUuid]
+                                    })
+                #   console.log(conn)
+                  conn.properties = flow.properties
+                  conn.refreshLabel()
 
                 # TODO: Render Boundaries
 

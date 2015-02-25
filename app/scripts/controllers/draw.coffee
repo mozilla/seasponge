@@ -46,6 +46,7 @@ angular.module('seaspongeApp')
     $scope.fileName = "ExampleFileName"
 
     $scope.selectedStencil = false
+    $scope.selectedFlow = false
     $scope.selectedDiagram = null
 
     $scope.dataClassificationOptions = model.dataClassificationOptions
@@ -166,7 +167,7 @@ angular.module('seaspongeApp')
     $scope.deleteElement = (element) ->
         diagram = $scope.selectedDiagram
         if element? and diagram
-            console.log('deleteElement', element, diagram)
+            # console.log('deleteElement', element, diagram)
             diagram.deleteElement(element)
             # Unselect Element
             $scope.selectedStencil = false
@@ -174,6 +175,20 @@ angular.module('seaspongeApp')
             diagram.constructor.clear($scope.instance, $scope.container)
             # Render new diagram
             diagram.render($scope.instance, $scope.container)
+
+    $scope.deleteFlow = (flow) ->
+        diagram = $scope.selectedDiagram
+        if flow? and diagram
+            # console.log('deleteFlow', flow, diagram)
+            diagram.deleteFlow(flow)
+            diagram.save($scope.instance, $scope.container)
+            # Unselect Flow
+            $scope.selectedFlow = false
+            # Clear old diagram
+            diagram.constructor.clear($scope.instance, $scope.container)
+            # Render new diagram
+            diagram.render($scope.instance, $scope.container)
+
 
     $scope.instance = instance = jsPlumb.getInstance(
                 # default drag options
@@ -218,6 +233,8 @@ angular.module('seaspongeApp')
             $scope.selectedDiagram = diagram
             # De-select Stencil
             $scope.selectedStencil = false
+            # De-select Flow
+            $scope.selectedFlow = false
             # Open Diagram information menu
             $scope.menu.diagramOpen = true
             # Close Model information menu
@@ -258,12 +275,17 @@ angular.module('seaspongeApp')
                 )
         })
 
+    clearSelected = ->
+        # Remove selected class from all selected
+        $('.selected-stencil').removeClass('selected-stencil')
+        $('._jsPlumb_overlay.aLabel').removeClass('selected-flow')
+
     # Listen for Stencil/Element click events
     $scope.container.on "stencil-instance-click", (e1, inst, e2) ->
         # console.log "stencil-instance-click", arguments
         $scope.$apply ->
-            # Remove selected class from all selected
-            $('.selected-stencil').removeClass('selected-stencil')
+            clearSelected()
+            $scope.selectedFlow = false
             # Check if same or different stencil instance
             if $scope.selectedStencil is inst
                 # Same instance therefore De-select
@@ -280,6 +302,30 @@ angular.module('seaspongeApp')
                 $scope.menu.modelOpen = false
                 $scope.menu.diagramOpen = false
                 $scope.menu.propertiesOpen = true
+
+    # Listen for Stencil/Element click events
+    $scope.container.on "flow-instance-click", (e1, inst, e2) ->
+        console.log "flow-instance-click", arguments
+        $scope.$apply ->
+            clearSelected()
+            $scope.selectedStencil = false
+            # Check if same or different stencil instance
+            if $scope.selectedFlow is inst
+                # Same instance therefore De-select
+                # Change selected in $scope
+                $scope.selectedFlow = false
+                $scope.menu.propertiesOpen = false
+                $scope.menu.stencilsOpen = true
+            else
+                # Add selected class
+                inst.getOverlay("label").addClass('selected-flow')
+                # Change selected in $scope
+                $scope.selectedFlow = inst
+                $scope.menu.stencilsOpen = false
+                $scope.menu.modelOpen = false
+                $scope.menu.diagramOpen = false
+                $scope.menu.propertiesOpen = true
+
 
     # Create Diagram in Model if non exists already
     if model.diagrams.length is 0
