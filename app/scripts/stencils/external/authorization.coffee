@@ -1,5 +1,5 @@
 angular.module('seaspongeApp')
-.factory('Authorization', ['BaseExternalStencil', (BaseExternalStencil) ->
-    return class Authorization extends BaseExternalStencil
+.factory('AuthorizationStencil', ['BaseExternalStencil', (BaseExternalStencil) ->
+    return class AuthorizationStencil extends BaseExternalStencil
       @title: "Authorization"
 ])

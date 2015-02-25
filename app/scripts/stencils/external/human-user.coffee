@@ -1,5 +1,5 @@
 angular.module('seaspongeApp')
-.factory('HumanUser', ['BaseExternalStencil', (BaseExternalStencil) ->
-    return class HumanUser extends BaseExternalStencil
+.factory('HumanUserStencil', ['BaseExternalStencil', (BaseExternalStencil) ->
+    return class HumanUserStencil extends BaseExternalStencil
       @title: "Human User"
 ])

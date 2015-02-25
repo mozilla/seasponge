@@ -1,5 +1,5 @@
 angular.module('seaspongeApp')
-.factory('Cache', ['BaseStoreStencil', (BaseStoreStencil) ->
-    return class Cache extends BaseStoreStencil
+.factory('CacheStencil', ['BaseStoreStencil', (BaseStoreStencil) ->
+    return class CacheStencil extends BaseStoreStencil
       @title: "Cache"
 ])
