@@ -428,7 +428,7 @@
             <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': menu.propertiesOpen, 'glyphicon-chevron-right': !menu.propertiesOpen}"></i>
           </accordion-heading>
 
-          <form class="form" role="form" ng-show="selectedStencil">
+          <form class="form" role="form" ng-show="selectedStencil" onkeypress="return event.keyCode != 13;">
 
             <div class="form-group">
                 <button class="btn btn-danger form-control" ng-click="deleteElement(selectedStencil)">
@@ -613,7 +613,7 @@
 
           </form>
 
-          <form class="form" role="form" ng-show="selectedFlow">
+          <form class="form" role="form" ng-show="selectedFlow" onkeypress="return event.keyCode != 13;">
 
             <div class="form-group">
                 <button class="btn btn-danger form-control" ng-click="deleteFlow(selectedFlow)">
