@@ -63,10 +63,15 @@ angular.module('seaspongeApp')
         $category = $('<span/>', {
             class: "element-category"
         }).text("<#{@constructor.category}>")
+        $img = $('<img style="height:85%; width:85%; opacity:0.3; position:absolute; left:5px;">')
+        $img.attr('src', @icon)
+
         $p = $('<p/>')
             .append(@$elementTitle)
             .append("<br/>")
             .append($category)
+
+        $element.append($img)
         $element.append($p)
 
         # Data
@@ -157,7 +162,7 @@ angular.module('seaspongeApp')
         return @
 
       refreshIcon: ->
-        @$element.css("background-image", "url(#{@icon})")
+        # @$element.css("background-image", "url(#{@icon})")
         return @
 
       addDataClassification: ->
