@@ -18,6 +18,7 @@ angular.module('seaspongeApp')
         elements: null
         flows: null
         boundaries: null
+        zoom: null
 
         # Class Methods
         @clear: (instance, container) ->
@@ -37,6 +38,7 @@ angular.module('seaspongeApp')
             @elements = []
             @flows = []
             @boundaries = []
+            @zoom = 1.0
 
         serialize: =>
             serialized = {
@@ -45,6 +47,7 @@ angular.module('seaspongeApp')
                 elements: (element.serialize() for element in @elements)
                 flows: @flows
                 boundaries: (boundary.serialize() for boundary in @boundaries)
+                zoom: @zoom
             }
             return serialized
 
@@ -63,6 +66,7 @@ angular.module('seaspongeApp')
                 .deserialize(element) \
                 for element in serialized.elements)
             @flows = serialized.flows
+            @zoom = serialized.zoom
             return @
 
         addElement: (stencilClass) ->
@@ -193,6 +197,22 @@ angular.module('seaspongeApp')
                 # method, or document.querySelectorAll:
                 #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
                 #
+
+                # FIXME: Diagram should be passed the Drawing Panel
+                # In fact, drawingPanel should be the container
+                $drawingPanel = $('.drawing-panel')
+
+                # Zoom
+                scale = "scale(#{@zoom})"
+                $drawingPanel.css({
+                  "-webkit-transform": scale,
+                  "-moz-transform": scale,
+                  "-ms-transform": scale,
+                  "-o-transform": scale,
+                  "transform": scale
+                })
+                $()
+                instance.setZoom(@zoom)
 
                 # Repaint
                 instance.repaint()

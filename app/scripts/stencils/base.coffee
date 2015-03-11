@@ -127,6 +127,7 @@ angular.module('seaspongeApp')
       _addEndpoints: (instance, toId, sourceAnchors, targetAnchors) ->
         # console.log('add endpoints', arguments)
         # console.log(@sourceEndpoint, @targetEndpoint)
+        console.log('_addEndpoints', instance.getContainer())
         i = 0
         while i < sourceAnchors.length
           sourceUUID = "#{toId}-#{sourceAnchors[i]}"

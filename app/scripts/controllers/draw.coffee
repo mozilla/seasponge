@@ -189,6 +189,26 @@ angular.module('seaspongeApp')
             # Render new diagram
             diagram.render($scope.instance, $scope.container)
 
+    $scope.zoomInDiagram = () ->
+        diagram = $scope.selectedDiagram
+        if diagram
+            diagram.zoom += 0.1
+            # diagram.zoom = if diagram.zoom > 1.0 then 1.0 else diagram.zoom
+            # Clear old diagram
+            diagram.constructor.clear($scope.instance, $scope.container)
+            # Render new diagram
+            diagram.render($scope.instance, $scope.container)
+
+    $scope.zoomOutDiagram = () ->
+        diagram = $scope.selectedDiagram
+        if diagram
+            diagram.zoom -= 0.1
+            # diagram.zoom = if diagram.zoom < 0.0 then 0.0 else diagram.zoom
+            # Clear old diagram
+            diagram.constructor.clear($scope.instance, $scope.container)
+            # Render new diagram
+            diagram.render($scope.instance, $scope.container)
+
 
     $scope.instance = instance = jsPlumb.getInstance(
                 # default drag options
@@ -213,8 +233,29 @@ angular.module('seaspongeApp')
                     }
                   ]
                 ]
-                Container: "content-right"
-              )
+
+                # Note regarding the drawEndpoints option on jsPlumb.connect:
+                # with the default behaviour,
+                # jsPlumb uses the offsetParent of the source endpoint in a
+                # connection to make final adjustments to the position of a
+                # connector.
+                # When drawEndpoints is set to false,
+                # there is no offsetParent of the source endpoint because it
+                # is not visible.
+                # If your connection lies inside some container other
+                # than the document body, the connector will not be able
+                # to take that container's offset into account,
+                # and will most likely not be in the right place.
+                # You should either use the Blank endpoint when you
+                # don't want to see one,
+                # or instruct jsPlumb to attach everything to the
+                # document body (see below).
+                #
+                # Container: "content-right"
+                # Container: $scope.container
+                # Container: $('.diagram-endpoints-container')
+            )
+
 
     $scope.loadDiagram = (diagram) ->
         if diagram?
