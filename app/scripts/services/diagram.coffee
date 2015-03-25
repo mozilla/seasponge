@@ -8,7 +8,7 @@
  # Factory in the seaspongeApp.
 ###
 angular.module('seaspongeApp')
-  .factory 'Diagram', [ 'Stencils', (Stencils) ->
+  .factory 'Diagram', [ 'Stencils', 'BaseStencil', (Stencils, BaseStencil) ->
 
     return class Diagram
 
@@ -18,6 +18,7 @@ angular.module('seaspongeApp')
         elements: null
         flows: null
         boundaries: null
+        zoom: null
 
         # Class Methods
         @clear: (instance, container) ->
@@ -37,6 +38,7 @@ angular.module('seaspongeApp')
             @elements = []
             @flows = []
             @boundaries = []
+            @zoom = 1.0
 
         serialize: =>
             serialized = {
@@ -45,13 +47,16 @@ angular.module('seaspongeApp')
                 elements: (element.serialize() for element in @elements)
                 flows: @flows
                 boundaries: (boundary.serialize() for boundary in @boundaries)
+                zoom: @zoom
             }
             return serialized
 
         @stencilClassForElement: (name) ->
-            stencilClass = (stencilClass for stencilClass in Stencils when stencilClass.name is name)
-            # console.log('stencilClass', stencilClass)
-            return stencilClass[0]
+            stencilClasses = (stencilClass for stencilClass in Stencils when stencilClass.name is name)
+            stencilClass = stencilClasses[0]
+            if not stencilClass?
+                stencilClass = BaseStencil
+            return stencilClass
 
         deserialize: (serialized) =>
             # Local
@@ -63,10 +68,10 @@ angular.module('seaspongeApp')
                 .deserialize(element) \
                 for element in serialized.elements)
             @flows = serialized.flows
+            @zoom = serialized.zoom
             return @
 
         addElement: (stencilClass) ->
-            # stencil = new stencils.BaseStencil(uuid, $container, instance)
             stencil = new stencilClass()
             # console.log(stencil)
             @elements.push(stencil)
@@ -74,7 +79,6 @@ angular.module('seaspongeApp')
 
         deleteElement: (element) ->
             index = @elements.indexOf(element)
-            console.log(index, @elements)
             if index > -1
                 @elements.splice(index, 1)
 
@@ -82,7 +86,7 @@ angular.module('seaspongeApp')
             jsPlumb.detach(flow)
 
         save: (instance, container) ->
-            console.log('save', instance, container)
+            # console.log('save', instance, container)
             # console.log('save before', @serialize())
             # Elements
             $elements = $('.stencil', container)
@@ -115,7 +119,7 @@ angular.module('seaspongeApp')
               $scope = angular.element(container).scope()
 
               init = (connection) =>
-                console.log('init connection', connection)
+                # console.log('init connection', connection)
                 connection.properties = connection.properties || {
                     label: connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
                     tags: []
@@ -126,7 +130,7 @@ angular.module('seaspongeApp')
                 connection.refreshLabel()
 
                 connection.bind "editCompleted", (o) =>
-                  console.log "connection edited. path is now ", o.path  unless typeof console is "undefined"
+                #   console.log "connection edited. path is now ", o.path  unless typeof console is "undefined"
                   $scope.$apply =>
                       @save(instance, container)
                   return
@@ -193,6 +197,22 @@ angular.module('seaspongeApp')
                 # method, or document.querySelectorAll:
                 #jsPlumb.draggable(document.querySelectorAll(".window"), { grid: [20, 20] });
                 #
+
+                # FIXME: Diagram should be passed the Drawing Panel
+                # In fact, drawingPanel should be the container
+                $drawingPanel = $('.drawing-panel')
+
+                # Zoom
+                scale = "scale(#{@zoom})"
+                $drawingPanel.css({
+                  "-webkit-transform": scale,
+                  "-moz-transform": scale,
+                  "-ms-transform": scale,
+                  "-o-transform": scale,
+                  "transform": scale
+                })
+                $()
+                instance.setZoom(@zoom)
 
                 # Repaint
                 instance.repaint()

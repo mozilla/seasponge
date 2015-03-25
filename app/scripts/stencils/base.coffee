@@ -16,6 +16,7 @@ angular.module('seaspongeApp')
       title: null
       icon: null
       $element: null
+      $img: null
       location: null
       tags: null
       codeType: "Managed"
@@ -63,15 +64,16 @@ angular.module('seaspongeApp')
         $category = $('<span/>', {
             class: "element-category"
         }).text("<#{@constructor.category}>")
-        $img = $('<img style="height:85%; width:85%; opacity:0.3; position:absolute; left:5px;">')
-        $img.attr('src', @icon)
+        console.log('i am here')
+        @$img = $('<img style="height:85%; width:85%; opacity:0.3; position:absolute; left:5px;">')
+        @$img.attr('src', @icon)
 
         $p = $('<p/>')
             .append(@$elementTitle)
             .append("<br/>")
             .append($category)
 
-        $element.append($img)
+        $element.append(@$img)
         $element.append($p)
 
         # Data
@@ -127,6 +129,7 @@ angular.module('seaspongeApp')
       _addEndpoints: (instance, toId, sourceAnchors, targetAnchors) ->
         # console.log('add endpoints', arguments)
         # console.log(@sourceEndpoint, @targetEndpoint)
+        console.log('_addEndpoints', instance.getContainer())
         i = 0
         while i < sourceAnchors.length
           sourceUUID = "#{toId}-#{sourceAnchors[i]}"
@@ -162,7 +165,7 @@ angular.module('seaspongeApp')
         return @
 
       refreshIcon: ->
-        # @$element.css("background-image", "url(#{@icon})")
+        @$img.attr('src', @icon)
         return @
 
       addDataClassification: ->
