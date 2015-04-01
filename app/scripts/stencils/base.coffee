@@ -255,6 +255,7 @@ angular.module('seaspongeApp')
           radius: 7
           lineWidth: 3
         isSource: true
+        maxConnections: -1
         connector: [
           "Flowchart"
           {
@@ -291,7 +292,7 @@ angular.module('seaspongeApp')
           fillStyle: "#7AB02C"
           radius: 11
         hoverPaintStyle: @endpointHoverStyle
-        maxConnections: - 1
+        maxConnections: -1
         dropOptions:
           hoverClass: "hover"
           activeClass: "active"
