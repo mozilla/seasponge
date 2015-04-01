@@ -65,8 +65,7 @@ grunt serve # previews the app on a local server
 
 #### Developing
 
-We recommend you use the [sub-generators provided](https://github.com/yeoman/generator-angular#generators)
-by [generator-angular](https://github.com/yeoman/generator-angular).
+Please see the [Development Guide](DEVGUIDE.md)
 
 ## Links
 
