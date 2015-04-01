@@ -10,6 +10,30 @@
 angular.module('seaspongeApp')
   .controller 'DrawController', ['$scope', '$location', 'Stencils', 'model', 'config', ($scope, $location, Stencils, model, config) ->
 
+    # Prevent the backspace key from navigating back.
+    $(document).unbind('keydown').bind 'keydown', (event) ->
+      doPrevent = false
+      # Check if `delete` key
+      if event.keyCode == 8
+        # Check if should continue with default behaviour
+        # for input elements
+        d = event.srcElement or event.target
+        if d.tagName.toUpperCase() == 'INPUT' and (d.type.toUpperCase() == 'TEXT' or d.type.toUpperCase() == 'PASSWORD' or d.type.toUpperCase() == 'FILE' or d.type.toUpperCase() == 'EMAIL' or d.type.toUpperCase() == 'SEARCH' or d.type.toUpperCase() == 'DATE') or d.tagName.toUpperCase() == 'TEXTAREA'
+          # is editing an input element of some type
+          doPrevent = d.readOnly or d.disabled
+        else
+          # is not editing an input element
+          doPrevent = true
+          # delete selected stencil element
+          if $scope.selectedStencil
+              $scope.$apply -> $scope.deleteElement($scope.selectedStencil)
+
+
+      if doPrevent
+        event.preventDefault()
+      return
+
+
     $scope.model = model
     $scope.config = config
     $scope.stencils = Stencils
