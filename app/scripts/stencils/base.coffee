@@ -90,7 +90,10 @@ angular.module('seaspongeApp')
         # Data
         @$element.data('stencil', @)
         # Check if $element has parent
-        if @$element.parent().length is 0
+        # console.log(@$element, @$element.parent(), @$element.parent().parent(), $container)
+        # Check if there is no parent then
+        # Check if parent is $container
+        if @$element.parent().length is 0 or not @$element.parent().is($container)
             # Add to container
             $container.append(@$element) ;
         # Clear previous events
