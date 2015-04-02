@@ -16,7 +16,8 @@ This web-based application is being developed with three characteristics in mind
 - **Aesthetics**: We're tired of clunky, boring interfaces - we want to bring the pizazz into threat-modeling.
 - **Intuitive User-Experience**: We hate manuals, and we want you to be able to use this software without one.
 
-Please see http://mozilla.github.io/seasponge/ for a live demo of the application.
+Please see http://mozilla.github.io/seasponge/ for a live demo of the application.  
+There is also a video on Air Mozilla available at https://air.mozilla.org/mozilla-winter-of-security-seasponge-a-tool-for-easy-threat-modeling/
 
 ## Authors
 
