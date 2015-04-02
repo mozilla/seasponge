@@ -9,7 +9,7 @@
 ###
 angular.module('seaspongeApp')
   .controller 'CreateController', ['$scope', '$location', 'model', 'config', ($scope, $location, model, config) ->
-    
+
         console.log('model', model);
 
         $scope.title = "Example 1"
@@ -42,6 +42,8 @@ angular.module('seaspongeApp')
             # Validate input
             # TODO
 
+            # Clear old model data
+            model.constructor()
             # Save input
             model.title = $scope.title
             model.authors = $scope.authors
