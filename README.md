@@ -19,6 +19,10 @@ This web-based application is being developed with three characteristics in mind
 Please see http://mozilla.github.io/seasponge/ for a live demo of the application.  
 There is also a video on Air Mozilla available at https://air.mozilla.org/mozilla-winter-of-security-seasponge-a-tool-for-easy-threat-modeling/
 
+### Example Threat Model developed with SeaSponge
+
+Here is a share link for the SeaSponge threat model we developed in our [Air Mozilla demo video](https://air.mozilla.org/mozilla-winter-of-security-seasponge-a-tool-for-easy-threat-modeling/): http://goo.gl/Q8mt0T
+
 ## Authors
 
 - [Mathew Kallada](https://github.com/kallada)
