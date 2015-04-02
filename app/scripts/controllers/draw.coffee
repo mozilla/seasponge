@@ -27,12 +27,30 @@ angular.module('seaspongeApp')
           # delete selected stencil element
           if $scope.selectedStencil
               $scope.$apply -> $scope.deleteElement($scope.selectedStencil)
-
-
       if doPrevent
         event.preventDefault()
       return
 
+    # Copy & Paste support
+    $scope.clipboard = null;
+    $(document).on('copy', ->
+        # Remember currently selected element
+        if $scope.selectedStencil
+            # serialize and save for later
+            $scope.clipboard = $scope.selectedStencil.serialize()
+    )
+    $(document).on('paste', ->
+        if $scope.clipboard?
+            # Get serialized element
+            se = $.extend(true, {}, $scope.clipboard)
+            se.id = jsPlumbUtil.uuid();
+            se.location.left += 10
+            se.location.top += 10
+            # Deserialize and add copied element
+            element = $scope.selectedDiagram?.addSerializedElement(se)
+            # Render element
+            element.render($scope.instance, $scope.container)
+    )
 
     $scope.model = model
     $scope.config = config

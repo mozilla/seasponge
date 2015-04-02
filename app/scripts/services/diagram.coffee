@@ -63,13 +63,16 @@ angular.module('seaspongeApp')
             @id = serialized.id
             @title = serialized.title
             # Nested
-            @elements = (@addElement(
-                @constructor.stencilClassForElement(element.class))\
-                .deserialize(element) \
+            @elements = (@addSerializedElement(element) \
                 for element in serialized.elements)
             @flows = serialized.flows
             @zoom = serialized.zoom
             return @
+
+        addSerializedElement: (element) =>
+            @addElement(
+                @constructor.stencilClassForElement(element.class)) \
+                .deserialize(element)
 
         addElement: (stencilClass) ->
             stencil = new stencilClass()

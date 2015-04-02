@@ -64,7 +64,6 @@ angular.module('seaspongeApp')
         $category = $('<span/>', {
             class: "element-category"
         }).text("<#{@constructor.category}>")
-        console.log('i am here')
         @$img = $('<img style="height:85%; width:85%; opacity:0.3; position:absolute; left:5px;">')
         @$img.attr('src', @icon)
 
