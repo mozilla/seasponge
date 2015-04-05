@@ -2,9 +2,9 @@
 
 ###*
  # @ngdoc service
- # @name seaspongeApp.escapeHTML
+ # @name seaspongeApp.EscapeHtml
  # @description
- # # escapeHTML
+ # # EscapeHtml
  # Factory in the seaspongeApp.
 ###
 angular.module('seaspongeApp')

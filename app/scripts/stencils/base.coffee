@@ -1,3 +1,10 @@
+###*
+ # @ngdoc service
+ # @name seaspongeApp.BaseStencil
+ # @description
+ # # BaseStencil
+ # Factory in the seaspongeApp.
+###
 angular.module('seaspongeApp')
 .factory('BaseStencil', [ ->
 
