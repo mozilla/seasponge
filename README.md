@@ -48,7 +48,7 @@ Please see our [Contributing Guidelines](CONTRIBUTING.md)
 
 You may need to prefix commands with `sudo`
 
-- [Node.js](http://nodejs.org/) 
+- [Node.js](http://nodejs.org/)
   - [Bower](http://bower.io/) `npm install -g bower`
   - [Grunt](http://gruntjs.com/) `npm install -g grunt-cli`
   - [Yeoman](http://yeoman.io/) `npm install -g yo`
@@ -70,8 +70,21 @@ bower install
 Once you have the application and dependencies installed you can start building the app.
 
 ```bash
-grunt build # builds the application to /dist
-grunt serve # previews the app on a local server
+# Previews the app on a local server
+grunt serve
+
+# Builds the application to dist/
+grunt build
+```
+
+#### Documentation
+
+```bash
+# Build docs to docs/
+grunt docs
+
+# Build docs and serve docs/ for web browser
+grunt serve:docs
 ```
 
 #### Developing

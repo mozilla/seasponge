@@ -18,7 +18,7 @@ module.exports = (grunt) ->
   appConfig =
     app: require("./bower.json").appPath or "app"
     dist: "dist"
-
+    docs: "docs"
 
   # Define the configuration for all the tasks
   grunt.initConfig
@@ -105,6 +105,11 @@ module.exports = (grunt) ->
           open: true
           base: "<%= yeoman.dist %>"
 
+      docs:
+        options:
+          open: true
+          base: "<%= yeoman.docs %>"
+
 
     # Make sure code styles are up to par and there are no obvious mistakes
     jshint:
@@ -129,6 +134,8 @@ module.exports = (grunt) ->
         ]
 
       server: ".tmp"
+
+      docs: "<%= yeoman.docs %>"
 
 
     # Add vendor prefixed styles
@@ -181,6 +188,8 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
+    ngdocs:
+      all: ['.tmp/scripts/**/*.js']
 
     # Compiles Sass to CSS and generates necessary files if requested
     compass:
@@ -400,6 +409,12 @@ module.exports = (grunt) ->
         "build"
         "connect:dist:keepalive"
       ])
+    else if target is "docs"
+      return grunt.task.run([
+            "docs"
+            "connect:docs:keepalive"
+        ])
+
     grunt.task.run [
       "clean:server"
       "wiredep"
@@ -437,6 +452,11 @@ module.exports = (grunt) ->
     "filerev"
     "usemin"
     "htmlmin"
+  ]
+  grunt.registerTask "docs", [
+      "clean:docs"
+      "coffee:dist"
+      "ngdocs"
   ]
   grunt.registerTask "default", [
     "newer:jshint"
