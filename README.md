@@ -23,6 +23,12 @@ There is also a video on Air Mozilla available at https://air.mozilla.org/mozill
 
 Here is a share link for the SeaSponge threat model we developed in our [Air Mozilla demo video](https://air.mozilla.org/mozilla-winter-of-security-seasponge-a-tool-for-easy-threat-modeling/): http://goo.gl/Q8mt0T
 
+### Usage
+
+See our [`Usage` page in our Wiki](https://github.com/mozilla/seasponge/wiki/Usage) for more details.
+
+![usage_demo](https://cloud.githubusercontent.com/assets/5893112/6827282/55cf9060-d2e5-11e4-802f-7663719ee873.gif)
+
 ## Authors
 
 - [Mathew Kallada](https://github.com/kallada)
