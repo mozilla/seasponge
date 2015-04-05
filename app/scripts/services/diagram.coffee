@@ -8,7 +8,7 @@
  # Factory in the seaspongeApp.
 ###
 angular.module('seaspongeApp')
-  .factory 'Diagram', [ 'Stencils', 'BaseStencil', (Stencils, BaseStencil) ->
+  .factory 'Diagram', ['Stencils', 'BaseStencil', 'EscapeHtml', (Stencils, BaseStencil, escapeHtml) ->
 
     return class Diagram
 
@@ -129,7 +129,7 @@ angular.module('seaspongeApp')
                 }
                 # connection.getOverlay("label").setLabel connection.sourceId.substring(15) + "-" + connection.targetId.substring(15)
                 connection.refreshLabel = ->
-                    connection.getOverlay("label").setLabel(connection.properties.label)
+                    connection.getOverlay("label").setLabel(escapeHtml(connection.properties.label))
                 connection.refreshLabel()
 
                 connection.bind "editCompleted", (o) =>
