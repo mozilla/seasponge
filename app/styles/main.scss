@@ -110,15 +110,6 @@ a:hover {
   color: #000;
 }
 
-/* Custom default button */
-.btn-default,
-.btn-default:hover,
-.btn-default:focus {
-  color: #333;
-  text-shadow: none; /* Prevent inheritence from `body` */
-  background-color: #fff;
-  border: 1px solid #fff;
-}
 
 // BOOTSTRAP COVERPAGE TEMPLATE
 /*
@@ -129,6 +120,7 @@ html,
 body {
   height: 100%;
   background-color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 
@@ -243,4 +235,39 @@ body {
   .cover-container {
     width: 700px;
   }
+}
+
+.form-control{
+  margin-bottom: 10px;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.fancy {
+  line-height: 0.5;
+  text-align: center;
+}
+.fancy span {
+  display: inline-block;
+  position: relative;  
+}
+.fancy span:before,
+.fancy span:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  top: 0;
+  width: 600px;
+}
+.fancy span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+.fancy span:after {
+  left: 100%;
+  margin-left: 15px;
 }
