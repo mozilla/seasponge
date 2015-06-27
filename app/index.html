@@ -6,19 +6,13 @@
   <title>SeaSponge</title>
   <meta name="description" content="Accessible and client-side threat modeling tool">
   <meta name="viewport" content="width=device-width">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <!-- build:css(.) styles/vendor.css -->
-  <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/jsplumb/dist/css/jsplumb.css" />
   <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
-  <!-- endbower -->
-  <!-- endbuild -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link href='http://fonts.googleapis.com/css?family=Allan:400,700' rel='stylesheet' type='text/css'>
-  <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/layout.css">
   <link rel="stylesheet" href="styles/draw.css">
-  <!-- endbuild -->
 </head>
 
 <body ng-app="seaspongeApp">
@@ -26,7 +20,6 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <!-- Add your site or application content here -->
   <div ng-view="" class="height"></div>
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -47,15 +40,6 @@
     ga('send', 'pageview');
   </script>
 
-  <!-- build:js(.) scripts/oldieshim.js -->
-  <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
-  <!-- endbuild -->
-
-  <!-- build:js(.) scripts/vendor.js -->
-  <!-- bower:js -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/json3/lib/json3.js"></script>
@@ -85,29 +69,22 @@
   <script src="bower_components/html2canvas/build/html2canvas.js"></script>
   <script src="bower_components/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
   <script src="bower_components/canvg/canvg.js"></script>
-  <!-- endbower -->
-  <!-- endbuild -->
 
-  <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/about.js"></script>
   <script src="scripts/controllers/draw.js"></script>
 
-  <!-- Start Stencils! -->
   <script src="scripts/stencils/stencils.js"></script>
   <script src="scripts/stencils/base.js"></script>
-    <!-- Boundary -->
   <script src="scripts/stencils/boundary/base-boundary.js"></script>
   <script src="scripts/stencils/boundary/generic-trust-boundary.js"></script>
-    <!-- External -->
   <script src="scripts/stencils/external/base-external.js"></script>
   <script src="scripts/stencils/external/authorization.js"></script>
   <script src="scripts/stencils/external/bot.js"></script>
   <script src="scripts/stencils/external/human-user.js"></script>
   <script src="scripts/stencils/external/server.js"></script>
   <script src="scripts/stencils/external/service.js"></script>
-    <!-- Process -->
   <script src="scripts/stencils/process/base-process.js"></script>
   <script src="scripts/stencils/process/browser.js"></script>
   <script src="scripts/stencils/process/desktop.js"></script>
@@ -117,12 +94,10 @@
   <script src="scripts/stencils/process/process.js"></script>
   <script src="scripts/stencils/process/thread.js"></script>
   <script src="scripts/stencils/process/web-app.js"></script>
-    <!-- Store -->
   <script src="scripts/stencils/store/base-store.js"></script>
   <script src="scripts/stencils/store/cache.js"></script>
   <script src="scripts/stencils/store/data-store.js"></script>
   <script src="scripts/stencils/store/database.js"></script>
-  <!-- End Stencils -->
 
   <script src="scripts/controllers/create.js"></script>
   <script src="scripts/controllers/load.js"></script>
@@ -130,7 +105,6 @@
   <script src="scripts/services/model.js"></script>
   <script src="scripts/services/diagram.js"></script>
   <script src="scripts/services/escapeHtml.js"></script>
-  <!-- endbuild -->
 </body>
 
 </html>

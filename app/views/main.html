@@ -5,22 +5,49 @@
       
       <div class="masthead clearfix">
         <div class="inner">
-          <h3 class="masthead-brand">SeaSponge</h3>
-          <nav>
+          <div class="masthead-brand"><h3><i class="fa fa-ship"></i> SeaSponge</h3>by <a href="https://github.com/Mozilla"><img width="75px" height="27px" src="/images/mozilla.png"/></a></div> 
+<!--           <nav>
             <ul class="nav masthead-nav">
               <li><a href="https://www.github.com/mozilla/seasponge">Github</a></li>
             </ul>
-          </nav>
+          </nav> -->
         </div>
       </div>
-        
       <div class="inner cover">
-        <a type="button" class="btn btn-primary" ng-href="#/create">Create Model</a>
-        <a type="button" class="btn btn-primary" ng-href="#/load">Load Model</a>
+        <p class="lead">Create a new Threat Model</p>
+        <form role="form" class="create-form">
+
+          <div class="form-group">
+            <label for="project-name">Project Title</label>
+            <input type="text" class="form-control" id="project-name" 
+            placeholder="Project Title" ng-model="title">
+          </div>
+
+          <div class="form-group">
+            <label for="authors">Authors</label>
+            <input type="text" class="form-control" id="authors" 
+            placeholder="Authors" ng-model="authors">
+          </div>
+
+          <div class="form-group">
+            <label for="version">Version</label>
+            <input type="text" class="form-control" id="version" 
+            placeholder="Version" ng-model="version">
+          </div>
+
+          <div class="form-group">
+            <label for="config">Configuration File</label>
+            <input type="file" class="load-form" id="config-file" onchange="angular.element(this).scope().loadFile(this)">
+          </div>
+
+          <button type="submit" class="btn btn-default" ng-click="createModel()">Start Modeling!</button>
+          <h2>or</h2>
+          <button type="submit" class="btn btn-default" ng-click="createModel()">Load existing model</button>
+
+        </form>
       </div>
 
     </div>
 
   </div>
 </div>
-
