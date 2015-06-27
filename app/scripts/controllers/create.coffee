@@ -10,10 +10,8 @@
 angular.module('seaspongeApp')
   .controller 'CreateController', ['$scope', '$location', 'model', 'config', ($scope, $location, model, config) ->
 
-        console.log('model', model);
-
-        $scope.title = "Example 1"
-        $scope.authors = "Glavin Wiechert"
+        $scope.title = "My Threat Model"
+        $scope.authors = "Sherlock Holmes"
         $scope.version = "0.0.0"
 
         # Load Configuration from JSON string
