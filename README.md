@@ -4,13 +4,11 @@
 [![Gitter chat](https://badges.gitter.im/mozilla/seasponge.png)](https://gitter.im/mozilla/seasponge)
 [![Build Status](https://travis-ci.org/mozilla/seasponge.svg)](https://travis-ci.org/mozilla/seasponge)
 
-> SeaSponge is an accessible web-based threat modeling tool developed for [Mozilla Winter of Security 2014](https://wiki.mozilla.org/Security/Automation/WinterOfSecurity2014).
-
 -----
 
 ## About
 
-This web-based application is being developed with three characteristics in mind:
+SeaSponge is an accessible web-based threat modeling tool. This web-based application is being developed with three characteristics in mind:
 
 - **Accessibility**: We want everyone to be able to map out their infrastructures and generate security reports on any operating-system and on any browser.
 - **Aesthetics**: We're tired of clunky, boring interfaces - we want to bring the pizazz into threat-modeling.
