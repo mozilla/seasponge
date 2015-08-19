@@ -3,16 +3,16 @@
   "version": "0.0.0",
   "appPath": "app",
   "dependencies": {
-    "angular": "1.2.16",
+    "angular": "1.4.3",
     "json3": "~3.3.1",
     "es5-shim": "~3.1.0",
     "bootstrap-sass-official": "~3.2.0",
-    "angular-resource": "1.2.16",
-    "angular-cookies": "1.2.16",
-    "angular-sanitize": "1.2.16",
-    "angular-animate": "1.2.16",
-    "angular-touch": "1.2.16",
-    "angular-route": "1.2.16",
+    "angular-resource": "1.4.3",
+    "angular-cookies": "1.4.3",
+    "angular-sanitize": "1.4.3",
+    "angular-animate": "1.4.3",
+    "angular-touch": "1.4.3",
+    "angular-route": "1.4.3",
     "jsplumb": "~1.6.2",
     "jquery-ui": "~1.11.1",
     "angular-bootstrap": "~0.11.2",
@@ -23,8 +23,8 @@
     "canvg": "gabelerner/canvg#da635b49d30555c922d9b697ed06d4171364de03"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.16",
-    "angular-scenario": "1.2.16"
+    "angular-mocks": "1.4.3",
+    "angular-scenario": "1.4.3"
   },
   "overrides": {
     "jsplumb": {
@@ -34,13 +34,9 @@
       ]
     },
     "canvg": {
-        "main": [
-            "canvg.js"
-        ]
+      "main": [
+        "canvg.js"
+      ]
     }
-  },
-  "resolutions": {
-    "angular": ">=1.2.18",
-    "angular-ui-select": "~0.8.3"
   }
 }
