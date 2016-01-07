@@ -48,7 +48,7 @@ Please see our [Contributing Guidelines](CONTRIBUTING.md)
 
 You may need to prefix commands with `sudo`
 
-- [Node.js](http://nodejs.org/)
+- [Node.js](http://nodejs.org/) 
   - [Bower](http://bower.io/) `npm install -g bower`
   - [Grunt](http://gruntjs.com/) `npm install -g grunt-cli`
   - [Yeoman](http://yeoman.io/) `npm install -g yo`
@@ -59,6 +59,8 @@ You may need to prefix commands with `sudo`
   - [Compass](http://compass-style.org/install/) >=0.12.2 `gem install compass`
 
 After forking and cloning the repository in the location of your choice run the following commands to install your [Node.js](http://nodejs.org/) and [Bower](http://bower.io/) dependencies.
+
+On Debian and Ubuntu-based platforms, the nodejs-legacy package must be installed along with nodejs and npm using apt-get in order to fix a naming conflict that will otherwise prevent some packages from building and running correctly, as explained in [/usr/share/doc/nodejs/README.Debian] (http://apt-browse.org/browse/ubuntu/trusty/universe/i386/nodejs/0.10.25~dfsg2-2ubuntu1/file/usr/share/doc/nodejs/README.Debian)
 
 ```bash
 npm install
