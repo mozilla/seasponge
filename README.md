@@ -1,8 +1,8 @@
 [SeaSponge](https://github.com/mozilla/seasponge)
 =========
 
-[![Gitter chat](https://badges.gitter.im/mozilla/seasponge.png)](https://gitter.im/mozilla/seasponge)
-[![Build Status](https://travis-ci.org/mozilla/seasponge.svg)](https://travis-ci.org/mozilla/seasponge)
+ [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+ [![Build Status](https://travis-ci.org/mozilla/seasponge.svg)](https://travis-ci.org/mozilla/seasponge)
 
 > SeaSponge is an accessible web-based threat modeling tool developed for [Mozilla Winter of Security 2014](https://wiki.mozilla.org/Security/Automation/WinterOfSecurity2014).
 
